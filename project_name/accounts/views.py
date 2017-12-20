@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout, update_session_auth_hash
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -47,7 +47,7 @@ class LoginView(FormView):
     form_class = accounts.forms.LoginForm
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return HttpResponseRedirect(self.get_success_url())
         return super().get(request, *args, **kwargs)
 
@@ -121,8 +121,8 @@ class HomepageView(TemplateView):
     template_name = '{{ project_name }}/application/homepage/homepage.html'
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
-            return super(HomepageView, self).get(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return super().get(request, *args, **kwargs)
         return HttpResponseRedirect(reverse('login'))
 
 
@@ -130,7 +130,7 @@ class ProfileView(BaseUserSystemView, TemplateView):
     template_name = '{{ project_name }}/application/profiles/view-form.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
             'back_url': self.get_back_url(),
             'profile': self.get_object().profile,
@@ -143,7 +143,7 @@ class SettingsView(BaseUserSystemView, TemplateView):
     template_name = '{{ project_name }}/application/configurations/settings.html'
 
     def get_context_data(self, **kwargs):
-        context = super(SettingsView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
             'active': 'profile-settings'
         })
@@ -180,7 +180,7 @@ class ProfileEditView(BaseUserSystemView, UpdateView):
         })
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileEditView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
             'profile': self.get_object().profile,
             'formset': self.get_profile_form()
@@ -202,7 +202,7 @@ class ChangePasswordView(BaseUserSystemView, FormView):
         else:
             msg = u'Your password does not match with any of our records, please put the correct password and try again'
             messages.add_message(self.request, messages.ERROR, _(msg))
-            return super(ChangePasswordView, self).form_invalid(form)
+            return super().form_invalid(form)
 
         msg = _("Your password has been updated")
         messages.add_message(self.request, messages.SUCCESS, msg)
@@ -215,7 +215,7 @@ class ChangePasswordView(BaseUserSystemView, FormView):
         return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(ChangePasswordView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
             'active': "change-password"
         })
@@ -252,7 +252,7 @@ class ListUsersView(BaseUserSystemView, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
-        context = super(ListUsersView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['form'] = accounts.forms.ListUsersSearchForm(
             data=self.request.GET, initial=self.request.GET
         )

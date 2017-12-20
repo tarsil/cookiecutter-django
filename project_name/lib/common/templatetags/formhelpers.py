@@ -15,7 +15,6 @@ def get_current_choice_field_value(bound_field):
         return bound_field.label
 
 
-@register.assignment_tag(name='get_field_text_value')
 @register.simple_tag
 def field_text_value(bound_field):
     if isinstance(bound_field.field, forms.ChoiceField):

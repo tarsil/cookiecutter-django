@@ -28,9 +28,9 @@ exclude = ['created_by', 'modified_by']
 
 class AuditedModel(models.Model):
     created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='created_%(class)s_set', null=False, blank=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='created_%(class)s_set', null=False, blank=True, on_delete=models.DO_NOTHING)
     modified_at = models.DateTimeField(null=False, blank=False, auto_now=True)
-    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='modified_%(class)s_set', null=False, blank=True, on_delete=models.SET_DEFAULT, default=1)
+    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='modified_%(class)s_set', null=False, blank=True, on_delete=models.SET_DEFAULT)
 
     class Meta:
         abstract = True
@@ -38,9 +38,9 @@ class AuditedModel(models.Model):
 
 class LooselyAuditedModel(models.Model):
     created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='created_%(class)s_set', null=True, blank=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='created_%(class)s_set', null=True, blank=True, on_delete=models.DO_NOTHING)
     modified_at = models.DateTimeField(null=False, blank=False, auto_now=True)
-    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='modified_%(class)s_set', null=True, blank=True, on_delete=models.SET_DEFAULT, default=1)
+    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='modified_%(class)s_set', null=True, blank=True, on_delete=models.SET_DEFAULT)
 
     class Meta:
         abstract = True

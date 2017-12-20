@@ -3,7 +3,7 @@ import bleach
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import Permission as DjangoPermission
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_init, post_save
@@ -29,7 +29,8 @@ class Choices(object):
 
 
 class ProfileType(models.Model):
-    profile = models.ForeignKey('accounts.Profile', null=False, blank=True, related_name='profile_types')
+    profile = models.ForeignKey('accounts.Profile', null=False, blank=True, related_name='profile_types',
+                                on_delete=models.DO_NOTHING)
     profile_type = models.CharField(max_length=255, choices=Choices.Profiles.PROFILE_CHOICES,
                                     default=Choices.Profiles.ADMIN, null=False, blank=False)
 
@@ -42,7 +43,8 @@ class Profile(models.Model):
     For every user, there is a profile associated. This model is a representation of that same profile
     """
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, related_name='profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, related_name='profile',
+                                on_delete=models.DO_NOTHING)
     slug = models.SlugField(max_length=255, help_text=_('Slug'), blank=False, null=False, unique=True)
     created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
     modified_at = models.DateTimeField(null=False, blank=False, auto_now=True)

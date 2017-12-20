@@ -6,7 +6,7 @@ class CachedStaticFilesStorage(
 
     def hashed_name(self, name, content=None):
         try:
-            return super(CachedStaticFilesStorage, self).hashed_name(
+            return super().hashed_name(
                 name, content=content)
         except ValueError:
             # If there is a static asset that refers to another asset

@@ -86,7 +86,7 @@ class RegistrationForm(forms.Form):
     profile_type = forms.ChoiceField(choices=accounts.models.Choices.Profiles.PROFILE_CHOICES)
 
     def clean(self):
-        cleaned_data = super(RegistrationForm, self).clean()
+        cleaned_data = super().clean()
         self._validate_password()
         return cleaned_data
 
@@ -212,7 +212,7 @@ class ChangePasswordForm(forms.Form):
         return retype_password
 
     def clean(self):
-        cleaned_data = super(ChangePasswordForm, self).clean()
+        cleaned_data = super().clean()
         self._validate_password()
         return cleaned_data
 

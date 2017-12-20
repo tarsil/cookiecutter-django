@@ -26,6 +26,6 @@ def render_as_template(context, string):
     )
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_random_integer(minimum, maximum):
     return random.randint(minimum, maximum)

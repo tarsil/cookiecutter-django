@@ -20,7 +20,7 @@ def is_href_external(href):
 class NofollowMixin(object):
 
     def handleMatch(self, m):
-        element = super(NofollowMixin, self).handleMatch(m)
+        element = super().handleMatch(m)
         if element is not None and is_href_external(element.get('href')):
             element.set('rel', 'nofollow')
         return element
@@ -29,7 +29,7 @@ class NofollowMixin(object):
 class TargetBlankMixin(object):
 
     def handleMatch(self, m):
-        element = super(TargetBlankMixin, self).handleMatch(m)
+        element = super().handleMatch(m)
         if element is not None and is_href_external(element.get('href')):
             element.set('target', '_blank')
         return element

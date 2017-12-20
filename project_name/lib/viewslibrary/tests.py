@@ -7,7 +7,7 @@ class TestRequest(http.HttpRequest):
     """Just enough implementation to make it testable"""
 
     def __init__(self, uri, method='GET'):
-        super(TestRequest, self).__init__()
+        super().__init__()
         self.method = method
         _, self.host, self.path, self.query, _ = urlparse.urlsplit(uri)
         self.META['QUERY_STRING'] = self.query

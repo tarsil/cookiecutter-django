@@ -1,4 +1,4 @@
-"""{{ project_name }} URL Configuration
+"""dj URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.urls import re_path, include
 from django.contrib import admin
 from accounts.views import LoginView, LogoutView, HomepageView
 import accounts.urls
@@ -22,12 +22,12 @@ import api.urls
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', HomepageView.as_view(), name=('homepage')),
-    url(r'^login/$', LoginView.as_view(), name=('login')),
-    url(r'^logout/$', LogoutView.as_view(), name=('logout')),
-    url(r'^u/', include(accounts.urls.accounts_urlpatterns, namespace="accounts")),
+    re_path(r'^admin/', admin.site.urls),
+    re_path(r'^$', HomepageView.as_view(), name='homepage'),
+    re_path(r'^login/$', LoginView.as_view(), name='login'),
+    re_path(r'^logout/$', LogoutView.as_view(), name='logout'),
+    re_path(r'^u/', include(accounts.urls.accounts_urlpatterns)),
 
     # API
-    url(r'^api/v1', include(api.urls.api_url_pattern, namespace="api-v1")),
+    re_path(r'^api/v1', include(api.urls.api_url_patterns)),
 ]

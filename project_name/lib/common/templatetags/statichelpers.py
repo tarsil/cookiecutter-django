@@ -4,6 +4,6 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 register = Library()
 
 
-@register.assignment_tag(name='get_static_path')
+@register.simple_tag
 def static_path(path):
     return staticfiles_storage.url(path)
