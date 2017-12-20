@@ -1,0 +1,50 @@
+version: '2'
+services:
+  db:
+    restart: always
+    image: postgres:9.3.14
+    expose:
+      - "5432"
+    volumes:
+      - "'{{ project_name }}'_db_data:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+
+  redis:
+    restart: always
+    image: redis:latest
+    expose:
+      - "6379"
+
+  {{ project_name }}:
+    restart: always
+    image: tiagoarasilva/titan:1.1.0
+    depends_on:
+      - redis
+    environment:
+      DJANGOENV: development
+      ENVIRONMENT: development
+      PYTHON: python
+      PROJECT_NAME: {{ project_name }}
+      TERM: xterm
+      ROLE: development
+    links:
+      - db:postgres
+      - redis:redis
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8000:8000"
+    expose:
+      - "80"
+      - "443"
+      - "8000"
+    volumes:
+      - .:/var/www
+      - ~/.aws/config:/root/.aws/config
+    working_dir: /var/www
+    command: bash -lc "pip install invoke jinja2 && invoke -r roles $${ROLE}"
+
+volumes:
+  {{ project_name }}_db_data:
+    external: true

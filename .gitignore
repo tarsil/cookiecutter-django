@@ -1,0 +1,61 @@
+LINUX-ENV
+ENV
+DEV
+EVENT
+popup
+syntax: glob
+*.pyc
+._*
+__pycache__/
+.#*
+#*#
+.DS_Store
+media
+local_settings.py
+*.mo
+*.codekit
+*.map
+.sass-cache/
+.coverage
+wag-labels
+useful
+renders
+*~
+.*.sw*
+.Python
+.vagrant/
+renders
+.pip-download-cache
+*-auto-bak-*.pgdump
+.installed
+# built CSS is not kept in source control
+config.codekit
+*.map.css
+*.tar
+*.Rhistory
+*.tsv
+keys
+*.sql
+dump.rdb
+build
+
+# Eclipse metadata
+.project
+.pydevproject
+.settings
+dbbaks
+
+selenium-server-standalone*jar
+ingest
+
+# PyCharm metadata
+.idea
+
+# VS Code metadata
+.vscode
+.noseids
+app.wsgi
+uwsgi.ini
+celerybeat-schedule
+*.pgdump
+db.sqlite3

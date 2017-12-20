@@ -1,0 +1,11 @@
+<div class="{% templatetag openvariable %}  class {% templatetag closevariable %}">
+    {% templatetag openblock %} if label or field.label {% templatetag closeblock %}
+        {% templatetag openblock %} if not hide_label {% templatetag closeblock %}
+            <label for="{% templatetag openvariable %} field.auto_id {% templatetag closevariable %}">
+                {% templatetag openblock %} if label {% templatetag closeblock %}{% templatetag openvariable %} label {% templatetag closevariable %}{% templatetag openblock %} else {% templatetag closeblock %}{% templatetag openvariable %} field.label {% templatetag closevariable %} {% templatetag openvariable %} extra {% templatetag closevariable %}{% templatetag openblock %} endif {% templatetag closeblock %}{% templatetag openblock %} if field.field.required and not hide_required {% templatetag closeblock %}*{% templatetag openblock %} endif {% templatetag closeblock %}
+            </label>
+        {% templatetag openblock %} endif {% templatetag closeblock %}
+    {% templatetag openblock %} endif {% templatetag closeblock %}
+    {% templatetag openvariable %} field {% templatetag closevariable %}
+    {% templatetag openblock %} if field.errors {% templatetag closeblock %}<small class="error">{% templatetag openvariable %} field.errors {% templatetag closevariable %}</small>{% templatetag openblock %} endif {% templatetag closeblock %}
+</div>

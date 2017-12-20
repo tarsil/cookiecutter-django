@@ -1,0 +1,14 @@
+{% templatetag openblock %} if messages {% templatetag closeblock %}
+    {% templatetag openblock %} for message in messages {% templatetag closeblock %}
+        {% templatetag openblock %} {% templatetag closeblock %} if message.tags == "success" {% templatetag closeblock %} <div class="success callout" data-closable>{% templatetag openblock %} endif {% templatetag closeblock %}
+        {% templatetag openblock %} {% templatetag closeblock %} if message.tags == "error" {% templatetag closeblock %} <div class="alert callout" data-closable>{% templatetag openblock %} endif {% templatetag closeblock %}
+        {% templatetag openblock %} {% templatetag closeblock %} if message.tags == "info" {% templatetag closeblock %} <div class="primary callout" data-closable>{% templatetag openblock %} endif {% templatetag closeblock %}
+        {% templatetag openblock %} {% templatetag closeblock %} if message.tags == "warning" {% templatetag closeblock %} <div class="warning callout " data-closable>{% templatetag openblock %} endif {% templatetag closeblock %}
+            <span>{% templatetag openvariable %} message {% templatetag closevariable %} </span>
+            <button id="close-button"
+                    class="close-button close-button-{% templatetag openvariable %} message.tags {% templatetag closevariable %}"
+                    aria-label="Dismiss alert" type="button" data-close><span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% templatetag openblock %} endfor {% templatetag closeblock %}
+{% templatetag openblock %} endif {% templatetag closeblock %}
