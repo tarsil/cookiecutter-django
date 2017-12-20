@@ -1,5 +1,10 @@
 from django.conf.urls import url
 
-api_url_pattern = [
+from api.apps import ApiConfig
+
+app_name = ApiConfig.name
+
+
+api_url_patterns = [
 
 ]
