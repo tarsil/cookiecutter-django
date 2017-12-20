@@ -3,7 +3,7 @@ import json
 from django.views.generic import FormView, UpdateView, CreateView, ListView
 from django.core.paginator import InvalidPage
 from django.urls import reverse, NoReverseMatch, resolve
-from django.core.urlresolvers import reverse, resolve
+from django.urls import reverse reverse, resolve
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http.response import HttpResponse
 from lib.forms.generic import FormListView
