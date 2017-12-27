@@ -5,7 +5,7 @@ awscli==1.11.175
 beautifulsoup4==4.6.0
 billiard==3.5.0.3
 bitly-api==0.3
-bleach==2.1.1
+bleach==2.1.2
 boto==2.48.0
 botocore==1.7.33
 boto3==1.4.7
