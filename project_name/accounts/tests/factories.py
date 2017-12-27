@@ -7,10 +7,10 @@ import accounts.models
 
 
 class ProfileFactory(factory.django.DjangoModelFactory):
-    slug = factory.LazyAttribute(lambda u: "{{ project_name }}-%s" % str(uuid.uuid4())[0:12])
+    slug = factory.LazyAttribute(lambda u: "testes-%s" % str(uuid.uuid4())[0:12])
 
     class Meta:
-        accounts.models.Profile
+        model = accounts.models.Profile
 
 
 class ProfileTypeFactory(factory.django.DjangoModelFactory):
@@ -18,15 +18,15 @@ class ProfileTypeFactory(factory.django.DjangoModelFactory):
     profile_type = accounts.models.Choices.Profiles.USER
 
     class Meta:
-        accounts.models.ProfileType
+        model = accounts.models.ProfileType
 
 
 class UserFactory(factory.django.DjangoModelFactory):
-    username = factory.Sequence(lambda n: "{{ project_name }}-%s" % n)
-    password = "{{ project_name }}"
+    username = factory.Sequence(lambda n: "testes-%s" % n)
+    password = "testes"
     first_name = "Test"
     last_name = 'User'
-    email = factory.LazyAttribute(lambda u: "%s@{{ project_name }}.example.com" % u.username)
+    email = factory.LazyAttribute(lambda u: "%s@testes.example.com" % u.username)
     profile = factory.RelatedFactory(ProfileFactory, name='user')
 
     class Meta:
