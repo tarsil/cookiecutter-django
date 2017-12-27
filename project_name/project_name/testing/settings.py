@@ -5,7 +5,7 @@ in terms of settings and how to set them up
 
 To all who contribute for this, thank you very much.
 """
-from pluto.settings import *
+from {{ project_name }}.settings import *
 import os
 
 '''
@@ -95,7 +95,7 @@ CACHES = {
 
 # allow for a local override that won't be used by development
 try:
-    from pluto.pluto.testing.local_settings import *
+    from {{ project_name }}.{{ project_name }}.testing.local_settings import *
 except ImportError:
     pass
 
