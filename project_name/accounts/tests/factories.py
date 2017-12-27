@@ -27,7 +27,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     first_name = "Test"
     last_name = 'User'
     email = factory.LazyAttribute(lambda u: "%s@testes.example.com" % u.username)
-    profile = factory.RelatedFactory(ProfileFactory, name='user')
+    profile = factory.RelatedFactory(ProfileFactory, factory_related_name='user')
 
     class Meta:
         model = get_user_model()
