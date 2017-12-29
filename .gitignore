@@ -54,8 +54,7 @@ ingest
 # VS Code metadata
 .vscode
 .noseids
-app.wsgi
-uwsgi.ini
+
 celerybeat-schedule
 *.pgdump
 db.sqlite3
