@@ -1,4 +1,4 @@
-import urlparse
+import urllib.parse
 
 from django import http
 
@@ -9,7 +9,7 @@ class TestRequest(http.HttpRequest):
     def __init__(self, uri, method='GET'):
         super().__init__()
         self.method = method
-        _, self.host, self.path, self.query, _ = urlparse.urlsplit(uri)
+        _, self.host, self.path, self.query, _ = urllib.parse.urlsplit(uri)
         self.META['QUERY_STRING'] = self.query
         self.GET = http.QueryDict(self.query)
 
