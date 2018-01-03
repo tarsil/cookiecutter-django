@@ -9,7 +9,7 @@ import {{ project_name }}.third_parties.blacklist_domains
 class ListUsersViewTest(WebTest):
 
     def setUp(self):
-        self.user = accounts.tests.factories.UserFactory(username=u'LTPLabs', email="cenas@cenas.com")
+        self.user = accounts.tests.factories.UserFactory(username=u'{{ project_name }}', email="cenas@cenas.com")
         self.url = reverse('profiles:list-users')
 
     def test_get_login_page(self):
@@ -21,7 +21,7 @@ class ListUsersViewTest(WebTest):
 class LoginAndRegisterViewTest(WebTest):
 
     def setUp(self):
-        self.user = accounts.tests.factories.UserFactory(username=u'LTPLabs', email="cenas@cenas.com")
+        self.user = accounts.tests.factories.UserFactory(username=u'{{ project_name }}', email="cenas@cenas.com")
         self.url_login = reverse('login')
 
     def _get_profile_page_data(self):
@@ -42,7 +42,7 @@ class LoginAndRegisterViewTest(WebTest):
 
 class AddUserViewTest(WebTest):
     def setUp(self):
-        self.user = accounts.tests.factories.UserFactory(username=u'LTPLabs')
+        self.user = accounts.tests.factories.UserFactory(username=u'{{ project_name }}')
         self.url = reverse('profiles:add-user')
 
     def _get_user_form_data(self, email='testeFirst@testeLast.com'):
