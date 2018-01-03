@@ -9,7 +9,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 
-CANONICAL_SITE_URL = 'www.ltplabs.com'
+CANONICAL_SITE_URL = 'www.{{ project_name }}.com'
 
 AUTH_PROFILE_MODULE = 'profiles.profile'
 ABSOLUTE_URL_OVERRIDES = {
