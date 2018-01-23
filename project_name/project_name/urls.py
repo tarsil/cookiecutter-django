@@ -29,5 +29,5 @@ urlpatterns = [
     re_path(r'^u/', include(accounts.urls.accounts_urlpatterns)),
 
     # API
-    re_path(r'^api/v1', include(api.urls.api_url_patterns)),
+    re_path(r'^api/v1/', include(api.urls.api_url_patterns)),
 ]
