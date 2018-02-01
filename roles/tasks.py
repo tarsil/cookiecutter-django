@@ -17,7 +17,7 @@ def _template_file(template, destination, template_dir='/var/www/deploy/'):
 
 
 @task
-def development():
+def development(context):
     run('pip3 install -U pip')
     run('pip3 install -r requirements/development.txt')
     # _template_file('nginx/nginx.conf', '/etc/nginx/sites-enabled/default')
