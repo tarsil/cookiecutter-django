@@ -34,8 +34,8 @@ If you desire, you can create somes aliases in your local machine, inside the ba
 E.g.:
 
 ```shell
-alias shell_plus='docker-compose up exec {{ project_name }} bash && make run'
-alias run_server='docker-compose up exec {{ project_name }} bash && make shell'
+alias shell_plus='docker-compose exec {{ project_name }} bash && make run'
+alias run_server='docker-compose exec {{ project_name }} bash && make shell'
 ```
 
 # First run with the project
