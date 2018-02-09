@@ -32,10 +32,10 @@ class ProfileType(models.Model):
     profile = models.ForeignKey('accounts.Profile', null=False, blank=True, related_name='profile_types',
                                 on_delete=models.DO_NOTHING)
     profile_type = models.CharField(max_length=255, choices=Choices.Profiles.PROFILE_CHOICES,
-                                    default=Choices.Profiles.ADMIN, null=False, blank=False)
+                                    default=Choices.Profiles.USER, null=False, blank=False)
 
-    def __unicode__(self):
-        return self.profile.user.display_name
+    def __str__(self):
+        return self.get_profile_type_display()
 
 
 class Profile(models.Model):
