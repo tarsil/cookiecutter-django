@@ -18,7 +18,7 @@ services:
 
   {{ project_name }}:
     restart: always
-    image: tiagoarasilva/titan:1.4.0
+    image: oratio/kale:1.0.0
     depends_on:
       - redis
     environment:
