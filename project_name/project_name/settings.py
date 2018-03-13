@@ -3,6 +3,7 @@ import os
 from {{ project_name }}.databases import *
 from {{ project_name }}.redis.settings import *
 from {{ project_name }}.third_parties.blacklist_domains import *
+from {{ project_name }}.redis_rabbitmq import *
 
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 {{ project_name }}_VERSION = os.path.basename(os.path.dirname(SITE_ROOT))
