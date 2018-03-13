@@ -15,12 +15,22 @@ services:
     image: redis:latest
     expose:
       - "6379"
+  
+  rabbitmq:
+    restart: always
+    image: rabbitmq:3.6.12
+    expose:
+      - "5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbit_user
+      - RABBITMQ_DEFAULT_PASS=rabbit_user_default_pass
 
   {{ project_name }}:
     restart: always
     image: oratio/kale:1.0.0
     depends_on:
       - redis
+      - rabbitmq
     environment:
       DJANGOENV: development
       ENVIRONMENT: development
@@ -31,6 +41,7 @@ services:
     links:
       - db:postgres
       - redis:redis
+      - rabbitmq:rabbitmq
     ports:
       - "80:80"
       - "443:443"
