@@ -3,13 +3,14 @@ The setup for rabbitmq message broker (we can also user Redis for this)
 '''
 import os
 from kombu import Exchange, Queue, serialization
+import {{ project_name }}.utils
 
 
 # BROKER_HOST = '127.0.0.1'
 BROKER_PORT = 5672
 BROKER_VHOST = '/'
 BROKER_USER = '{{ project_name }}'
-BROKER_PASSWORD = '!!bro!!ker!pass'
+BROKER_PASSWORD = '!!bro!!k!er'
 BROKER_TRANSPORT_OPTIONS = {'confirm_publish': True}
 CELERY_CREATE_MISSING_QUEUES = True
 CELERY_RESULT_PERSISTENT = True
@@ -19,6 +20,13 @@ CELERY_RESULT_PERSISTENT = True
 SESSION_CACHE_ALIAS = "sessions"
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
+MEMCACHED_ENDPOINTS = [
+    '127.0.0.1:11211',
+]
+CACHES = {{ project_name }}.utils.make_memcached_cache(MEMCACHED_ENDPOINTS)
+CACHES["default"] = {
+    'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+}
 CACHES['sessions'] = {
     'BACKEND': 'redis_cache.RedisCache',
     'LOCATION': 'redis:6379',
@@ -44,8 +52,8 @@ if RABBIT_HOSTNAME.startswith('tcp://'):
 BROKER_URL = os.environ.get('BROKER_URL', '')
 if not BROKER_URL:
     BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
-        user=os.environ.get('RABBIT_ENV_USER', 'rabbit_user'),
-        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', 'rabbit_user_default_pass'),
+        user=os.environ.get('RABBIT_ENV_USER', '{{ project_name }}'),
+        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', '{{ project_name }}_inco_pro'),
         hostname=RABBIT_HOSTNAME,
         vhost=os.environ.get('RABBIT_ENV_VHOST', ''))
 
@@ -62,9 +70,7 @@ BROKER_CONNECTION_TIMEOUT = 10
 # CONFIGURE QUEUES, CURRENTLY WE HAVE ONLY ONE
 CELERY_DEFAULT_QUEUE = 'default'
 CELERY_QUEUES = (
-    Queue('profiles', Exchange('profiles'), routing_key='profiles'),
-    Queue('job_applications', Exchange('job_applications'), routing_key='job_applications'),
-    Queue('cvs', Exchange('cvs'), routing_key='cvs'),
+    Queue('queue', Exchange('queue'), routing_key='queue'),
 )
 
 

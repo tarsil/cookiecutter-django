@@ -1,7 +1,7 @@
 import os
 
 from {{ project_name }}.databases import *
-from {{ project_name }}.redis.settings import *
+from {{ project_name }}.general.settings import *
 from {{ project_name }}.third_parties.blacklist_domains import *
 from {{ project_name }}.redis_rabbitmq import *
 
