@@ -52,8 +52,8 @@ if RABBIT_HOSTNAME.startswith('tcp://'):
 BROKER_URL = os.environ.get('BROKER_URL', '')
 if not BROKER_URL:
     BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
-        user=os.environ.get('RABBIT_ENV_USER', '{{ project_name }}'),
-        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', '{{ project_name }}_inco_pro'),
+        user=os.environ.get('RABBIT_ENV_USER', 'rabbit_user'),
+        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', 'rabbit_user_default_pass'),
         hostname=RABBIT_HOSTNAME,
         vhost=os.environ.get('RABBIT_ENV_VHOST', ''))
 
