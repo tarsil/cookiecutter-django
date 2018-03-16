@@ -42,6 +42,7 @@ BASE_INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sitemaps',
     'django.contrib.redirects',
+    'djcelery',
     'lib.common',
     'lib.audit',
     'lib.cache',
