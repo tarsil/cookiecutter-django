@@ -20,6 +20,9 @@ run:
 shell:
 	python3 $(PROJECT_NAME)/manage.py shell_plus --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 
+celery:
+	python3 saturn/manage.py celery worker -Q celery --logleve=INFO --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+
 show_urls:
 	python3 $(PROJECT_NAME)/manage.py show_urls --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 
