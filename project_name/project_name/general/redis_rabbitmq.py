@@ -3,7 +3,7 @@ The setup for rabbitmq message broker (we can also user Redis for this)
 '''
 import os
 from kombu import Exchange, Queue, serialization
-import {{ project_name }}.utils
+from {{ project_name }}.utils import make_memcached_cache
 
 
 # BROKER_HOST = '127.0.0.1'
@@ -23,7 +23,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 MEMCACHED_ENDPOINTS = [
     '127.0.0.1:11211',
 ]
-CACHES = {{ project_name }}.utils.make_memcached_cache(MEMCACHED_ENDPOINTS)
+CACHES = make_memcached_cache(MEMCACHED_ENDPOINTS)
 CACHES["default"] = {
     'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
 }
