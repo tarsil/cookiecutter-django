@@ -2,6 +2,7 @@
 The setup for rabbitmq message broker (we can also user Redis for this)
 '''
 import os
+import djcelery
 from kombu import Exchange, Queue, serialization
 from {{ project_name }}.utils import make_memcached_cache
 
@@ -99,3 +100,6 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERYD_HIJACK_ROOT_LOGGER = False
 CELERYD_PREFETCH_MULTIPLIER = 1
 CELERYD_MAX_TASKS_PER_CHILD = 1000
+
+# ACTIVATE SETTINGS
+djcelery.setup_loader()
