@@ -16,7 +16,7 @@ services:
     expose:
       - "6379"
   
-  rabbitmq:
+  rabbit:
     restart: always
     image: rabbitmq:3.6.12
     expose:
@@ -30,7 +30,7 @@ services:
     image: oratio/kale:1.0.0
     depends_on:
       - redis
-      - rabbitmq
+      - rabbit
     environment:
       DJANGOENV: development
       ENVIRONMENT: development
@@ -39,9 +39,9 @@ services:
       TERM: xterm
       ROLE: development
     links:
-      - db:postgres
-      - redis:redis
-      - rabbitmq:rabbitmq
+      - db
+      - redis
+      - rabbit
     ports:
       - "80:80"
       - "443:443"
