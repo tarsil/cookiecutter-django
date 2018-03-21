@@ -1,5 +1,5 @@
 aldjemy==0.8.0
-anyjson-0.3.3
+anyjson==0.3.3
 astroid==1.6.1
 awesome-slugify==1.6.5
 awscli==1.14.53
