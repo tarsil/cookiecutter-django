@@ -39,7 +39,7 @@ services:
       TERM: xterm
       ROLE: development
     links:
-      - db
+      - db:postgres
       - redis
       - rabbit
     ports:
