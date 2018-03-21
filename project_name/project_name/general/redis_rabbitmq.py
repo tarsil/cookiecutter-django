@@ -45,26 +45,29 @@ REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 
 # RABBITMQ
+# CELERY_BROKER_HOST = '127.0.0.1'
+CELERY_BROKER_USER = 'rabbit_user'
+CELERY_BROKER_PASSWORD = 'rabbit_user_default_pass'
 RABBIT_HOSTNAME = os.environ.get('RABBIT_PORT_5672_TCP', 'rabbit')
 
 if RABBIT_HOSTNAME.startswith('tcp://'):
     RABBIT_HOSTNAME = RABBIT_HOSTNAME.split('//')[1]
 
-BROKER_URL = os.environ.get('BROKER_URL', '')
-if not BROKER_URL:
-    BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
-        user=os.environ.get('RABBIT_ENV_USER', 'rabbit_user'),
-        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', 'rabbit_user_default_pass'),
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', '')
+if not CELERY_BROKER_URL:
+    CELERY_BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
+        user=os.environ.get('RABBIT_ENV_USER', CELERY_BROKER_USER),
+        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', CELERY_BROKER_PASSWORD),
         hostname=RABBIT_HOSTNAME,
         vhost=os.environ.get('RABBIT_ENV_VHOST', ''))
 
 # We don't want to have dead connections stored on rabbitmq, so we have to negotiate using heartbeats
-BROKER_HEARTBEAT = '?heartbeat=30'
-if not BROKER_URL.endswith(BROKER_HEARTBEAT):
-    BROKER_URL += BROKER_HEARTBEAT
+CELERY_BROKER_HEARTBEAT = "30"
+# if not CELERY_BROKER_URL.endswith(CELERY_BROKER_HEARTBEAT):
+#     CELERY_BROKER_URL += CELERY_BROKER_HEARTBEAT
 
-BROKER_POOL_LIMIT = 1
-BROKER_CONNECTION_TIMEOUT = 10
+CELERY_BROKER_POOL_LIMIT = 1
+CELERY_BROKER_CONNECTION_TIMEOUT = 10
 
 
 # CELERY CONFIGURATION
@@ -100,6 +103,10 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERYD_HIJACK_ROOT_LOGGER = False
 CELERYD_PREFETCH_MULTIPLIER = 1
 CELERYD_MAX_TASKS_PER_CHILD = 1000
+
+# UTC
+CELERY_TIMEZONE = 'UTC'
+CELERY_ENABLE_UTC = True
 
 # ACTIVATE SETTINGS
 djcelery.setup_loader()
