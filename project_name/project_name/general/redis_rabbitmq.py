@@ -8,14 +8,6 @@ from {{ project_name }}.utils import make_memcached_cache
 
 
 # BROKER_HOST = '127.0.0.1'
-BROKER_PORT = 5672
-BROKER_VHOST = '/'
-BROKER_USER = '{{ project_name }}'
-BROKER_PASSWORD = '!!bro!!k!er'
-BROKER_TRANSPORT_OPTIONS = {'confirm_publish': True}
-CELERY_CREATE_MISSING_QUEUES = True
-CELERY_RESULT_PERSISTENT = True
-
 # REDIS
 
 SESSION_CACHE_ALIAS = "sessions"
@@ -46,8 +38,8 @@ REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 # RABBITMQ
 # CELERY_BROKER_HOST = '127.0.0.1'
-CELERY_BROKER_USER = 'rabbit_user'
-CELERY_BROKER_PASSWORD = 'rabbit_user_default_pass'
+RABBIT_USER = 'rabbit_user'
+RABBIT_PASSWORD = 'rabbit_user_default_pass'
 RABBIT_HOSTNAME = os.environ.get('RABBIT_PORT_5672_TCP', 'rabbit')
 
 if RABBIT_HOSTNAME.startswith('tcp://'):
@@ -56,8 +48,8 @@ if RABBIT_HOSTNAME.startswith('tcp://'):
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', '')
 if not CELERY_BROKER_URL:
     CELERY_BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
-        user=os.environ.get('RABBIT_ENV_USER', CELERY_BROKER_USER),
-        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', CELERY_BROKER_PASSWORD),
+        user=os.environ.get('RABBIT_ENV_USER', RABBIT_USER),
+        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', RABBIT_PASSWORD),
         hostname=RABBIT_HOSTNAME,
         vhost=os.environ.get('RABBIT_ENV_VHOST', ''))
 
@@ -72,9 +64,12 @@ CELERY_BROKER_CONNECTION_TIMEOUT = 10
 
 # CELERY CONFIGURATION
 # CONFIGURE QUEUES, CURRENTLY WE HAVE ONLY ONE
+CELERY_CREATE_MISSING_QUEUES = True
+CELERY_RESULT_PERSISTENT = True
+
 CELERY_DEFAULT_QUEUE = 'default'
 CELERY_QUEUES = (
-    Queue('queue', Exchange('queue'), routing_key='queue'),
+    Queue('{{ project_name }}', Exchange('{{ project_name }}'), routing_key='{{ project_name }}'),
 )
 
 
