@@ -31,7 +31,7 @@ services:
 
   {{ project_name }}:
     restart: always
-    image: oratio/kale:1.0.0
+    image: oratio/kale:2.0.0
     depends_on:
       - redis
       - rabbit
@@ -44,8 +44,8 @@ services:
       ROLE: development
     links:
       - db:postgres
-      - redis
-      - rabbit
+      - redis:redis
+      - rabbit:rabbit
     ports:
       - "80:80"
       - "443:443"
