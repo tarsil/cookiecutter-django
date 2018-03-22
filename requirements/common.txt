@@ -90,6 +90,7 @@ pyaml==17.12.1
 pycountry==18.2.23
 python-dateutil==2.6.1
 python-Levenshtein==0.12.0
+python-json-logger==0.1.8
 python-magic==0.4.15
 python3-memcached==1.51
 python-linkedin==4.1
