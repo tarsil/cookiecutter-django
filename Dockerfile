@@ -3,7 +3,7 @@
 # Based on an Ubuntu Image
 ############################################################
 FROM ubuntu:18.04
-MAINTAINER tiago.arasilva@outlook.com
+MAINTAINER tiago.arasilva@linezap.eu
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_GB.UTF-8
@@ -35,7 +35,7 @@ RUN apt-get update                                              && \
                        libcurl4-openssl-dev                        \
                        libevent-dev                                \
                        libffi-dev                                  \
-					   libgeos-c1v5                                \
+		       libgeos-c1v5                                \
                        libmagickwand-dev                           \
                        libmemcached-tools                          \
                        libxml2-dev                                 \
@@ -48,16 +48,9 @@ RUN apt-get update                                              && \
                        postgresql-client-9.6                       \
                        postgresql-server-dev-9.6                   \
                        python-pil                                  \
-                       python-chardet                              \
-                       python-colorama                             \
-                       python-distlib                              \
-                       python-html5lib                             \
-                       python-pip                                  \
-                       python3-pip                                 \
-                       python-requests                             \
-                       python-setuptools                           \
-                       python-six                                  \
                        python-urllib3                              \
+                       python3-pip                                 \
+                       python-pip                                  \
                        python-dev                                  \
                        python3-dev                                 \
                        rsyslog                                     \
@@ -71,6 +64,7 @@ RUN apt-get update                                              && \
                        wget                                     && \
     apt-get clean && apt-get autoclean                          && \
     find /var/lib/apt/lists/ -type f -delete
+
 
 RUN apt-get -y upgrade
 
@@ -88,13 +82,8 @@ RUN pip3 install -U setuptools
 ADD requirements /var/www/requirements
 RUN pip3 install -r /var/www/requirements/common.txt
 
-#
-# Make Python3 the default python
-# Make pip3 the default pip
-#
-RUN echo 'alias python=python3' >> ~/.bashrc && echo 'alias pip=pip3' >> ~/.bashrc
-
+# Patch Nginx Config to Disable Security Tokens
 RUN sed -i -e 's/# server_tokens off;/server_tokens off;/g' /etc/nginx/nginx.conf
 
-# Add JSON logging formatter
+# Add JSON logging formatter for nginx
 ADD deploy/nginx/nginx.json-logging.conf /etc/nginx/conf.d/json-logging.conf
