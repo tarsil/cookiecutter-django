@@ -3,7 +3,7 @@
 # Based on an Ubuntu Image
 ############################################################
 FROM ubuntu:18.04
-MAINTAINER tiago.arasilva@linezap.eu
+MAINTAINER tiago.arasilva@outlook.com
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_GB.UTF-8
