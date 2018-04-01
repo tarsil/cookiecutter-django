@@ -35,7 +35,7 @@ RUN apt-get update                                              && \
                        libcurl4-openssl-dev                        \
                        libevent-dev                                \
                        libffi-dev                                  \
-		       libgeos-c1v5                                \
+					   libgeos-c1v5                                \
                        libmagickwand-dev                           \
                        libmemcached-tools                          \
                        libxml2-dev                                 \
@@ -81,6 +81,8 @@ RUN pip3 install -U setuptools
 #
 ADD requirements /var/www/requirements
 RUN pip3 install -r /var/www/requirements/common.txt
+
+RUN echo 'alias python=python3' >> ~/.bashrc && echo 'alias pip=pip3' >> ~/.bashrc
 
 # Patch Nginx Config to Disable Security Tokens
 RUN sed -i -e 's/# server_tokens off;/server_tokens off;/g' /etc/nginx/nginx.conf
