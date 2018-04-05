@@ -137,7 +137,7 @@ STATICFILES_DIRS += [STATICI18N_ROOT]
 
 STATIC_ROOT = os.path.join(SITE_ROOT, 'staticfiles')
 
-
+LOCALE_PATHS = [os.path.join(SITE_ROOT, 'locale')]
 
 COMPRESS_ROOT = '/tmp/pr-static'
 COMPRESS_ENABLED = True
