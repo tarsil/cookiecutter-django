@@ -1,5 +1,3 @@
-import {{ project_name }}.utils
-
 from django.utils.translation import ugettext_lazy
 
 LOGIN_REDIRECT_URL = '/'

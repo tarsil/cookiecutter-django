@@ -4,31 +4,11 @@ The setup for rabbitmq message broker (we can also user Redis for this)
 import os
 from kombu import Exchange, Queue, serialization
 import djcelery
-from {{ project_name }}.utils import make_memcached_cache
-
 
 # REDIS
 
 SESSION_CACHE_ALIAS = "sessions"
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-
-MEMCACHED_ENDPOINTS = [
-    '127.0.0.1:11211',
-]
-
-CACHES = make_memcached_cache(MEMCACHED_ENDPOINTS)
-
-CACHES["default"] = {
-    'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-}
-
-CACHES['sessions'] = {
-    'BACKEND': 'redis_cache.RedisCache',
-    'LOCATION': 'redis:6379',
-    'OPTIONS': {
-        'DB': 10,
-    }
-}
 
 REDIS_HOSTNAME = 'localhost'
 REDIS_PORT = 6379
@@ -36,6 +16,34 @@ REDIS_SERVER = (REDIS_HOSTNAME, REDIS_PORT, 0)  # host, port, db
 REDIS_PASSWORD = ''
 REDIS_DB = 1  # keep cache entries in a different db so we can clear them easily
 REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
+
+
+CACHES = {
+    "default": {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    },
+    "sessions": {
+        "BACKEND": "redis_cache.cache.RedisCache",
+        "LOCATION": 'redis:6379',
+        "OPTIONS": {
+            'DB': 10,
+        },
+        "KEY_PREFIX": "sessions"
+    },
+    'staticfiles': {
+        'BACKEND': 'redis_cache.cache.RedisCache',
+        'LOCATION': 'redis:6379',
+        'TIMEOUT': 86400 * 365,
+        'KEY_PREFIX': 'staticfiles',
+    },
+    'api': {
+        'BACKEND': 'redis_cache.cache.RedisCache',
+        'LOCATION': 'redis:6379',
+        'TIMEOUT': 86400 * 365,
+        'KEY_PREFIX': 'api',
+    },
+}
+
 
 
 # RABBITMQ
