@@ -55,7 +55,7 @@ django-taggit==0.22.2
 django-transaction-hooks==0.2
 django-treebeard==4.2.1
 django-validate-model-attribute-assignment==2.0.2
-Django==2.1
+Django==2.2.1
 djrill==2.1.0
 elasticsearch==6.1.1
 elasticsearch-dsl==6.1.0
