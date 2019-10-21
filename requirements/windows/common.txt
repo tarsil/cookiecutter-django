@@ -20,7 +20,7 @@ colorama==0.3.9
 cryptography==2.1.4
 cssselect==1.0.3
 django_exceptional_middleware==1.2.1
-djangorestframework==3.7.7
+djangorestframework==3.9.1
 django-appconf==1.0.2
 django-classy-tags==0.8.0
 django-annoying==0.10.4
