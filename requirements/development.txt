@@ -18,7 +18,7 @@ pinocchio==0.4.2
 pre-commit==1.7.0
 pudb==2017.1.4
 PyVirtualDisplay==0.2.1
-PyYAML==3.12
+PyYAML==5.1.2
 sphinx==1.7.1
 sqlparse==0.2.4
 spec==1.4.1
