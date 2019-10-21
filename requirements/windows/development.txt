@@ -26,4 +26,4 @@ transifex-client==0.13.1
 unittest-data-provider==1.0.1
 virtualenv-tools==1.0
 webtest==2.0.29
-werkzeug==0.14.1
+werkzeug==0.15.3
