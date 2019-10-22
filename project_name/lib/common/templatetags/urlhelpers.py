@@ -4,7 +4,6 @@ from django.conf import settings
 from django import template
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils.http import urlquote
-import lib.html.utils
 
 register = template.Library()
 
@@ -28,8 +27,3 @@ def minified_static(path):
     split_path = os.path.splitext(path)
     new_path = "%s.min%s" % (split_path[0], split_path[1])
     return staticfiles_storage.url(new_path)
-
-
-@register.filter
-def absolutize_url(url):
-    return lib.html.utils.absolutize_link(url)

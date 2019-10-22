@@ -8,7 +8,7 @@ app_name = AccountsConfig.name
 
 
 accounts_urlpatterns = [
-    re_path(r'^user/create/$', accounts.views.RegisterProfileView.as_view(), name='add-user'),
+    re_path(r'^user/create/$', accounts.django_views.RegisterProfileView.as_view(), name='add-user'),
 ]
 
 

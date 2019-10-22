@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import re_path, include
 from django.contrib import admin
-from accounts.views import LoginView, LogoutView, HomepageView
+from accounts.django_views import LoginView, LogoutView, HomepageView
 import accounts.urls
 
 admin.autodiscover()
