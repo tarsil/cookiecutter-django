@@ -59,7 +59,7 @@ alias shell_plus='docker-compose exec {{ project_name }} bash && make shell'
 
 ### Apps
 
-All of your Django "apps" go in this {{ project_name}} directory. These have models, views, forms, urls, 
+All of your Django "apps" go in this {{ project_name}}/apps directory. These have models, views, forms, urls, 
 templates or all of the above. These should be Python packages you would add to
 your project's `INSTALLED_APPS` list.
 
