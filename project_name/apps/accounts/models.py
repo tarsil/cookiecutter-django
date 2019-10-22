@@ -1,19 +1,17 @@
 from __future__ import unicode_literals
+
 import bleach
-
 from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
-from django.urls import reverse
-from django.contrib.auth.models import Permission as DjangoPermission
 from django.contrib.auth.models import AbstractUser
-from django.db.models.signals import post_init, post_save
+from django.contrib.auth.models import Permission as DjangoPermission
 from django.db import models
-
+from django.db.models.signals import post_init, post_save
+from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 from lib.cache.decorators import memoize_invalidate
 
 
 class Choices(object):
-
     class Profiles:
         ADMIN = u'admin'
         USER = u'user'
@@ -29,6 +27,9 @@ class Choices(object):
 
 
 class ProfileType(models.Model):
+    """
+    Creates and associates a Profile with a User
+    """
     profile = models.ForeignKey('accounts.Profile', null=False, blank=True, related_name='profile_types',
                                 on_delete=models.DO_NOTHING)
     profile_type = models.CharField(max_length=255, choices=Choices.Profiles.PROFILE_CHOICES,
@@ -58,8 +59,11 @@ class Profile(models.Model):
 
 class User(AbstractUser):
     """
-    Model responsible for the user maintenance for the platform
+    Model responsible for the user maintenance for the platform. This is a default from django but you can change to
+    models.Model and create a One-to-One relationship. This way, the application logins are isolated
+    in case of being integrated with external apps.
     """
+
     class Meta:
         db_table = 'auth_user'
         permissions = (('can_view_dashboard', 'Can view all dashboards'),
@@ -123,7 +127,6 @@ post_save.connect(User.post_save, sender=User)
 
 
 class Permission(DjangoPermission):
-
     class Meta:
         proxy = True
         permissions = (

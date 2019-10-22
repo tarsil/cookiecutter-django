@@ -22,86 +22,60 @@ class AjaxTemplateMixin(object):
         return super(AjaxTemplateMixin, self).dispatch(request, **kwargs)
 
 
-class AjaxLoadMoreMixin(object):
-    """ Mixin for providing AJAX pagination facilities to any
-    view that takes a "page" kwarg and provides a "page" variable in it's context data
-    """
-
-    def get(self, request, **kwargs):
-        response = super(AjaxLoadMoreMixin, self).get(request, **kwargs)
-        if request.is_ajax():
-            json_data = {"content": response.render().content}
-
-            try:
-                next_page = response.context_data["page_obj"].next_page_number()
-                if next_page:
-                    kwargs = dict(self.kwargs)
-                    kwargs["page"] = next_page
-                    try:
-                        json_data["next_url"] = reverse(resolve(request.path).url_name, args=self.args, kwargs=kwargs)
-                    except NoReverseMatch:
-                        # this results in there not being a Next button
-                        json_data["next_url"] = None
-            except InvalidPage:
-                pass
-            # response = JsonResponse(json, status_code=200)
-        return response
-
-
 class AjaxView(object):
     FORM_INVALID_HTTP_STATUS_CODE = 400
-    '''
+    """
     A specialised version of the Django FormView that provides default
     JSON responses for AJAX requests.
-    '''
+    """
 
     def form_valid(self, form):
-        '''
+        """
         Calls the appropriate handler depending on whether or not we're
         dealing with an AJAX request. If you would subclass this when
         using a normal FormView, you should subclass default_form_valid
         or ajax_form_valid instead.
-        '''
+        """
         if self.request.is_ajax():
             return self.ajax_form_valid(form)
         else:
             return self.default_form_valid(form)
 
     def ajax_form_valid(self, form):
-        '''
+        """
         Handles AJAX submissions with valid data by responding with a
         200 (OK) with a JSON body.
-        '''
+        """
         return JsonResponse(
             {'result': 'ok'},
             status_code=200,
         )
 
     def default_form_valid(self, form):
-        '''
+        """
         Handles non-AJAX submissions with valid data by calling FormView's
         implemenation of form_valid.
-        '''
+        """
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        '''
+        """
         Calls the appropriate handler depending on whether or not we're
         dealing with an AJAX request. If you would subclass this when
         using a normal FormView, you should subclass default_form_invalid
         or ajax_form_invalid instead.
-        '''
+        """
         if self.request.is_ajax():
             return self.ajax_form_invalid(form)
         else:
             return self.default_form_invalid(form)
 
     def ajax_form_invalid(self, form):
-        '''
+        """
         Handles AJAX submissions with invalid data and responds with a
         400 (bad request) with a JSON body containing errors and the form's
         prefix.
-        '''
+        """
         return JsonResponse(
             {
                 'result': 'error',
@@ -112,10 +86,10 @@ class AjaxView(object):
         )
 
     def default_form_invalid(self, form):
-        '''
+        """
         Handles non-AJAX submissions with invalid data by calling FormView's
         implementation of form_invalid.
-        '''
+        """
         return super().form_invalid(form)
 
 

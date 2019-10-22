@@ -4,7 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class StaffOnlyMixin(object):
-
+    """
+    Used for staff validation
+    """
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_staff:
             return HttpResponseForbidden()
@@ -12,7 +14,9 @@ class StaffOnlyMixin(object):
 
 
 class UserAuthMixin(object):
-
+    """
+    Used for user validation
+    """
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('login'))
@@ -20,7 +24,9 @@ class UserAuthMixin(object):
 
 
 class BaseTemplateMixin(LoginRequiredMixin):
-
+    """
+    Class common to every view in the system, for instance, the user should be always logged in
+    """
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({

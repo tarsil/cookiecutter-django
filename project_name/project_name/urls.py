@@ -17,9 +17,14 @@ from django.urls import re_path, include
 from django.contrib import admin
 from accounts.views import LoginView, LogoutView, HomepageView
 import accounts.urls
-import api.urls
 
 admin.autodiscover()
+
+
+api_url_patterns = [
+    re_path(r'^accounts/', include((accounts.urls.accounts_api_urlpatterns, 'accounts'), namespace='accounts')),
+]
+
 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
@@ -29,5 +34,5 @@ urlpatterns = [
     re_path(r'^u/', include(accounts.urls.accounts_urlpatterns)),
 
     # API
-    re_path(r'^api/v1/', include(api.urls.api_url_patterns)),
+    re_path(r'^api/v1/', include((api_url_patterns, 'api-v1'), namespace='api-v1')),
 ]

@@ -1,5 +1,6 @@
 import datetime
 
+
 class ConvertedDateTime:
     """
     DateTime object parser
@@ -12,5 +13,4 @@ class ConvertedDateTime:
         """
         Given a  format, returns a datetime object
         """
-        #TODO: Later, this function should receive the client timezone and based on that, determine the format
         return datetime.datetime.strptime(self._date, format_str)
