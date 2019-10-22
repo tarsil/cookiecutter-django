@@ -1,4 +1,5 @@
 import os
+import sys
 
 from {{ project_name }}.databases import *
 from {{ project_name }}.general.settings import *

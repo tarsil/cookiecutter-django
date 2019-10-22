@@ -11,6 +11,7 @@ Django Docker Boilerplate - Django Rest Framework with Redis, RabbitMQ and Celer
 - This boilerplate is now supporting [Django Channels](https://channels.readthedocs.io/en/stable/index.html).
 - Read more about this [here](https://channels.readthedocs.io/en/stable/index.html)
 - The template has a specific structure in terms of organisation, meaning, inside the {{ project_name }} there is a module called `apps` where it contains all the django custom apps in the settings. That setting is in the main {{ project_settings }} and it can be changed or removed.
+- You should create a virtual environment in Python 3.6 or higher. This isolates your project and it doesn't break your system
 
 # Installing from the template base
 
