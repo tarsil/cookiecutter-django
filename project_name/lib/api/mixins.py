@@ -2,19 +2,10 @@
 """
 All the mixins that can be used in the system and for Django REST Framework Views
 """
-from django.http import HttpResponseForbidden
 from rest_framework import authentication
 from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
-from rest_framework import status
-from django.contrib.auth import authenticate
-from django.contrib.auth import login
-
-from rainbow.constants import TOKEN_MATCH
-import re
 
 
 class AnonymousAuthentication(authentication.BaseAuthentication):
