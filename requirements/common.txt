@@ -92,6 +92,6 @@ unicodecsv==0.14.1
 urbanairship==4.0.1
 urllib3==1.25.6
 user-agents==1.1.0
-uWSGI==2.0.17
+uWSGI==2.0.18
 Wand==0.4.4
 wrapt==1.10.11
