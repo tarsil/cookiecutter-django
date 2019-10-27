@@ -15,6 +15,7 @@ django-anymail[mailgun]==2.2
 django-annoying==0.10.4
 django-appconf==1.0.2
 django-block-ip==0.2.0
+django-celery==3.2.2
 django-cors-headers==2.4.0
 django-countries==5.2
 django-elasticsearch-dsl==0.5.1
