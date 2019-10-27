@@ -23,7 +23,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     },
     "sessions": {
-        "BACKEND": "redis_cache.cache.RedisCache",
+        "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": 'redis:6379',
         "OPTIONS": {
             'DB': 10,
@@ -31,13 +31,13 @@ CACHES = {
         "KEY_PREFIX": "sessions"
     },
     'staticfiles': {
-        'BACKEND': 'redis_cache.cache.RedisCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis:6379',
         'TIMEOUT': 86400 * 365,
         'KEY_PREFIX': 'staticfiles',
     },
     'api': {
-        'BACKEND': 'redis_cache.cache.RedisCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis:6379',
         'TIMEOUT': 86400 * 365,
         'KEY_PREFIX': 'api',
