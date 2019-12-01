@@ -5,6 +5,7 @@ beautifulsoup4==4.8.1
 billiard==3.5.0.3
 bitly-api==0.3
 bleach==3.1.0
+bugsnag==3.6.0
 celery==4.3.0
 channels==2.3.1
 cffi==1.11.5
