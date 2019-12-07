@@ -133,5 +133,3 @@ LOGGING = {
 MIDDLEWARE = list(MIDDLEWARE)
 if 'bugsnag.django.middleware.BugsnagMiddleware' in MIDDLEWARE:
     MIDDLEWARE.remove('bugsnag.django.middleware.BugsnagMiddleware')
-
-COMPRESS_ENABLED = False
