@@ -49,8 +49,7 @@ BASE_INSTALLED_APPS = [
     'lib.audit',
     'lib.cache',
     'lib.viewslibrary',
-    'statici18n',
-    'compressor',
+    'statici18n',,
     'rest_framework',
     'channels',
 ]
@@ -128,7 +127,6 @@ STATICFILES_STORAGE = 'lib.storage.CachedStaticFilesStorage'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 # Statici18n Config
@@ -139,9 +137,6 @@ STATICFILES_DIRS += [STATICI18N_ROOT]
 STATIC_ROOT = os.path.join(SITE_ROOT, 'staticfiles')
 
 LOCALE_PATHS = [os.path.join(SITE_ROOT, 'locale')]
-
-COMPRESS_ROOT = '/tmp/pr-static'
-COMPRESS_ENABLED = True
 
 WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 
