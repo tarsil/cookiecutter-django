@@ -27,7 +27,4 @@ INSTALLED_APPS += [
 DJANGO_DEBUG_TOOLBAR = True
 SHOW_TOOLBAR_CALLBACK = True
 
-COMPRESS_ENABLED = False
-COMPRESS_OFFLINE = True
-
 BROKER_URL = 'amqp://rabbit_user:rabbit_user_default_pass@localhost:5672/'
