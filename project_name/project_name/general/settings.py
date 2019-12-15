@@ -6,11 +6,6 @@ LOGIN_URL = '/login/'
 
 CANONICAL_SITE_URL = 'www.{{ project_name }}.com'
 
-AUTH_PROFILE_MODULE = 'profiles.profile'
-ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda u: '/user/%i/' % u.profile.pk,
-}
-
 # Sessions
 POSTGRES_HOSTNAME = 'localhost'
 
