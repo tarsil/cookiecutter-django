@@ -39,19 +39,11 @@ LOGGING = {
         },
     },
     "handlers": {
-        'bugsnag': {
-            'level': 'ERROR',
-            'class': 'bugsnag.handlers.BugsnagHandler',
-        },
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'json',
         },
-        'investigation': {
-            "level": "INFO",
-            "class": "bugsnag.handlers.BugsnagHandler"
-        }
     },
     "loggers": {
         "django.request": {
@@ -59,31 +51,25 @@ LOGGING = {
             "propagate": True,
         },
         "celery": {
-            "handlers": ["console", "bugsnag"],
+            "handlers": ["console"],
             "level": "INFO",
             "propagate": True
         },
         "httpstream": {
-            "handlers": ["console", "bugsnag"],
+            "handlers": ["console"],
             "level": "ERROR",
             "propagate": True
         },
         "elasticsearch": {
-            "handlers": ["console", "bugsnag"],
+            "handlers": ["console"],
             "level": "WARNING",
             "propagate": False
         },
         "urllib3": {
-            "handlers": ["console", "bugsnag"],
+            "handlers": ["console"],
             "level": "WARNING",
             "propagate": False
         },
-        "celery.investigation": {
-            "level": "INFO",
-            "handlers": ["investigation"],
-            "propagate": False
-        }
-
     }
 }
 
