@@ -12,6 +12,8 @@ ENV LC_ALL en_GB.UTF-8
 #
 # Install Apt Packages
 #
+RUN apt-get update -y && apt-get install -y gnupg2 synaptic software-properties-common
+
 RUN apt-get update                                                                                           && \
     apt-get upgrade -y                                                                                       && \
     apt-get install curl -y                                                                                  && \
@@ -20,18 +22,17 @@ RUN apt-get update                                                              
     echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
-RUN apt-get update                                              && \
-    apt-get install -y bind9-host                                  \
+RUN apt-get update -y                                           && \
+    apt-get install -y postgresql postgresql-contrib               \
+                       bind9-host                                  \
                        build-essential                             \
                        curl                                        \
                        geoip-bin                                   \
                        gettext                                     \
                        git-core                                    \
                        gawk                                        \
-                       imagemagick                                 \
                        iputils-ping                                \
                        language-pack-en                            \
-                       less                                        \
                        libcurl4-openssl-dev                        \
                        libevent-dev                                \
                        libffi-dev                                  \
@@ -45,17 +46,15 @@ RUN apt-get update                                              && \
                        nginx-extras                                \
                        perl                                        \
                        pgbouncer                                   \
-                       postgresql-client-9.6                       \
-                       postgresql-server-dev-9.6                   \
+                       postgresql-11                               \
                        python-pil                                  \
                        python-urllib3                              \
-                       python3-pip                                 \
                        python-pip                                  \
                        python-dev                                  \
                        python3-dev                                 \
+                       python3-pip                                 \
                        rsyslog                                     \
                        socat                                       \
-                       software-properties-common                  \
                        sudo                                        \
                        supervisor                                  \
                        unattended-upgrades                         \
@@ -63,18 +62,11 @@ RUN apt-get update                                              && \
                        vim                                         \
                        wget                                     && \
     apt-get clean && apt-get autoclean                          && \
-    find /var/lib/apt/lists/ -type f -delete
+    apt-get autoremove -y                                       && \
+    find /var/lib/apt/lists/ -type f -delete                    && \
+    apt-get -y update
 
 
-RUN apt-get -y upgrade
-
-#
-# Install Pip Requirements
-# upgrade the setuptools from 27.1.2 to 32.3.1.
-#
-RUN pip3 install pip --upgrade
-RUN pip3 install wheel
-RUN pip3 install -U setuptools
 
 #
 #  Install requirements
