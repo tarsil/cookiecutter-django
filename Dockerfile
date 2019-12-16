@@ -44,7 +44,6 @@ RUN apt-get update -y                                           && \
                        memcached                                   \
                        net-tools                                   \
                        nginx-extras                                \
-                       perl                                        \
                        pgbouncer                                   \
                        postgresql-11                               \
                        python-pil                                  \
@@ -65,7 +64,6 @@ RUN apt-get update -y                                           && \
     apt-get autoremove -y                                       && \
     find /var/lib/apt/lists/ -type f -delete                    && \
     apt-get -y update
-
 
 
 #
