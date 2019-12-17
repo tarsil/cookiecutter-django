@@ -61,7 +61,8 @@ class User(AbstractUser):
     """
     Model responsible for the user maintenance for the platform. This is a default from django but you can change to
     models.Model and create a One-to-One relationship. This way, the application logins are isolated
-    in case of being integrated with external apps.
+    in case of being integrated with external apps. If you do it, don't forget to remove the AUTH_USER_MODEL setting from
+    the settings file.
     """
 
     class Meta:
