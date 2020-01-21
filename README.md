@@ -47,6 +47,11 @@ alias shell_plus='docker-compose exec {{ project_name }} bash && make shell'
     - Run `python {{ project_name }}/manage.py createsuperuser` to create a super user for yourself
     - It will create a "User Admin" by default as first and last name respectively. This can be changed in `accounts/management/commands/createsuperuser.py`
 
+## Requirements
+
+```shell
+pip install -r requirements/development.txt
+```
 
 ## Run Tests (If you ran migrations before and need to reconstruct the DB schema)
 
@@ -65,18 +70,7 @@ templates or all of the above. These should be Python packages you would add to
 your project's `INSTALLED_APPS` list.
 
 
-### Requirements for MacOS and Windows
-
-Install Homebrew (MacOS Users)
-`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-
-Install OpenSSL or Upgrade (MacOS Users)
-`brew install openssl`
-
-### Requirements for Linux (Ubuntu <= 16.10)
-Install OpenSSL or Upgrade
-`sudo apt-get update`
-`sudo apt-get install openssl-server`
+### Perks
 
 Install VirtualenvWrapper
 `https://virtualenvwrapper.readthedocs.io/en/latest/install.html`
