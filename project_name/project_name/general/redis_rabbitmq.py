@@ -1,13 +1,10 @@
-'''
-The setup for rabbitmq message broker (we can also user Redis for this)
-'''
 import os
 from kombu import Exchange, Queue, serialization
 import djcelery
 
 # REDIS
 
-SESSION_CACHE_ALIAS = "sessions"
+SESSION_CACHE = "sessions"
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 REDIS_HOSTNAME = 'localhost'
@@ -19,28 +16,13 @@ REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 
 CACHES = {
-    "default": {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    },
-    "sessions": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": 'redis:6379',
-        "OPTIONS": {
-            'DB': 10,
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379',
+        'KEY_PREFIX': 'cache',
+        'OPTIONS': {
+            'SERIALIZER': 'django_redis.serializers.json.JSONSerializer',
         },
-        "KEY_PREFIX": "sessions"
-    },
-    'staticfiles': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis:6379',
-        'TIMEOUT': 86400 * 365,
-        'KEY_PREFIX': 'staticfiles',
-    },
-    'api': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis:6379',
-        'TIMEOUT': 86400 * 365,
-        'KEY_PREFIX': 'api',
     },
 }
 
@@ -83,7 +65,7 @@ CELERY_TASK_QUEUES = (
 )
 
 # IMPORT ROUTES AND CRONTAB
-from {{ project_name }}.general.celery_routes_crontab import *
+from linezap.general.celery_routes_crontab import *
 
 
 # SENSIBLE SETTINGS FOR CELERY
