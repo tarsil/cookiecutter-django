@@ -111,7 +111,7 @@ class User(AbstractUser):
     def post_save(sender, **kwargs):
         instance = kwargs["instance"]
         try:
-            profile = instance.profile
+            instance.profile
         except Profile.DoesNotExist:
             pass
         instance.old_email = instance.email
