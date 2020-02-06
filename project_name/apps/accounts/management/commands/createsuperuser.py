@@ -12,7 +12,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import DEFAULT_DB_ALIAS
 from django.utils.text import capfirst
 
-from accounts.models import Profile, ProfileType
+from accounts.models import Profile
 from accounts.utils import generate_username, generate_profile_type
 
 
