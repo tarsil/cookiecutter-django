@@ -3,10 +3,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout
 from django.urls import reverse
 from django.db import IntegrityError
-from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import View, TemplateView, FormView, UpdateView, ListView, CreateView
 from lib.common.views import BaseTemplateMixin
 
 import accounts.forms
@@ -16,7 +14,6 @@ import accounts.models
 
 
 def login_and_handle_data_stored_in_session(user, request):
-    session_key = request.session.session_key
     login(request, user)
 
 
