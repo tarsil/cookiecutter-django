@@ -1,5 +1,5 @@
 import os
-from kombu import Exchange, Queue, serialization
+from kombu import Exchange, Queue
 import djcelery
 
 # REDIS
