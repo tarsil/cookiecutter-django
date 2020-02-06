@@ -3,8 +3,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.forms.models import modelformset_factory, inlineformset_factory
-from slugify import slugify
 
 import accounts.models
 import accounts.utils
