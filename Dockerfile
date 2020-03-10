@@ -2,7 +2,7 @@
 # Dockerfile to run a Django-based web application
 # Based on an Ubuntu Image
 ############################################################
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER tiago.arasilva@outlook.com
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -19,7 +19,7 @@ RUN apt-get update                                                              
     apt-get install curl -y                                                                                  && \
     apt-get clean && apt-get autoclean                                                                       && \
     find /var/lib/apt/lists/ -type f -delete                                                                 && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 RUN apt-get update -y                                           && \
