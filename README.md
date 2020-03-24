@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/github/license/vintasoftware/django-react-boilerplate.svg)](LICENSE.txt)
 
-Django Docker Boilerplate - Django Rest Framework with Redis, RabbitMQ and Celery
+Django Docker Boilerplate - Django Rest Framework with Redis, RabbitMQ and Task Management
 ===============================================================================
 
 ## Note
@@ -55,9 +55,7 @@ pip install -r requirements/development.txt
 
 ## Run Tests (If you ran migrations before and need to reconstruct the DB schema)
 
-`make unittests TESTONLY='profiles.tests.models_tests'`
-- OR
-`make unittests TESTONLY='profiles.tests.models_tests:ProfileUserTest.test_create_user'` for a specific test
+`make unittests`
 
 ## If you only need to run the tests and the models weren't changed before
 
