@@ -21,7 +21,7 @@ pudb==2017.1.4
 PyVirtualDisplay==0.2.1
 PyYAML==5.1.2
 sphinx==1.7.1
-sphinx_rtd_theme=0.4.3
+sphinx_rtd_theme==0.4.3
 sqlparse==0.2.4
 spec==1.4.1
 transifex-client==0.13.1
