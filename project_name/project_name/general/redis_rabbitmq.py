@@ -1,5 +1,8 @@
+'''
+The setup for rabbitmq message broker (we can also user Redis for this)
+'''
 import os
-from kombu import Exchange, Queue
+from kombu import Exchange, Queue, serialization
 import djcelery
 
 # REDIS
@@ -61,7 +64,7 @@ CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
 
 CELERY_TASK_QUEUES = (
     Queue('default', Exchange('default'), routing_key='default'),
-    Queue('{{ project_name }}', Exchange('default'), routing_key='default'),
+    Queue('linezap', Exchange('default'), routing_key='default'),
 )
 
 # IMPORT ROUTES AND CRONTAB
