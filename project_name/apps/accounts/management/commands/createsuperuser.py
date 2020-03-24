@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 """
 Management utility to create superusers.
 """
 import getpass
 import sys
+import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.management import get_default_username
@@ -12,8 +14,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import DEFAULT_DB_ALIAS
 from django.utils.text import capfirst
 
-from accounts.models import Profile
-from accounts.utils import generate_username, generate_profile_type
+from accounts.models import HubUser, Choices
 
 
 class NotRunningInTTYException(Exception):
@@ -39,11 +40,11 @@ class Command(BaseCommand):
         parser.add_argument(
             '--noinput', '--no-input', action='store_false', dest='interactive',
             help=(
-                'Tells Django to NOT prompt the user for input of any kind. '
-                'You must use --%s with --noinput, along with an option for '
-                'any other required field. Superusers created with --noinput will '
-                'not be able to log in until they\'re given a valid password.' %
-                self.UserModel.USERNAME_FIELD
+                    'Tells Django to NOT prompt the user for input of any kind. '
+                    'You must use --%s with --noinput, along with an option for '
+                    'any other required field. Superusers created with --noinput will '
+                    'not be able to log in until they\'re given a valid password.' %
+                    self.UserModel.USERNAME_FIELD
             ),
         )
         parser.add_argument(
@@ -206,11 +207,8 @@ class Command(BaseCommand):
         user = get_user_model().objects.get(email=user_data.get('email'))
         user.first_name = u'User'
         user.last_name = u'Admin'
-
-        username = generate_username(user.username)
-        profile = Profile.objects.create(
-            user=user, slug=slugify(username),
-        )
-        generate_profile_type(profile)
         user.save()
-        profile.save()
+
+        # CREATE USER
+        HubUser.objects.create(user=user, slug=slugify(user.username), uuid=str(uuid.uuid4()),
+                               profile_type=Choices.Profiles.ADMIN)

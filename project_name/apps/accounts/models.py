@@ -1,14 +1,18 @@
 from __future__ import unicode_literals
 
+import logging
+import uuid
+
 import bleach
+from accounts.utils import get_uuid
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import Permission as DjangoPermission
+from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models.signals import post_init, post_save
-from django.urls import reverse
+from django.db import transaction, IntegrityError
 from django.utils.translation import ugettext_lazy as _
-from lib.cache.decorators import memoize_invalidate
+from slugify import slugify
+
+logger = logging.getLogger(__name__)
 
 
 class Choices(object):
@@ -26,26 +30,19 @@ class Choices(object):
         )
 
 
-class ProfileType(models.Model):
+class HubUser(models.Model):
     """
-    Creates and associates a Profile with a User
+    Model responsible for the user maintenance for the platform. This is a default from django but you can change to
+    models.Model and create a One-to-One relationship. This way, the application logins are isolated
+    in case of being integrated with external apps. If you do it, don't forget to remove the AUTH_USER_MODEL setting from
+    the settings file.
     """
-    profile = models.ForeignKey('accounts.Profile', null=False, blank=True, related_name='profile_types',
-                                on_delete=models.DO_NOTHING)
+    uuser = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=False, related_name='hub_user',
+                                 on_delete=models.CASCADE)
+    uuid = models.UUIDField(null=False, blank=False)
+    middle_name = models.CharField(blank=True, null=True, max_length=255)
     profile_type = models.CharField(max_length=255, choices=Choices.Profiles.PROFILE_CHOICES,
                                     default=Choices.Profiles.USER, null=False, blank=False)
-
-    def __str__(self):
-        return self.get_profile_type_display()
-
-
-class Profile(models.Model):
-    """
-    For every user, there is a profile associated. This model is a representation of that same profile
-    """
-
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, related_name='profile',
-                                on_delete=models.DO_NOTHING)
     slug = models.SlugField(max_length=255, help_text=_('Slug'), blank=False, null=False, unique=True)
     created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
     modified_at = models.DateTimeField(null=False, blank=False, auto_now=True)
@@ -53,83 +50,56 @@ class Profile(models.Model):
     is_disabled = models.BooleanField(default=False, blank=False, null=False)
     is_password_changed = models.BooleanField(default=False, blank=False, null=False)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not self.uuid:
+            self.uuid = get_uuid()
+
     def __str__(self):
-        return self.slug
+        return self.display_name
 
-
-class User(AbstractUser):
-    """
-    Model responsible for the user maintenance for the platform. This is a default from django but you can change to
-    models.Model and create a One-to-One relationship. This way, the application logins are isolated
-    in case of being integrated with external apps. If you do it, don't forget to remove the AUTH_USER_MODEL setting from
-    the settings file.
-    """
-
-    class Meta:
-        db_table = 'auth_user'
-        permissions = (('can_view_dashboard', 'Can view all dashboards'),
-                       ('can_view_store_profiles', 'Can store profiles'),)
-
-    @memoize_invalidate
-    def get_or_create_profile(self, first_name=None, last_name=None):
-        try:
-            return Profile.objects.get(user=self)
-        except Profile.DoesNotExist:
-            profile = Profile.objects.create(
-                user=self, slug=self.username
-            )
-            profile.save()
-            return profile
-
-    def to_json_dict(self, context=None):
-        data = {
-            'id': self.pk,
-            'username': bleach.clean(self.username),
-            'email_url': reverse('postman_write', args=(self.pk,))
-        }
-
-        profile = self.profile
-        if profile is not None:
-            data['profile'] = profile.to_json_dict(context)
-
-        return data
-
-    def get_primary_email(self):
-        return self.email
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            _uuid = str(uuid.uuid4())[:12]
+            self.slug = f"{slugify(self.user.first_name)}-{_uuid}"
+        super().save(*args, **kwargs)
+        return self
 
     @staticmethod
-    def post_init(sender, **kwargs):
-        instance = kwargs["instance"]
-        instance.first_name = bleach.clean(instance.first_name)
-        instance.last_name = bleach.clean(instance.last_name)
-        instance.old_email = instance.email
-        instance.old_is_active = instance.is_active
-        instance.old_first_name = instance.first_name
-        instance.old_last_name = instance.last_name
+    def generate_username(first_name, last_name, email):
+        """Generates a username based on certain parameters"""
+        return f"{slugify(first_name)}-{slugify(last_name)}-{slugify(email)}-{str(uuid.uuid4())}"
 
     @staticmethod
-    def post_save(sender, **kwargs):
-        instance = kwargs["instance"]
-        try:
-            instance.profile
-        except Profile.DoesNotExist:
-            pass
-        instance.old_email = instance.email
-        instance.old_first_name = instance.first_name
-        instance.old_last_name = instance.last_name
+    def create_hub_user(email, password, profile_type=Choices.Profiles.USER, username=None, first_name=None,
+                        last_name=None, **kwargs):
+        """
+        Wrapper where a user is created followed by the models
+        :param username: str username
+        :param email: str email
+        :param password: str password
+        :param profile_type: Type of user to be created. Defaults to User
+        :param first_name: First name of a user
+        :param last_name: Last name of a user
+        :param incomplete_signup: If a signup of a HubUser is complete or not
+        :return: HubUser
+        """
+        with transaction.atomic():
+            try:
+                username = username or HubUser.generate_username(first_name, last_name, email)
+                user = get_user_model().objects.create_user(
+                    username=bleach.clean(username), email=email, password=password,
+                    is_staff=False, is_superuser=False, first_name=first_name, last_name=last_name,
+
+                )
+                hub_user = HubUser.objects.create(
+                    user=user, profile_type=profile_type, **kwargs
+                )
+            except IntegrityError as e:
+                logger.exception(f"Error creating the HubUser: {e}")
+                return
+            return hub_user
 
     @property
     def display_name(self):
-        return self.first_name + u' ' + self.last_name
-
-
-post_init.connect(User.post_init, sender=User)
-post_save.connect(User.post_save, sender=User)
-
-
-class Permission(DjangoPermission):
-    class Meta:
-        proxy = True
-        permissions = (
-            ('shorten_urls', 'Can shorten urls anywhere'),
-        )
+        return "{} - {}".format(self.user.first_name, self.user.last_name)

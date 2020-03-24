@@ -9,11 +9,14 @@ migrations:
 	python3 $(PROJECT_NAME)/manage.py makemigrations
 
 reusedb_unittests:
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python3 $(PROJECT_NAME)/manage.py test $(TESTONLY) --with-specplugin  --keepdb
+	cd $(PROJECT_NAME) &&\
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python3 manage.py test $(TESTONLY)  --exe --with-specplugin  --keepdb &&\
+	cd ..
 
 unittests:
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python3 $(PROJECT_NAME)/manage.py test $(TESTONLY) --with-specplugin
-
+	cd $(PROJECT_NAME) &&\
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python3 manage.py test $(TESTONLY) --exe --with-specplugin
+	cd ..
 run:
 	python3 $(PROJECT_NAME)/manage.py runserver_plus 0.0.0.0:8000 --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 

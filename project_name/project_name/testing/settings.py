@@ -5,23 +5,23 @@ in terms of settings and how to set them up
 
 To all who contribute for this, thank you very much.
 """
-from {{ project_name }}.settings import *
+from ..settings import *
 import os
 
-'''
+"""
 If you are using windows by default, the permissions to access subfolders for tests are disabled
 Activate them using NOSE_INCLUDE_EXE = 1 or an environment variable in your OS with the same name and value
-'''
+"""
 NOSE_INCLUDE_EXE = 1
-'''
+"""
 Other settings
-'''
+"""
 DEBUG = True
 TESTING = True
 
-'''
+"""
 Tells the django environment
-'''
+"""
 DJANGOENV = "testing"
 
 REUSE_DB = bool(int(os.environ.get("REUSE_DB", 0)))
@@ -36,6 +36,10 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+INSTALLED_APPS += [
+    'django_nose',
+]
 
 if REUSE_DB:
     DATABASE_ROUTERS = []
@@ -58,9 +62,6 @@ STATIC_ROOT = '/tmp/assets-upload'
 STATIC_URL = "/static/"
 MEDIA_ROOT = '/tmp/media-root'
 
-# Roll in the API URLs so we can test everything in one go
-API_URLS_IN_MAIN = True
-
 # nosetests - NoseTestSuiteRunner
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
@@ -74,7 +75,6 @@ REDIS_PASSWORD = None
 # We don't want to run Memcached for tests.
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
@@ -85,19 +85,7 @@ CACHES = {
     'staticfiles': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     },
-    'depictions': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    },
-    'thumbnails': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    },
 }
-
-# allow for a local override that won't be used by development
-try:
-    from {{ project_name }}.{{ project_name }}.testing.local_settings import *
-except ImportError:
-    pass
 
 
 # We don't care about secure password for tests, use MD5 which is faster.
@@ -131,5 +119,3 @@ LOGGING = {
 
 
 MIDDLEWARE = list(MIDDLEWARE)
-if 'bugsnag.django.middleware.BugsnagMiddleware' in MIDDLEWARE:
-    MIDDLEWARE.remove('bugsnag.django.middleware.BugsnagMiddleware')

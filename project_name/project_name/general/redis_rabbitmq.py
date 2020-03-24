@@ -64,11 +64,11 @@ CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
 
 CELERY_TASK_QUEUES = (
     Queue('default', Exchange('default'), routing_key='default'),
-    Queue('linezap', Exchange('default'), routing_key='default'),
+    Queue('{{ project_name }}', Exchange('default'), routing_key='default'),
 )
 
 # IMPORT ROUTES AND CRONTAB
-from linezap.general.celery_routes_crontab import *
+from {{ project_name }}.general.celery_routes_crontab import *
 
 
 # SENSIBLE SETTINGS FOR CELERY

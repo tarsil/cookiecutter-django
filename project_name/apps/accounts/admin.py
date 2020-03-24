@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from accounts.models import User, Profile, ProfileType
+from accounts.models import HubUser
 
-admin.site.register(User)
-admin.site.register(Profile)
-admin.site.register(ProfileType)
+admin.site.register(HubUser)

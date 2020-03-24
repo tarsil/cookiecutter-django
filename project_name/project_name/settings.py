@@ -49,7 +49,7 @@ BASE_INSTALLED_APPS = [
     'lib.audit',
     'lib.cache',
     'lib.viewslibrary',
-    'statici18n',,
+    'statici18n',
     'rest_framework',
     'channels',
 ]
@@ -122,8 +122,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = []
 
-STATICFILES_STORAGE = 'lib.storage.CachedStaticFilesStorage'
-
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -158,7 +156,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'accounts.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11.4/topics/i18n/
