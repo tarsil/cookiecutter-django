@@ -138,6 +138,8 @@ LOCALE_PATHS = [os.path.join(SITE_ROOT, 'locale')]
 
 WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 
+ASGI_APPLICATION = "{{ project_name }}.routing.application"
+
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
