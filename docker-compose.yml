@@ -15,19 +15,13 @@ services:
     image: redis:latest
     expose:
       - "6379"
-  
+
   rabbit:
     restart: always
     image: rabbitmq:3.6.12
-    expose:
-      - "5672"
     environment:
       - RABBITMQ_DEFAULT_USER=rabbit_user
       - RABBITMQ_DEFAULT_PASS=rabbit_user_default_pass
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
 
   {{ project_name }}:
     restart: always
@@ -36,6 +30,8 @@ services:
       - redis
       - rabbit
     environment:
+      DJANGO_SETTINGS_MODULE: {{ project_name }}.development.settings
+      BROKER_URL: amqp://{{ project_name }}:rabbit_line_zap@rabbitmq:5672//
       DJANGOENV: development
       ENVIRONMENT: development
       PYTHON: python

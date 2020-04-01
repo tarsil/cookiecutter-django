@@ -2,21 +2,9 @@
 The setup for rabbitmq message broker (we can also user Redis for this)
 '''
 import os
-from kombu import Exchange, Queue, serialization
-import djcelery
+from kombu import Exchange, Queue
 
-# REDIS
-
-SESSION_CACHE = "sessions"
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-
-REDIS_HOSTNAME = 'localhost'
-REDIS_PORT = 6379
-REDIS_SERVER = (REDIS_HOSTNAME, REDIS_PORT, 0)  # host, port, db
-REDIS_PASSWORD = ''
-REDIS_DB = 1  # keep cache entries in a different db so we can clear them easily
-REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 CACHES = {
     'default': {
@@ -29,30 +17,13 @@ CACHES = {
     },
 }
 
+CELERY_BROKER_URL = os.environ['BROKER_URL']
 
-
-# RABBITMQ
-RABBIT_HOSTNAME = os.environ.get('RABBIT_PORT_5672_TCP', 'rabbit')
-
-if RABBIT_HOSTNAME.startswith('tcp://'):
-    RABBIT_HOSTNAME = RABBIT_HOSTNAME.split('//')[1]
-
-BROKER_URL = os.environ.get('BROKER_URL', '')
-if not BROKER_URL:
-    BROKER_URL = 'amqp://{user}:{password}@{hostname}/{vhost}/'.format(
-        user=os.environ.get('RABBIT_ENV_USER', 'rabbit_user'),
-        password=os.environ.get('RABBIT_ENV_RABBITMQ_PASS', 'rabbit_user_default_pass'),
-        hostname=RABBIT_HOSTNAME,
-        vhost=os.environ.get('RABBIT_ENV_VHOST', ''))
-
-
-# We don't want to have dead connections stored on rabbitmq, so we have to negotiate using heartbeats
-BROKER_HEARTBEAT = '30'
-if not BROKER_URL.endswith(BROKER_HEARTBEAT):
-    BROKER_URL += BROKER_HEARTBEAT
-
-BROKER_POOL_LIMIT = 1
-BROKER_CONNECTION_TIMEOUT = 10
+CELERY_BROKER_HEARTBEAT = 30
+CELERY_BROKER_HEARTBEAT_CHECKRATE = 3
+CELERY_BROKER_POOL_LIMIT = 10
+CELERY_BROKER_CONNECTION_TIMEOUT = 3
+CELERY_BROKER_CONNECTION_MAX_RETRIES = 0
 
 
 # CELERY CONFIGURATION
@@ -64,7 +35,7 @@ CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
 
 CELERY_TASK_QUEUES = (
     Queue('default', Exchange('default'), routing_key='default'),
-    Queue('{{ project_name }}', Exchange('default'), routing_key='default'),
+    Queue('linezap', Exchange('linezap'), routing_key='default'),
 )
 
 # IMPORT ROUTES AND CRONTAB
@@ -90,6 +61,3 @@ CELERY_RESULT_COMPRESSION = 'bzip2'
 CELERY_TASK_COMPRESSION = 'bzip2'
 CELERY_TASK_TIME_LIMIT = 3 * 60 * 60  # 3 hours
 CELERY_TASK_SOFT_TIME_LIMIT = CELERY_TASK_TIME_LIMIT - 5 * 60  # 5 minutes before the hard timeout
-
-# ACTIVATE SETTINGS
-djcelery.setup_loader()
