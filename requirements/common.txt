@@ -60,7 +60,7 @@ Markdown==2.6.11
 markdown2==2.3.8
 netaddr==0.7.19
 openpyxl==2.5.7
-Pillow==6.2.0
+Pillow==6.2.2
 postgres==3.0.0
 premailer==3.2.0
 progressbar2==3.47.0
