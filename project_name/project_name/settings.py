@@ -48,7 +48,6 @@ BASE_INSTALLED_APPS = [
     'lib.common',
     'lib.audit',
     'lib.cache',
-    'lib.viewslibrary',
     'statici18n',
     'rest_framework',
     'channels',
@@ -142,6 +141,14 @@ ASGI_APPLICATION = "{{ project_name }}.routing.application"
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
+
+PASSWORD_HASHERS = [
+    '{{ project_name }}.linezap.auth.hashers.CustomPBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    # 'django.contrib.auth.hashers.Argon2PasswordHasher',
+    # 'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
