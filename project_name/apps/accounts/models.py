@@ -88,8 +88,9 @@ class HubUser(models.Model):
             try:
                 username = username or HubUser.generate_username(first_name, last_name, email)
                 user = get_user_model().objects.create_user(
-                    username=bleach.clean(username), email=email, password=password,
-                    is_staff=False, is_superuser=False, first_name=first_name, last_name=last_name,
+                    username=bleach.clean(username), email=bleach.clean(email), password=password,
+                    is_staff=False, is_superuser=False, first_name=bleach.clean(first_name), 
+                    last_name=bleach.clean(last_name),
 
                 )
                 hub_user = HubUser.objects.create(
