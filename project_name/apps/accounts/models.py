@@ -37,7 +37,7 @@ class HubUser(models.Model):
     in case of being integrated with external apps. If you do it, don't forget to remove the AUTH_USER_MODEL setting from
     the settings file.
     """
-    uuser = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=False, related_name='hub_user',
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=False, related_name='hub_user',
                                  on_delete=models.CASCADE)
     uuid = models.UUIDField(null=False, blank=False)
     middle_name = models.CharField(blank=True, null=True, max_length=255)
