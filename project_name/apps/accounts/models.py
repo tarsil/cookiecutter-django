@@ -37,7 +37,7 @@ class HubUser(models.Model):
     in case of being integrated with external apps. If you do it, don't forget to remove the AUTH_USER_MODEL setting from
     the settings file.
     """
-    uuser = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=False, related_name='hub_user',
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=False, related_name='hub_user',
                                  on_delete=models.CASCADE)
     uuid = models.UUIDField(null=False, blank=False)
     middle_name = models.CharField(blank=True, null=True, max_length=255)
@@ -88,8 +88,9 @@ class HubUser(models.Model):
             try:
                 username = username or HubUser.generate_username(first_name, last_name, email)
                 user = get_user_model().objects.create_user(
-                    username=bleach.clean(username), email=email, password=password,
-                    is_staff=False, is_superuser=False, first_name=first_name, last_name=last_name,
+                    username=bleach.clean(username), email=bleach.clean(email), password=password,
+                    is_staff=False, is_superuser=False, first_name=bleach.clean(first_name), 
+                    last_name=bleach.clean(last_name),
 
                 )
                 hub_user = HubUser.objects.create(

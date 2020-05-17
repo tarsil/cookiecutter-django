@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/github/license/vintasoftware/django-react-boilerplate.svg)](LICENSE.txt)
 
-Django Docker Boilerplate - Django Rest Framework with Redis, RabbitMQ and Task Management
+Django Template - DRF with Redis, RabbitMQ, Celery and Channels
 ===============================================================================
 
 ## Note
