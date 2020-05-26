@@ -59,7 +59,7 @@ pip install -r requirements/development.txt
 
 ## If you only need to run the tests and the models weren't changed before
 
-`make reusedb_unittests TESTONLY='profiles.tests.models_tests`
+`make reusedb_unittests TESTONLY='package.tests.py`
 
 ### Apps
 
