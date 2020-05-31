@@ -117,21 +117,23 @@ TEMPLATES = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = []
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-# Statici18n Config
 STATICI18N_ROOT = os.path.join(SITE_ROOT, 'static')
 
-STATICFILES_DIRS += [STATICI18N_ROOT]
+STATICFILES_DIRS = [
+    STATICI18N_ROOT
+]
 
-STATIC_ROOT = os.path.join(SITE_ROOT, 'staticfiles')
+# STATIC DECLARATIONS ALSO FOR NGINX
+STATIC_ROOT = '/resources/{{ project_name }}-static/'
+STATIC_URL = '/static/'
+MEDIA_ROOT = '/resources/{{ project_name }}-media/'
+MEDIA_URL = '/media/'
 
 LOCALE_PATHS = [os.path.join(SITE_ROOT, 'locale')]
 
