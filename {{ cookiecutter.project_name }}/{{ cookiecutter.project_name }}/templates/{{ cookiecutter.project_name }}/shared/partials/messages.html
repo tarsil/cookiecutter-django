@@ -1,0 +1,14 @@
+{% raw %}{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == "success" %} <div class="success callout" data-closable>{% endif %}
+        {% if message.tags == "error" %} <div class="alert callout" data-closable>{% endif %}
+        {% if message.tags == "info" %} <div class="primary callout" data-closable>{% endif %}
+        {% if message.tags == "info" %} <div class="warning callout" data-closable>{% endif %}
+            <span>{{ message }} </span>
+            <button id="close-button"
+                    class="close-button close-button-{{ message.tags  }}"
+                    aria-label="Dismiss alert" type="button" data-close><span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+{% endif %}{% endraw %}

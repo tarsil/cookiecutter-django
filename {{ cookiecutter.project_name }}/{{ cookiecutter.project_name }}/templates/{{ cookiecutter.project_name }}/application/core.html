@@ -1,0 +1,47 @@
+{% raw %}{% load static %}{% endraw %}
+{% raw %}{% load i18n %}{% endraw %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% raw %}{% block page-title %}Login{% endblock %}{% endraw %} | {{ cookiecutter.project_name }}</title>
+    {% raw %}{% block head-css %}{% endraw %}
+         {% raw %}<link rel="stylesheet" href="{% static {% endraw %}'css/foundation/foundation.min.css' %}"/>
+         {% raw %}<link rel="stylesheet" href="{% static {% endraw %}'css/{{ cookiecutter.project_name }}.css' %}"/>
+    {% raw %}{% endblock %}{% endraw %}
+    {% raw %}{% block secondary-css %}{% endblock %}{% endraw %}
+</head>
+<body>
+
+{% raw %}{% block head-messages %}{% endraw %}
+<div class="inner-wrap">
+    {% raw %}{% include {% endraw %} "{{ cookiecutter.project_name }}/shared/partials/messages.html" %}
+</div>
+{% raw %}{% endblock %}{% endraw %}
+
+<main>
+     <div class="grix-x grid-padding-x">
+        <div class="large-12 medium-12 small-12 cell">
+            {% raw %}{% block content %}{% endblock %}{% endraw %}
+        </div>
+     </div>
+</main>
+
+<footer>
+     <div class="grix-x grid-padding-x">
+        <div class="large-4 medium-12 small-12 cell">
+		<div id="footer">Copyright &copy; {% raw %}{% now 'Y' %} {% endraw %}<a href="https://github.com/tiagoarasilva"><span>Tiago A. Silva</span></a>
+    </div>
+        </div>
+     </div>
+</footer>
+
+{% raw %}{% block bottom-js %}
+        <script type='text/javascript' src="{% static 'js/vendor/jquery/jquery.min.js' %}"></script>
+        <script type='text/javascript' src="{% static 'js/vendor/foundation/foundation.min.js' %}"></script>
+{% endblock %}{% endraw %}
+{% raw %}{% block secondary-js %}{% endblock %}{% endraw %}
+</body>
+</html>

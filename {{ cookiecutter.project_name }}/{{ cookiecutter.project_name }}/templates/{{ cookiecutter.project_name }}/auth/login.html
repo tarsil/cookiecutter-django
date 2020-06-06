@@ -1,0 +1,15 @@
+{% raw %}{% extends {% endraw %}'{{ cookiecutter.project_name }}/auth/core.html' %}
+
+{% raw %}{% block content %}{% endraw %}
+    <form class="log-in-form" action="" method="POST">
+        {% raw %}{% csrf_token %}{% endraw %}
+        <h4 class="text-center">Log in with you email account</h4>
+        <label>
+            {% raw %}{% include {% endraw %}'{{ cookiecutter.project_name }}/shared/forms/foundation_field.html' with field=form.email hide_required=1 %}
+        </label>
+        <label>
+            {% raw %}{% include {% endraw %}'{{ cookiecutter.project_name }}/shared/forms/foundation_field.html' with field=form.password hide_required=1 %}
+        </label>
+        <p><input type="submit" class="button expanded" value="Log in" /></p>
+    </form>
+{% raw %}{% endblock %}{% endraw %}

@@ -1,9 +1,7 @@
-[![License: MIT](https://img.shields.io/github/license/vintasoftware/django-react-boilerplate.svg)](LICENSE.txt)
-
-Cookiecutter Django - DRF with Redis, RabbitMQ, Channels and Task Manager
+{{ cookiecutter.project_name }}
 ===============================================================================
 
-## Notes
+## Initial notes
 
 * The template is using foundation as a framework but this can be changed by your personal preference, you only need to update the references in the `static` and `templates` folder.
 * Inside the views located in accounts, there are some that you need to create your own files, such as the registration or change password, the code is there, you only need to place the HTML inside the proper directory. The only HTML placed and working is the login and the homepage to allow you to do a first run.
@@ -12,10 +10,6 @@ Cookiecutter Django - DRF with Redis, RabbitMQ, Channels and Task Manager
 * The template has a specific structure in terms of organisation, meaning, inside the {{ cookiecutter.project_name }} there is a module called `apps` where it contains all the django custom apps in the settings. 
 That setting is in the main project settings and it can be changed or removed.
 * You should create a virtual environment in Python 3.6 or higher. This isolates your project and it doesn't break your system
-
-## Requirements to install the template
-
-* Cookiecutter - More details how to use and install [here](https://cookiecutter.readthedocs.io/en/1.7.2/)
 
 ## Using the template
 
