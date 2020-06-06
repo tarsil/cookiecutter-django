@@ -13,7 +13,7 @@ That setting is in the main project settings and it can be changed or removed.
 
 ## Using the template
 
-. `cookiecutter https://github.com/tiagoarasilva/cookicutter-django` and follow the instructions.
+* `cookiecutter https://github.com/tiagoarasilva/cookicutter-django` and follow the instructions.
     **When giving a name to your project, avoid dashes by using underscores instead.**
 * The tests for the views won't work until you implement the solution to make the tests passing, that means, once you implement the views!
 
