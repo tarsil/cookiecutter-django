@@ -1,0 +1,6 @@
+{% raw %}{% extends {% endraw %} '{{ cookiecutter.project_name }}/application/core.html' %}
+
+{% raw %}{% block content %}
+    <h1>Page is working</h1>
+    <h6>Welcome {{ request.user.display_name }}</h6>
+{% endblock %}{% endraw %}

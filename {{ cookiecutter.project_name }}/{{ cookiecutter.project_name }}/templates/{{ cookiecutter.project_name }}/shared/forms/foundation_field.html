@@ -1,0 +1,13 @@
+{% raw %}<div class="{{ class }}}">
+    {% if label or field.label  %}
+        {% if not hide_label %}
+            <label for="{{ field.auto_id }}">
+                {% if label %}{{ label }}{% else %} {{ field.label }} {{ extra }}{% endif %}
+                {% if field.field.required and not hide_required %}*{% endif %}
+            </label>
+        {% endif %}
+    {% endif %}
+    {{ field }}
+    {% if field.errors  %}<small class="error">{{ field.errors  }}</small>{% endif %}
+</div>
+{% endraw %}
