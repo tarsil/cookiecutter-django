@@ -22,4 +22,5 @@ def development(context):
     # _template_file('nginx/nginx.conf', '/etc/nginx/sites-enabled/default')
     # _template_file('supervisor.nginx.conf', '/etc/supervisor/conf.d/nginx.conf')
     # _template_file('supervisor.celery.conf', '/etc/supervisor/conf.d/celery.conf')
+    run('pre-commit install')
     run('supervisord -n')
