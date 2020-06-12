@@ -1,10 +1,11 @@
-import os
-import sys
+import os  # noqa: F403,F401
+import sys  # noqa: F403,F401
 
-from {{ cookiecutter.project_name }}.databases import *
-from {{ cookiecutter.project_name }}.general.settings import *
-from {{ cookiecutter.project_name }}.third_parties.blacklist_domains import *
-from {{ cookiecutter.project_name }}.general.redis_rabbitmq import *
+from {{ cookiecutter.project_name }}.databases import *  # noqa: F403,F401
+from {{ cookiecutter.project_name }}.general.settings import *  # noqa: F403,F401
+from {{ cookiecutter.project_name }}.third_parties.blacklist_domains import *  # noqa: F403,F401
+from {{ cookiecutter.project_name }}.general.redis_rabbitmq import *  # noqa: F403,F401
+
 
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 {{ cookiecutter.project_name }}_VERSION = os.path.basename(os.path.dirname(SITE_ROOT))
