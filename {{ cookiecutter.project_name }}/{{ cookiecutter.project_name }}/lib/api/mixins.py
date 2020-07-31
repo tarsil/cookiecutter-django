@@ -6,6 +6,7 @@ from rest_framework import authentication
 from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 
 class AnonymousAuthentication(authentication.BaseAuthentication):
@@ -14,124 +15,34 @@ class AnonymousAuthentication(authentication.BaseAuthentication):
         return (request._request.user, None)
 
 
-class BaseAuthView(permissions.BasePermission):
-    authentication_classes = (SessionAuthentication, BasicAuthentication, TokenAuthentication)
-    permission_classes = (IsAuthenticated,)
+class AuthMeta(type):
+    """Metaclass to create/read from permissions property
+    """
+    def __new__(cls, name, bases, attrs):
+        permissions = []
+        for base in bases:
+            if hasattr(base, 'permissions'):
+                permissions.extend(base.permissions)
+        attrs['permissions'] = permissions + attrs.get('permissions', [])
+        return type.__new__(cls, name, bases, attrs)
 
 
-class BaseGetApiView(BaseAuthView, permissions.BasePermission):
-
-    def has_permission(self, request, view):
-        if request.method == 'GET':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseGetPostPutApiView(BaseAuthView, permissions.BasePermission):
-    def has_permission(self, request, view):
-        if request.method == 'GET' or request.method == 'POST' or request.method == 'PUT':
-            return True
-        return request.user and request.user.is_authenticated
+class AccessMixin(metaclass=AuthMeta):
+    """
+    Django rest framework doesn't append permission_classes on inherited models which can cause issues when
+    it comes to call an API programmatically, this way we create a metaclass that will read from a property custom
+    from our subclasses and will append to the default `permission_classes` on the subclasses of AccessMixin
+    """
+    pass
 
 
-class BaseGetPostApiView(BaseAuthView, permissions.BasePermission):
-    def has_permission(self, request, view):
-        if request.method == 'GET' or request.method == 'POST':
-            return True
-        return request.user and request.user.is_authenticated
+class BaseAuthView(AccessMixin, APIView):
+    """
+    Base APIView requiring login credentials to access it from the inside of the platform
+    Or via request (if known)
+    """
+    permissions = [IsAuthenticated]
 
-
-class BaseDestroyApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'DELETE':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BasePostApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'POST':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BasePutApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'PUT':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseUpdateApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'POST' or request.method == 'PUT' or request.method == 'PATCH':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseUpdateAndDestroyApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'POST' or request.method == 'PUT' or request.method == 'PATCH' or request.method == 'DELETE':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseCRUDApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'POST' or request.method == 'PUT' or request.method == 'PATCH' or request.method == 'GET' \
-                or request.method == 'DELETE':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseGetPostAndDestroyApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'POST' or request.method == 'GET' or request.method == 'DELETE':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseGetPutPatchApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'GET' or request.method == 'PUT' or request.method == 'PATCH':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseGetPutPostPatchApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'GET' or request.method == 'PUT' or request.method == 'POST' or request.method == 'PATCH':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseGetDestroyApiView(BaseAuthView):
-    def has_permission(self, request, view):
-        if request.method == 'GET' or request.method == 'DELETE':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BaseGetPutPostDestroyApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'GET' or request.method == 'PUT' or request.method == 'POST' or request.method == 'DELETE':
-            return True
-        return request.user and request.user.is_authenticated
-
-
-class BasePutPostDestroyApiView(BaseAuthView):
-
-    def has_permission(self, request, view):
-        if request.method == 'PUT' or request.method == 'POST' or request.method == 'DELETE':
-            return True
-        return request.user and request.user.is_authenticated
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.permission_classes = self.permissions

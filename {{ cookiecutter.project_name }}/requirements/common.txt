@@ -13,7 +13,7 @@ cssselect==1.0.3
 django_exceptional_middleware==1.2.1
 djangorestframework==3.11.0
 django-rest-swagger==2.2.0
-django-anymail[mailgun]==2.2
+django-anymail[mailgun]==7.2
 django-annoying==0.10.4
 django-appconf==1.0.2
 django-block-ip==0.2.0
