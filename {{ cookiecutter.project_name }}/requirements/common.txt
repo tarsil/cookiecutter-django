@@ -41,7 +41,7 @@ django-statici18n==1.8.2
 django-storages==1.7.1
 django-transaction-hooks==0.2
 django-validate-model-attribute-assignment==2.0.2
-Django==2.2.14
+Django==2.2.15
 dnspython==1.15.0
 elasticsearch==6.3.1
 elasticsearch-dsl==6.1.0

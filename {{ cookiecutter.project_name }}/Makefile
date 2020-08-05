@@ -1,36 +1,60 @@
+DEFAULT_GOAL := help
+
+.PHONY: help
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.PHONY: clean
 clean: clean_pyc
+
+.PHONY: clean_pyc
 clean_pyc:
 	find . -type f -name "*.pyc" -delete || true
 
+.PHONY: migrate
 migrate:
 	python $(PROJECT_NAME)/manage.py migrate --noinput
 
+.PHONY: migrations
 migrations:
 	python $(PROJECT_NAME)/manage.py makemigrations
 
+.PHONY: reusedb_unittests
 reusedb_unittests:
 	cd $(PROJECT_NAME) &&\
 	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python manage.py test $(TESTONLY)  --exe --with-specplugin  --keepdb &&\
 	cd ..
 
+.PHONY: unittests
 unittests:
 	cd $(PROJECT_NAME) &&\
 	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin
 	cd ..
+
+.PHONY: run
 run:
 	python $(PROJECT_NAME)/manage.py runserver_plus 0.0.0.0:8000 --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 
+.PHONY: shell
 shell:
 	python $(PROJECT_NAME)/manage.py shell_plus --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 
+.PHONY: celery_django
 celery_django:
 	python $(PROJECT_NAME)/manage.py celery -A $(PROJECT_NAME) worker --logleve=INFO --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 
+.PHONY: celery
 celery:
 	python $(PROJECT_NAME)/manage.py celery worker -A $(PROJECT_NAME).celery --logleve=INFO --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 
+.PHONY: show_urls
 show_urls:
 	python $(PROJECT_NAME)/manage.py show_urls --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 
+.PHONY: validate_templates
 validate_templates:
 	python $(PROJECT_NAME)/manage.py validate_templates --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+
+ifndef VERBOSE
+.SILENT:
+endif
