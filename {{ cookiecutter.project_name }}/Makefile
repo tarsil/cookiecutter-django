@@ -51,13 +51,10 @@ run:
 shell:
 	python $(PROJECT_NAME)/manage.py shell_plus --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
 
-.PHONY: celery_django
-celery_django:
-	python $(PROJECT_NAME)/manage.py celery -A $(PROJECT_NAME) worker --logleve=INFO --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
-
-.PHONY: celery
-celery:
-	python $(PROJECT_NAME)/manage.py celery worker -A $(PROJECT_NAME).celery --logleve=INFO --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+.PHONY: dramatiq
+dramatiq: ## Starts DramatiQ task manager
+	cd $(PROJECT_NAME) &&\
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python3 manage.py rundramatiq
 
 .PHONY: show_urls
 show_urls:
