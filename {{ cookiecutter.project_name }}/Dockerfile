@@ -51,6 +51,7 @@ RUN apt-get update -y                                           && \
                        python3-dev                                 \
                        python3-pip                                 \
                        python-is-python3                           \
+                       python3-urllib3                             \
                        rsyslog                                     \
                        socat                                       \
                        sudo                                        \
