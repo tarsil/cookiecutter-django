@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/github/license/vintasoftware/django-react-boilerplate.svg)](LICENSE.txt)
 
-Cookiecutter Django - DRF with Redis, RabbitMQ, Channels and Task Manager
+Cookiecutter Django - DRF with Redis, RabbitMQ, Channels and Dramatiq
 ===============================================================================
 
 ## Notes
@@ -12,6 +12,10 @@ Cookiecutter Django - DRF with Redis, RabbitMQ, Channels and Task Manager
 * The template has a specific structure in terms of organisation, meaning, inside the {{ cookiecutter.project_name }} there is a module called `apps` where it contains all the django custom apps in the settings. 
 That setting is in the main project settings and it can be changed or removed.
 * You should create a virtual environment in Python 3.6 or higher. This isolates your project and it doesn't break your system
+
+## Task Manager
+
+* This project in the past was using celery but due the limitations now is using [Dramatiq](https://dramatiq.io/)
 
 ## Requirements to install the template
 
@@ -52,7 +56,7 @@ alias shell_plus='docker-compose exec {{ cookiecutter.project_name }} bash && ma
 ## Requirements
 
 ```shell
-pip install -r requirements/development.txt
+make requirements-dev
 ```
 
 ## Run Tests (If you ran migrations before and need to reconstruct the DB schema)

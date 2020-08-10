@@ -19,6 +19,18 @@ migrate:
 migrations:
 	python $(PROJECT_NAME)/manage.py makemigrations
 
+.PHONY: requirements
+requirements: ## Install the production requirements
+	pip install -r requirements/common.txt
+
+.PHONY: requirements-dev
+requirements-dev: ## Install the production requirements
+	pip install -r requirements/development.txt
+
+.PHONY: requirements-deployment
+requirements-deployment: ## Install the production requirements
+	pip install -r requirements/deployment.txt
+
 .PHONY: reusedb_unittests
 reusedb_unittests:
 	cd $(PROJECT_NAME) &&\

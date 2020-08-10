@@ -16,12 +16,19 @@ services:
     expose:
       - "6379"
 
-  rabbit:
+  rabbitmq:
     restart: always
-    image: rabbitmq:3.6.12
+    image: rabbitmq:3.8.5
     environment:
-      - RABBITMQ_DEFAULT_USER=rabbit_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_user_default_pass
+      RABBITMQ_DEFAULT_USER: rabbit_user
+      RABBITMQ_DEFAULT_PASS: rabbit_user_default_pass
+      RABBITMQ_DEFAULT_VHOST: /
+    expose:
+      - "15672"
+      - "5672"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   {{ cookiecutter.project_name }}:
     restart: always

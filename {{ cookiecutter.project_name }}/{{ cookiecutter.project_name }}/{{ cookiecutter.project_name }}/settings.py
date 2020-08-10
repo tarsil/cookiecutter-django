@@ -45,7 +45,6 @@ BASE_INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sitemaps',
     'django.contrib.redirects',
-    'djcelery',
     'lib.common',
     'lib.audit',
     'lib.cache',
@@ -146,7 +145,7 @@ ASGI_APPLICATION = "{{ cookiecutter.project_name }}.routing.application"
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 PASSWORD_HASHERS = [
-    '{{ cookiecutter.project_name }}.linezap.auth.hashers.CustomPBKDF2SHA1PasswordHasher',
+    '{{ cookiecutter.project_name }}.auth.hashers.CustomPBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     # 'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -190,3 +189,47 @@ SLUG_MAX_LENGTH = 64
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# DRAMATIQ SETTINGS
+DRAMATIQ_BROKER = {
+    "BROKER": "dramatiq.brokers.rabbitmq.RabbitmqBroker",
+    "OPTIONS": {
+        "url": 'amqp://rabbit_user:rabbit_user_default_pass@rabbitmq:5672/',
+    },
+    "MIDDLEWARE": [
+        "dramatiq.middleware.Prometheus",
+        "dramatiq.middleware.AgeLimit",
+        "dramatiq.middleware.TimeLimit",
+        "dramatiq.middleware.Callbacks",
+        "dramatiq.middleware.Retries",
+        "django_dramatiq.middleware.AdminMiddleware",
+        "django_dramatiq.middleware.DbConnectionsMiddleware",
+    ]
+}
+
+# Defines which database should be used to persist Task objects when the
+# AdminMiddleware is enabled.  The default value is "default".
+DRAMATIQ_TASKS_DATABASE = "default"
+
+DRAMATIQ_RESULT_BACKEND = {
+    "BACKEND": "dramatiq.results.backends.redis.RedisBackend",
+    "BACKEND_OPTIONS": {
+        "url": 'redis://redis:6379',
+    },
+    "MIDDLEWARE_OPTIONS": {
+        "result_ttl": 60000
+    }
+}
+
+DRAMATIQ_IGNORED_MODULES = (
+)
+
+DRAMATIQ_PRIORITY = {
+    'high': 0,
+    'medium': 50,
+    'low': 100
+}
+
+DRAMATIQ_QUEUES = {
+    'default': 'default',
+}
