@@ -38,6 +38,7 @@ RUN apt-get update -y                                           && \
                        libffi-dev                                  \
                        libgeos-c1v5                                \
                        libmagickwand-dev                           \
+                       libmemcached-dev                            \
                        libmemcached-tools                          \
                        libxml2-dev                                 \
                        libxslt-dev                                 \
