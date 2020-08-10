@@ -3,7 +3,6 @@
 # Based on an Ubuntu Image
 ############################################################
 FROM ubuntu:20.04
-MAINTAINER tiago.arasilva@outlook.com
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_GB.UTF-8
@@ -35,8 +34,9 @@ RUN apt-get update -y                                           && \
                        language-pack-en                            \
                        libcurl4-openssl-dev                        \
                        libevent-dev                                \
+                       libssl-dev                                  \
                        libffi-dev                                  \
-					   libgeos-c1v5                                \
+                       libgeos-c1v5                                \
                        libmagickwand-dev                           \
                        libmemcached-tools                          \
                        libxml2-dev                                 \
@@ -44,14 +44,13 @@ RUN apt-get update -y                                           && \
                        memcached                                   \
                        net-tools                                   \
                        nginx-extras                                \
+                       perl                                        \
                        pgbouncer                                   \
                        postgresql-11                               \
                        python-pil                                  \
-                       python-urllib3                              \
-                       python-pip                                  \
-                       python-dev                                  \
                        python3-dev                                 \
                        python3-pip                                 \
+                       python-is-python3                           \
                        rsyslog                                     \
                        socat                                       \
                        sudo                                        \
@@ -66,13 +65,14 @@ RUN apt-get update -y                                           && \
     apt-get -y update
 
 
+
 #
 #  Install requirements
 #
 ADD requirements /var/www/requirements
 RUN pip3 install -r /var/www/requirements/common.txt
 
-RUN echo 'alias python=python3' >> ~/.bashrc && echo 'alias pip=pip3' >> ~/.bashrc
+RUN ln /usr/local/bin/dramatiq /usr/bin/dramatiq
 
 # Patch Nginx Config to Disable Security Tokens
 RUN sed -i -e 's/# server_tokens off;/server_tokens off;/g' /etc/nginx/nginx.conf
