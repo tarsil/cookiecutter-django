@@ -8,15 +8,15 @@ help:
 clean: clean_pyc
 
 .PHONY: clean_pyc
-clean_pyc:
+clean_pyc: ## Clean all *.pyc in the system
 	find . -type f -name "*.pyc" -delete || true
 
 .PHONY: migrate
-migrate:
+migrate: # Runs the migrations
 	python $(PROJECT_NAME)/manage.py migrate --noinput
 
 .PHONY: migrations
-migrations:
+migrations: ## Generate migrations
 	python $(PROJECT_NAME)/manage.py makemigrations
 
 .PHONY: requirements
@@ -32,13 +32,13 @@ requirements-deployment: ## Install the production requirements
 	pip install -r requirements/deployment.txt
 
 .PHONY: reusedb_unittests
-reusedb_unittests:
+reusedb_unittests: ## Run all unittests by reusing a db
 	cd $(PROJECT_NAME) &&\
 	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python manage.py test $(TESTONLY)  --exe --with-specplugin  --keepdb &&\
 	cd ..
 
 .PHONY: unittests
-unittests:
+unittests: ## Run all unittests by creating a new db
 	cd $(PROJECT_NAME) &&\
 	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin
 	cd ..
@@ -63,6 +63,18 @@ show_urls:
 .PHONY: validate_templates
 validate_templates:
 	python $(PROJECT_NAME)/manage.py validate_templates --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+
+.PHONY: createsuperuser
+createsuperuser: ## Creates a super user in the database
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python3 $(PROJECT_NAME)/manage.py createsuperuser
+
+.PHONY: start_docker
+start_docker: ## Starts the dev environment
+	docker-compose up -d
+
+.PHONY: start_docker_logs
+start_docker_logs: ## Starts the dev environment
+	docker-compose up
 
 ifndef VERBOSE
 .SILENT:
