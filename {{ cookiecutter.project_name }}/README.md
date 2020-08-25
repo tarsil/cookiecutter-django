@@ -3,7 +3,6 @@
 ## Table of Contents
 
 - [Initial Notes](#initial-notes)
-- [Disclosure](#disclosure)
 - [Requirements](#requirements)
 - [Installation](#installation)
   - [Docker Structure](#docker-structure)
