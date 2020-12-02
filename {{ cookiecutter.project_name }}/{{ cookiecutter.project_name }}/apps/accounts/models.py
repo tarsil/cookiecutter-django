@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import logging
-import uuid
+from uuid import uuid4
 
 import bleach
 from accounts.utils import get_uuid
@@ -37,9 +37,9 @@ class HubUser(models.Model):
     in case of being integrated with external apps. If you do it, don't forget to remove the AUTH_USER_MODEL setting from
     the settings file.
     """
+    uuid = models.UUIDField(null=False, blank=False, default=uuid4)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=False, related_name='hub_user',
                                  on_delete=models.CASCADE)
-    uuid = models.UUIDField(null=False, blank=False)
     middle_name = models.CharField(blank=True, null=True, max_length=255)
     profile_type = models.CharField(max_length=255, choices=Choices.Profiles.PROFILE_CHOICES,
                                     default=Choices.Profiles.USER, null=False, blank=False)

@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             name='HubUser',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uuid', models.UUIDField()),
+                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False)),
                 ('middle_name', models.CharField(blank=True, max_length=255, null=True)),
                 ('profile_type', models.CharField(choices=[('admin', 'Admin'), ('user', 'User'), ('manager', 'Manager'), ('other', 'Other')], default='user', max_length=255)),
                 ('slug', models.SlugField(help_text='Slug', max_length=255, unique=True)),
