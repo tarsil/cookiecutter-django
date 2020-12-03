@@ -1,5 +1,11 @@
 version: 2.1
 
+workflows:
+  build-test-push:
+    jobs:
+      - build:
+          context: opensource
+
 jobs:
   build:
     machine: true
@@ -30,12 +36,5 @@ jobs:
           command: |
             cd myproject
             docker build -t $IMAGE_NAME:latest .
-            echo "$DOCKER_PASS" | docker login --username $DOCKERHUB_USERNAME" --password-stdin
+            echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
-
-
-workflows:
-  build-test-push:
-    jobs:
-      - build:
-          context: opensource
