@@ -33,3 +33,9 @@ jobs:
             echo "$DOCKER_PASS" | docker login --username $DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
 
+
+workflows:
+  build-test-push:
+    jobs:
+      - build:
+          context: opensource
