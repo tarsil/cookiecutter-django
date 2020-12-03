@@ -1,24 +1,24 @@
 version: '3.3'
 services:
   db:
-    restart: always
-    image: postgres:11.6
-    expose:
-      - "5432"
-    volumes:
-      - "{{ cookiecutter.project_name }}_db_data:/var/lib/postgresql/data"
+    image: postgres:12.3
+    container_name: db
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
 
   redis:
-    restart: always
+    container_name: redis
     image: redis:latest
     expose:
       - "6379"
+    ports:
+      - "6379:6379"
 
   rabbitmq:
-    restart: always
     image: rabbitmq:3.8.5
+    container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: rabbit_user
       RABBITMQ_DEFAULT_PASS: rabbit_user_default_pass
@@ -30,7 +30,7 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-  {{ cookiecutter.project_name }}:
+  webapp:
     restart: always
     image: oratio/virgo:latest
     depends_on:
@@ -61,7 +61,4 @@ services:
       - .:/var/www
     working_dir: /var/www
     command: bash -lc "pip install invoke jinja2 && invoke -r roles $${ROLE}"
-
-volumes:
-  {{ cookiecutter.project_name }}_db_data:
-  external: true
+    command: 'bash ./scripts/run-unittest.sh'
