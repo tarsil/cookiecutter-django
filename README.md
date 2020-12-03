@@ -1,5 +1,7 @@
 # Cookiecutter Django
 
+[![CircleCI](https://circleci.com/gh/tarsil/cookiecutter-django.svg?style=shield&circle-token=91ae5605f46538c06c9b88248fd0fd6cc9b2994d)](https://circleci.com/gh/tarsil/cookiecutter-django)
+
 This is a cookicutter application that aims to help people speeding up the development process.
 
 ## Table of Contents
