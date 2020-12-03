@@ -60,7 +60,7 @@ class HubUser(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            _uuid = str(uuid.uuid4())[:12]
+            _uuid = str(uuid4())[:12]
             self.slug = f"{slugify(self.user.first_name)}-{_uuid}"
         super().save(*args, **kwargs)
         return self

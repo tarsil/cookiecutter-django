@@ -38,11 +38,12 @@ services:
       - rabbitmq
     environment:
       DJANGO_SETTINGS_MODULE: {{ cookiecutter.project_name }}.development.settings
-      BROKER_URL: amqp://{{ cookiecutter.project_name }}:rabbit_line_zap@rabbitmq:5672//
+      BROKER_URL: amqp://rabbit_user:rabbit_user_default_pass@rabbitmq:5672//
       DJANGOENV: development
       ENVIRONMENT: development
       PYTHON: python
       PROJECT_NAME: {{ cookiecutter.project_name }}
+      PYTHONBREAKPOINT: ipdb.sset_trace
       TERM: xterm
       ROLE: development
     links:

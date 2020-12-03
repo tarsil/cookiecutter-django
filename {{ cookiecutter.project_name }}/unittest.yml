@@ -37,14 +37,14 @@ services:
       - redis
       - rabbitmq
     environment:
-      DJANGO_SETTINGS_MODULE: {{ cookiecutter.project_name }}.development.settings
-      BROKER_URL: amqp://{{ cookiecutter.project_name }}:rabbit_line_zap@rabbitmq:5672//
-      DJANGOENV: development
-      ENVIRONMENT: development
+      DJANGO_SETTINGS_MODULE: {{ cookiecutter.project_name }}.testing.settings
+      BROKER_URL: amqp://rabbit_user:rabbit_user_default_pass@rabbitmq:5672//
+      DJANGOENV: testing
+      ENVIRONMENT: testing
       PYTHON: python
       PROJECT_NAME: {{ cookiecutter.project_name }}
       TERM: xterm
-      ROLE: development
+      ROLE: testing
     links:
       - db:postgres
       - redis:redis
@@ -60,5 +60,4 @@ services:
     volumes:
       - .:/var/www
     working_dir: /var/www
-    command: bash -lc "pip install invoke jinja2 && invoke -r roles $${ROLE}"
     command: 'bash ./scripts/run-unittest.sh'

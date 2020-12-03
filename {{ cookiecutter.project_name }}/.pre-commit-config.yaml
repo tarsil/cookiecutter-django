@@ -1,7 +1,5 @@
 default_language_version:
-    python: python3.7
-
-default_stages: [commit, push]
+  python: python3.8
 
 repos:
 
@@ -30,23 +28,37 @@ repos:
     -   id: requirements-txt-fixer
     -   id: check-added-large-files
         args:
-        - --maxkb=128
+        - --maxkb=500
+-   repo: https://github.com/psf/black
+    rev: 19.3b0
+    hooks:
+    -   id: black
+        args: [--line-length=120]
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: '3.8.4'
+    hooks:
     -   id: flake8
+        exclude: ^docs/
         args:
         - --max-line-length=120
-        - --ignore=E731
-        - --exclude=bauhaus/apps/*/migrations/*
+        - --ignore=E731,W503,W504,E203
+        - --exclude=linezap/apps/*/migrations/*,linezap/linezap/*
 -   repo: git://github.com/Lucas-C/pre-commit-hooks.git
-    sha: v1.0.1
+    rev: v1.1.9
     hooks:
     -   id: remove-crlf
     -   id: remove-tabs
+        args: [ '--whitespaces-count', '2' ]  # defaults to: 4
 -   repo: git://github.com/trbs/pre-commit-hooks-trbs.git
-    sha: e233916fb2b4b9019b4a3cc0497994c7926fe36b
+    rev: e233916fb2b4b9019b4a3cc0497994c7926fe36b
     hooks:
     -   id: forbid-executables
         exclude: manage.py|setup.py
+# -   repo: git://github.com/pre-commit/mirrors-csslint
+#     rev: v1.0.5
+#     hooks:
+#     -   id: csslint
 -   repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-    sha: v1.1.0
+    rev: v1.1.0
     hooks:
     -   id: python-safety-dependencies-check

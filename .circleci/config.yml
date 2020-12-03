@@ -23,12 +23,12 @@ jobs:
       - run:
           name: Running Tests
           command: |
-            cd djangoproject
+            cd my_project
             docker-compose -f unittest.yml up --abort-on-container-exit --exit-code-from webapp
       - run:
           name: Build and push Docker image
           command: |
-            cd djangoproject
+            cd my_project
             docker build -t $IMAGE_NAME:latest .
             docker login -u "$DOCKERHUB_USERNAME" --p "$DOCKER_PASSWORD"
             docker push $IMAGE_NAME:latest

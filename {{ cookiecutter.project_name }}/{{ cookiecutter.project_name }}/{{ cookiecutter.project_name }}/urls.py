@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.urls import re_path, include
+from django.urls import path, include
 from django.contrib import admin
 from accounts.django_views import LoginView, LogoutView, HomepageView
 import accounts.urls
@@ -22,17 +22,17 @@ admin.autodiscover()
 
 
 api_url_patterns = [
-    re_path(r'^accounts/', include((accounts.urls.accounts_api_urlpatterns, 'accounts'), namespace='accounts')),
+    path('accounts/', include((accounts.urls.accounts_api_urlpatterns, 'accounts'), namespace='accounts')),
 ]
 
 
 urlpatterns = [
-    re_path(r'^admin/', admin.site.urls),
-    re_path(r'^$', HomepageView.as_view(), name='homepage'),
-    re_path(r'^login/$', LoginView.as_view(), name='login'),
-    re_path(r'^logout/$', LogoutView.as_view(), name='logout'),
-    re_path(r'^u/', include(accounts.urls.accounts_urlpatterns)),
+    path('admin/', admin.site.urls),
+    path('', HomepageView.as_view(), name='homepage'),
+    path('login/$', LoginView.as_view(), name='login'),
+    path('logout/$', LogoutView.as_view(), name='logout'),
+    path('u/', include(accounts.urls.accounts_urlpatterns)),
 
     # API
-    re_path(r'^api/v1/', include((api_url_patterns, 'api-v1'), namespace='api-v1')),
+    path('core/api/', include((api_url_patterns, 'internal-api'), namespace='internal-api')),
 ]
