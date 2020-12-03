@@ -31,10 +31,4 @@ jobs:
           command: |
             cd myproject
             docker-compose -f unittest.yml up --abort-on-container-exit --exit-code-from webapp
-      - run:
-          name: Build and push Docker image
-          command: |
-            cd myproject
-            docker build -t $IMAGE_NAME:latest .
-            echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME" --password-stdin
-            docker push $IMAGE_NAME:latest
+            
