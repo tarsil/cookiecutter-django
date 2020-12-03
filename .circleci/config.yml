@@ -30,6 +30,6 @@ jobs:
           command: |
             cd myproject
             docker build -t $IMAGE_NAME:latest .
-            docker login -u "$DOCKERHUB_USERNAME" --p "$DOCKER_PASSWORD"
+            echo "$DOCKER_PASS" | docker login --username $DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:latest
 
