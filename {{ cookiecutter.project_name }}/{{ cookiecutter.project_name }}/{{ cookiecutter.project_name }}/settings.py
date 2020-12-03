@@ -1,14 +1,15 @@
 import os  # noqa: F403,F401
 import sys  # noqa: F403,F401
 
-from {{ cookiecutter.project_name }}.databases import *  # noqa: F403,F401
-from {{ cookiecutter.project_name }}.general.settings import *  # noqa: F403,F401
-from {{ cookiecutter.project_name }}.third_parties.blacklist_domains import *  # noqa: F403,F401
-from {{ cookiecutter.project_name }}.general.redis_rabbitmq import *  # noqa: F403,F401
+from .channel_layers import * # noqa: F403,F401
+from .databases import *  # noqa: F403,F401
+from .general.settings import *  # noqa: F403,F401
+from .third_parties.blacklist_domains import *  # noqa: F403,F401
+from .general.redis_rabbitmq import *  # noqa: F403,F401
 
 
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-{{ cookiecutter.project_name }}_VERSION = os.path.basename(os.path.dirname(SITE_ROOT))
+os.path.basename(os.path.dirname(SITE_ROOT))
 DJANGOENV = None
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -46,8 +47,6 @@ BASE_INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.redirects',
     'lib.common',
-    'lib.audit',
-    'lib.cache',
     'statici18n',
     'rest_framework',
     'channels',
@@ -189,6 +188,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+#
+# SSL CONFIGURATIONS
+#
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 8640000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+X_FRAME_OPTIONS = "DENY"
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 
 # Pull slug max_length out ot
 SLUG_MAX_LENGTH = 64
@@ -219,16 +232,11 @@ DRAMATIQ_TASKS_DATABASE = "default"
 
 DRAMATIQ_RESULT_BACKEND = {
     "BACKEND": "dramatiq.results.backends.redis.RedisBackend",
-    "BACKEND_OPTIONS": {
-        "url": 'redis://redis:6379',
-    },
-    "MIDDLEWARE_OPTIONS": {
-        "result_ttl": 60000
-    }
+    "BACKEND_OPTIONS": {"url": "redis://redis:6379"},
+    "MIDDLEWARE_OPTIONS": {"result_ttl": 60000},
 }
 
-DRAMATIQ_IGNORED_MODULES = (
-)
+DRAMATIQ_IGNORED_MODULES = ()
 
 DRAMATIQ_PRIORITY = {
     'high': 0,
@@ -239,3 +247,4 @@ DRAMATIQ_PRIORITY = {
 DRAMATIQ_QUEUES = {
     'default': 'default',
 }
+

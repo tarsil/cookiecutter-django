@@ -31,8 +31,8 @@ services:
       - "15672:15672"
 
   webapp:
-    restart: always
     image: oratio/virgo:latest
+    container_name: webapp
     depends_on:
       - redis
       - rabbitmq
@@ -50,14 +50,15 @@ services:
       - redis:redis
       - rabbitmq:rabbitmq
     ports:
-      - "80:80"
-      - "443:443"
-      - "8000:8000"
+      - 80:80
+      - 443:443
+      - 127.0.0.1:8080:8080
+      - 127.0.0.1:8000:8000
     expose:
-      - "80"
-      - "443"
-      - "8000"
+      - 80
+      - 443
+      - 8000
     volumes:
       - .:/var/www
     working_dir: /var/www
-    command: 'bash ./scripts/run-unittest.sh'
+    command: bash -lc "pip3 install invoke jinja2 && invoke -r roles $${ROLE}"

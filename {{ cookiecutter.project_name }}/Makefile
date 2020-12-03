@@ -21,26 +21,26 @@ migrations: ## Generate migrations
 
 .PHONY: requirements
 requirements: ## Install the production requirements
-	pip install -r requirements/common.txt
+	pip3 install -r requirements/common.txt
 
 .PHONY: requirements-dev
 requirements-dev: ## Install the production requirements
-	pip install -r requirements/development.txt
+	pip3 install -r requirements/development.txt
 
 .PHONY: requirements-deployment
 requirements-deployment: ## Install the production requirements
-	pip install -r requirements/deployment.txt
+	pip3 install -r requirements/deployment.txt
 
 .PHONY: reusedb_unittests
-reusedb_unittests: ## Run all unittests by reusing a db
+reusedb_unittests:  ## Run the unit tests without recreating the testing database
 	cd $(PROJECT_NAME) &&\
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python manage.py test $(TESTONLY)  --exe --with-specplugin  --keepdb &&\
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin  --keepdb &&\
 	cd ..
 
 .PHONY: unittests
-unittests: ## Run all unittests by creating a new db
+unittests: ## Runs the unit tests from the scratch by recreating the testing database
 	cd $(PROJECT_NAME) &&\
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin --noinput
 	cd ..
 
 .PHONY: run

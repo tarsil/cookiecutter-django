@@ -8,10 +8,10 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, View, TemplateView
-from lib.common.views import BaseTemplateMixin
+from lib.common.views import AuthMixin
 
 
-class BaseUserSystemView(BaseTemplateMixin):
+class BaseUserSystemView(AuthMixin):
     """
     Base class inheriting from the main settings object where common validations are placed
     """

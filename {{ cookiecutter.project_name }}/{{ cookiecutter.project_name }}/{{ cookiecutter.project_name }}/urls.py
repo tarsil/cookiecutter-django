@@ -13,6 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+import os
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from django.contrib import admin
 from accounts.django_views import LoginView, LogoutView, HomepageView
@@ -25,14 +28,36 @@ api_url_patterns = [
     path('accounts/', include((accounts.urls.accounts_api_urlpatterns, 'accounts'), namespace='accounts')),
 ]
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomepageView.as_view(), name='homepage'),
-    path('login/$', LoginView.as_view(), name='login'),
-    path('logout/$', LogoutView.as_view(), name='logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('u/', include(accounts.urls.accounts_urlpatterns)),
 
     # API
     path('core/api/', include((api_url_patterns, 'internal-api'), namespace='internal-api')),
 ]
+
+
+if settings.DEBUG and (os.getenv("ENVIRONMENT") not in ["live", "staging"]):
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    import debug_toolbar
+    import django.views.defaults
+
+    def custom_page_not_found(request):
+        return django.views.defaults.page_not_found(request, None)
+
+    def server_error(request):
+        return django.views.defaults.server_error(request)
+
+    def permission_denied(request):
+        return django.views.defaults.permission_denied(request, None)
+
+    urlpatterns += [
+        path("__debug__/", include(debug_toolbar.urls)),
+        path("403/", permission_denied),
+        path("404/", custom_page_not_found),
+        path("500/", server_error),
+    ]

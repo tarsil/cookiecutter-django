@@ -51,18 +51,19 @@ services:
       - redis:redis
       - rabbitmq:rabbitmq
     ports:
-      - "80:80"
-      - "443:443"
-      - "8000:8000"
+      - 80:80
+      - 443:443
+      - 127.0.0.1:8080:8080
+      - 127.0.0.1:8000:8000
     expose:
-      - "80"
-      - "443"
-      - "8000"
+      - 80
+      - 443
+      - 8000
     volumes:
       - .:/var/www
     working_dir: /var/www
-    command: bash -lc "pip install invoke jinja2 && invoke -r roles $${ROLE}"
+    command: bash -lc "pip3 install invoke jinja2 && invoke -r roles $${ROLE}"
 
 volumes:
   {{ cookiecutter.project_name }}_db_data:
-  external: true
+    external: true

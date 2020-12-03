@@ -17,10 +17,19 @@ def _template_file(template, destination, template_dir='/var/www/deploy/'):
 
 @task
 def development(context):
+    """
+    Development environment
+    """
     run('pip3 install -U pip')
-    run('pip3 install -r requirements/development.txt')
-    # _template_file('nginx/nginx.conf', '/etc/nginx/sites-enabled/default')
-    # _template_file('supervisor.nginx.conf', '/etc/supervisor/conf.d/nginx.conf')
-    # _template_file('supervisor.celery.conf', '/etc/supervisor/conf.d/celery.conf')
+    run('make requirements-dev')
     run('pre-commit install')
     run('supervisord -n')
+
+
+@task
+def testing(context):
+    """
+    For the unittesting in our CI
+    """
+    run('make requirements-dev')
+    run('make unittests')

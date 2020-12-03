@@ -1,4 +1,4 @@
-import uuid
+from uuid import uuid4
 import factory
 import factory.django
 
@@ -20,11 +20,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 class HubUserFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
-    uuid = factory.Sequence(lambda n: "%s" % str(uuid.uuid4()))
+    uuid = factory.Sequence(lambda n: "%s" % str(uuid4()))
 
     class Meta:
         model = accounts.models.HubUser
-
-    mail_digests = factory.RelatedFactory(
-        "configurations.tests.factories.MailDigestFactory", factory_related_name="hub_user"
-    )
