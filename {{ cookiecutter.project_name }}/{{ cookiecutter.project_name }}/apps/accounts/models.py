@@ -68,7 +68,7 @@ class HubUser(models.Model):
     @staticmethod
     def generate_username(first_name, last_name, email):
         """Generates a username based on certain parameters"""
-        return f"{slugify(first_name)}-{slugify(last_name)}-{slugify(email)}-{str(uuid.uuid4())}"
+        return f"{slugify(first_name)}-{slugify(last_name)}-{slugify(email)}-{str(uuid4())}"
 
     @staticmethod
     def create_hub_user(email, password, profile_type=Choices.Profiles.USER, username=None, first_name=None,
@@ -89,7 +89,7 @@ class HubUser(models.Model):
                 username = username or HubUser.generate_username(first_name, last_name, email)
                 user = get_user_model().objects.create_user(
                     username=bleach.clean(username), email=bleach.clean(email), password=password,
-                    is_staff=False, is_superuser=False, first_name=bleach.clean(first_name), 
+                    is_staff=False, is_superuser=False, first_name=bleach.clean(first_name),
                     last_name=bleach.clean(last_name),
 
                 )

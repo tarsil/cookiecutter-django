@@ -35,7 +35,7 @@ services:
     image: oratio/virgo:latest
     depends_on:
       - redis
-      - rabbit
+      - rabbitmq
     environment:
       DJANGO_SETTINGS_MODULE: {{ cookiecutter.project_name }}.development.settings
       BROKER_URL: amqp://{{ cookiecutter.project_name }}:rabbit_line_zap@rabbitmq:5672//
@@ -48,7 +48,7 @@ services:
     links:
       - db:postgres
       - redis:redis
-      - rabbit:rabbit
+      - rabbitmq:rabbitmq
     ports:
       - "80:80"
       - "443:443"

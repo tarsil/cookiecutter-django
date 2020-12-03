@@ -3,6 +3,8 @@ version: 2.1
 jobs:
   build:
     machine: true
+    environment:
+      IMAGE_NAME: oratio/virgo
     resource_class: medium
     steps:
       - checkout
@@ -18,9 +20,16 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-
       - run:
           name: Running Tests
           command: |
-            cd django_project
+            cd djangoproject
             docker-compose -f unittest.yml up --abort-on-container-exit --exit-code-from webapp
+      - run:
+          name: Build and push Docker image
+          command: |
+            cd djangoproject
+            docker build -t $IMAGE_NAME:latest .
+            docker login -u "$DOCKERHUB_USERNAME" --p "$DOCKER_PASSWORD"
+            docker push $IMAGE_NAME:latest
+
