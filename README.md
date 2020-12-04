@@ -33,7 +33,7 @@ All of this using docker.
 To use this cookiecutter you should have at least.
 
 1. [Docker](https://www.docker.com/products)
-2. Python 3.8+
+2. Python 3.8
 3. Any virtual environment at your choice
 
 ## Cookiecutter
