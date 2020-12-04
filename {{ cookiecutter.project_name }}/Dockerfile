@@ -22,13 +22,11 @@ RUN apt-get update                                                              
     curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 RUN apt-get update -y                                           && \
-    apt-get install -y postgresql postgresql-contrib               \
-                       bind9-host                                  \
+    apt-get install -y postgresql                                  \
                        build-essential                             \
                        curl                                        \
                        geoip-bin                                   \
                        gettext                                     \
-                       git-core                                    \
                        gawk                                        \
                        iputils-ping                                \
                        language-pack-en                            \
@@ -45,21 +43,14 @@ RUN apt-get update -y                                           && \
                        memcached                                   \
                        net-tools                                   \
                        nginx-extras                                \
-                       perl                                        \
                        pgbouncer                                   \
-                       postgresql-11                               \
                        python-pil                                  \
-                       python3-dev                                 \
                        python3-pip                                 \
-                       python-is-python3                           \
-                       python3-urllib3                             \
                        rsyslog                                     \
                        socat                                       \
-                       sudo                                        \
                        supervisor                                  \
                        unattended-upgrades                         \
                        unzip                                       \
-                       vim                                         \
                        wget                                     && \
     apt-get clean && apt-get autoclean                          && \
     apt-get autoremove -y                                       && \
