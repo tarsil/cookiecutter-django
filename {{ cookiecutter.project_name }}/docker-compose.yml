@@ -32,7 +32,7 @@ services:
 
   {{ cookiecutter.project_name }}:
     restart: always
-    image: oratio/virgo:latest
+    image: tarsil/django:latest
     depends_on:
       - redis
       - rabbitmq

@@ -31,7 +31,7 @@ services:
       - "15672:15672"
 
   webapp:
-    image: oratio/virgo:latest
+    image: tarsil/django:latest
     container_name: webapp
     depends_on:
       - redis
