@@ -27,6 +27,7 @@ RUN apt-get update -y                                           && \
                        curl                                        \
                        geoip-bin                                   \
                        gettext                                     \
+                       git-core                                    \
                        gawk                                        \
                        iputils-ping                                \
                        language-pack-en                            \
@@ -46,6 +47,7 @@ RUN apt-get update -y                                           && \
                        pgbouncer                                   \
                        python-pil                                  \
                        python3-pip                                 \
+                       python-is-python3                           \
                        rsyslog                                     \
                        socat                                       \
                        supervisor                                  \
