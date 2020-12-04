@@ -42,7 +42,7 @@ repos:
         args:
         - --max-line-length=120
         - --ignore=E731,W503,W504,E203
-        - --exclude=linezap/apps/*/migrations/*,linezap/linezap/*
+        - --exclude={{ cookiecutter.project_name }}/apps/*/migrations/*,linezap/linezap/*
 -   repo: git://github.com/Lucas-C/pre-commit-hooks.git
     rev: v1.1.9
     hooks:

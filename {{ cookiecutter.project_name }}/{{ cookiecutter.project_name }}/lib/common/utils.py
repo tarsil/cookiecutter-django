@@ -5,7 +5,7 @@ from django.conf import settings
 
 
 """\
-A wrapper for reverse that always sets the URLConf to the linezap.
+A wrapper for reverse that always sets the URLConf to the {{ cookiecutter.project_name }}.
 This is safe to use from the API, unlike the normal reverse().
 """
 reverse = functools.partial(
