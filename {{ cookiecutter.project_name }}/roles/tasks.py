@@ -31,5 +31,6 @@ def testing(context):
     """
     For the unittesting in our CI
     """
+    run('pip3 install -U pip')
     run('make requirements-dev')
     run('make unittests')
