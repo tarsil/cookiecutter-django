@@ -5,7 +5,7 @@ from .channel_layers import * # noqa: F403,F401
 from .databases import *  # noqa: F403,F401
 from .general.settings import *  # noqa: F403,F401
 from .third_parties.blacklist_domains import *  # noqa: F403,F401
-from .general.redis_rabbitmq import *  # noqa: F403,F401
+from .general.caches import *  # noqa: F403,F401
 
 
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))

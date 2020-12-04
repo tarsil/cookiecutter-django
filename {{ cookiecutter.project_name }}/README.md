@@ -50,7 +50,7 @@ The command `make` will display all the options and automation of the project.
 
 The first run with the project, there are a few recommended steps to make it clean and simple.
 
-  1. Create a new virtual environment with python 3.7+.
+  1. Create a new virtual environment with python 3.8+.
   2. `make requirements-dev` - Installs the requirements for development.
   3. `make start_docker` - Starts docker containers with no logs.
       1. (Optional) - `make start_docker_logs` starts docker with all logs.
