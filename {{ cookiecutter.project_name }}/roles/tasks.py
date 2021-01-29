@@ -32,5 +32,4 @@ def testing(context):
     For the unittesting in our CI
     """
     run('make requirements-dev')
-    run('make mypy')
     run('make test')
