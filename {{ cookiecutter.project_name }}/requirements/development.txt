@@ -10,6 +10,7 @@ django-rename-app==0.1.2
 django-template-repl==0.3.0
 ipdb==0.13.2
 jprq
+mypy==0.800
 path.py==11
 pep8
 pinocchio==0.4.2

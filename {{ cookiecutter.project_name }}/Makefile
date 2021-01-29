@@ -31,17 +31,21 @@ requirements-dev: ## Install the production requirements
 requirements-deployment: ## Install the production requirements
 	pip3 install -r requirements/deployment.txt
 
-.PHONY: reusedb_unittests
-reusedb_unittests:  ## Run the unit tests without recreating the testing database
-	cd $(PROJECT_NAME) &&\
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin  --keepdb &&\
+.PHONY: test
+test: ## Runs the unit tests from the scratch by recreating the testing database
+	cd myproject &&\
+	DJANGOENV=testing py.test $(TESTONLY) --disable-pytest-warnings --create-db
 	cd ..
 
-.PHONY: unittests
-unittests: ## Runs the unit tests from the scratch by recreating the testing database
-	cd $(PROJECT_NAME) &&\
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin --noinput
+.PHONY: test-reusedb
+test-reusedb:  ## Run the unit tests without recreating the testing database
+	cd myproject &&\
+	DJANGOENV=testing pytest --disable-pytest-warnings $(TESTONLY) --reuse-db &&\
 	cd ..
+
+.PHONY: mypy
+mypy: ## Runs MyPy type checking
+	mypy $(PROJECT_NAME)/
 
 .PHONY: run
 run:

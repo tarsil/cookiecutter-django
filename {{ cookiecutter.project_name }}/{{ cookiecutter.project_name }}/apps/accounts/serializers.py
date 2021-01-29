@@ -1,6 +1,8 @@
-import accounts.models
 import bleach
-from django.contrib.auth import authenticate, get_user_model
+import accounts.models
+
+from django.contrib.auth import authenticate
+from rest_framework import serializers
 
 
 class LoginSerializer(serializers.Serializer):

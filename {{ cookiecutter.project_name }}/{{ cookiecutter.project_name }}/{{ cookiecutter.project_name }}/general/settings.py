@@ -1,3 +1,4 @@
+# type: ignore
 from django.utils.translation import ugettext_lazy
 
 LOGIN_REDIRECT_URL = '/'

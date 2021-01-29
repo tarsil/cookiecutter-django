@@ -34,7 +34,6 @@ django-storages==1.9.1
 django-weasyprint==1.0.1
 djangorestframework==3.11.1
 djangorestframework-simplejwt==4.4.0
-djongo==1.3.3
 dramatiq[all]==1.9.0
 enum34==1.1.10
 fuzzywuzzy==0.18.0

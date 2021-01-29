@@ -1,3 +1,4 @@
+# type: ignore
 import os  # noqa: F403,F401
 import sys  # noqa: F403,F401
 

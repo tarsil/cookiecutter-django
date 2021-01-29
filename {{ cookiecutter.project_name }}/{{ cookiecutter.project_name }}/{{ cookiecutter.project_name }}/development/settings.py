@@ -1,3 +1,4 @@
+# type: ignore
 from ..settings import *
 
 # To see outgoing email dumped to a terminal, uncomment the following and

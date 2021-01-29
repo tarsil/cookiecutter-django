@@ -1,3 +1,4 @@
+# type: ignore
 """
 testing.settings will pull in (probably global) local_settings,
 This is a special thanks to David Dyball for helping me understand and build something very familiar to me
@@ -9,6 +10,7 @@ If you are using windows by default, the permissions to access subfolders for te
 Activate them using NOSE_INCLUDE_EXE = 1 or an environment variable in your OS with the same name and value
 """
 from ..settings import *
+from .databases import *
 import os
 
 NOSE_INCLUDE_EXE = 1
@@ -27,17 +29,6 @@ TESTING = True
 DJANGOENV = os.environ.get("DJANGOENV", "testing")
 
 REUSE_DB = bool(int(os.environ.get("REUSE_DB", 0)))
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "postgres",
-        "PORT": "5432",
-    }
-}
 
 INSTALLED_APPS += ["django_nose"]
 
