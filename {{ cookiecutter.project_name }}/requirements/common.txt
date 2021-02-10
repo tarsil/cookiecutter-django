@@ -7,7 +7,7 @@ bleach==3.1.5
 cffi==1.14.1
 channels==3.0.0
 channels-redis==3.2.0
-cryptography==3.2
+cryptography==3.3.2
 Django==3.1.5
 django-annoying==0.10.6
 django-anymail[sendinblue]==7.2
