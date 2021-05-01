@@ -86,6 +86,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'lib.{{ cookiecutter.project_name }}.rest.paginator.NumberDetailPagination',
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'PAGE_SIZE': 50
 }
@@ -151,7 +152,7 @@ ASGI_APPLICATION = "{{ cookiecutter.project_name }}.routing.application"
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 PASSWORD_HASHERS = [
-    '{{ cookiecutter.project_name }}.auth.hashers.CustomPBKDF2SHA1PasswordHasher',
+    'lib.{{ cookiecutter.project_name }}.auth.hashers.CustomPBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     # 'django.contrib.auth.hashers.Argon2PasswordHasher',
