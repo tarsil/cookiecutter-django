@@ -10,16 +10,27 @@ jobs:
   build:
     machine: true
     environment:
-      IMAGE_NAME: oratio/virgo
+      IMAGE_NAME: tarsil/django
     resource_class: medium
     steps:
       - checkout
       - run:
+          name: install python 3.8
+          command: |
+            sudo add-apt-repository --yes ppa:deadsnakes/ppa
+            sudo apt-get update --fix-missing
+            sudo apt upgrade
+            sudo apt-get install python3.8
+            wget https://bootstrap.pypa.io/get-pip.py
+            sudo python3.8 get-pip.py
+            sudo python3.8 -m pip install --upgrade pip setuptools wheel
+            sudo python3.8 -m pip install pipenv
+      - run:
           name: Update pip
-          command: pip install --upgrade pip
+          command: pip3 install --upgrade pip
       - run:
           name: Install Cookiecutter
-          command: pip install cookiecutter
+          command: pip3 install cookiecutter
       - run:
           name: Create project test from cookiecutter
           command: cookiecutter . --no-input
