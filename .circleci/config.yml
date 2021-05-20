@@ -20,7 +20,7 @@ jobs:
             sudo python -m pip install --upgrade pip setuptools wheel
             sudo python -m pip install pipenv
       - run:
-          name: Install PyEnv
+          name: Install pyenv
           command: |
             git clone git://github.com/pyenv/pyenv-update.git $(pyenv root)/plugins/pyenv-update
             pyenv update
