@@ -33,14 +33,14 @@ requirements-deployment: ## Install the production requirements
 
 .PHONY: test
 test: ## Runs the unit tests from the scratch by recreating the testing database
-	cd myproject &&\
-	DJANGOENV=testing py.test $(TESTONLY) --disable-pytest-warnings --create-db
-	cd ..
+	cd $(PROJECT_NAME) &&\
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin --noinput
+	cd .
 
 .PHONY: test-reusedb
 test-reusedb:  ## Run the unit tests without recreating the testing database
-	cd myproject &&\
-	DJANGOENV=testing pytest --disable-pytest-warnings $(TESTONLY) --reuse-db &&\
+	cd $(PROJECT_NAME) &&\
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python manage.py test $(TESTONLY)  --exe --with-specplugin  --keepdb &&\
 	cd ..
 
 .PHONY: mypy
