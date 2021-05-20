@@ -15,19 +15,33 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install python 3.8
+          name: Install/Update pip pipenv
           command: |
-            sudo add-apt-repository --yes ppa:deadsnakes/ppa
-            sudo apt-get update --fix-missing
-            sudo apt upgrade
-            sudo apt-get install python3.8
-            wget https://bootstrap.pypa.io/get-pip.py
-            sudo python3.8 get-pip.py
-            sudo python3.8 -m pip install --upgrade pip setuptools wheel
-            sudo python3.8 -m pip install pipenv
+            sudo python -m pip install --upgrade pip setuptools wheel
+            sudo python -m pip install pipenv
+      - run:
+          name: Install PyEnv
+          command: |
+            git clone git://github.com/pyenv/pyenv-update.git $(pyenv root)/plugins/pyenv-update
+            pyenv update
+            pyenv install 3.8.5
+      - run:
+          name: Set Python Version
+          command: pyenv global 3.8.5
+      # - run:
+      #     name: install python 3.8
+      #     command: |
+      #       sudo add-apt-repository --yes ppa:deadsnakes/ppa
+      #       sudo apt-get update --fix-missing
+      #       sudo apt upgrade
+      #       sudo apt-get install python3.8
+      #       wget https://bootstrap.pypa.io/get-pip.py
+      #       sudo python3.8 get-pip.py
+      #       sudo python3.8 -m pip install --upgrade pip setuptools wheel
+      #       sudo python3.8 -m pip install pipenv
       - run:
           name: Update pip
-          command: pip3 install --upgrade pip
+          command: pip install --upgrade pip
       - run:
           name: Install Cookiecutter
           command: pip3 install cookiecutter
