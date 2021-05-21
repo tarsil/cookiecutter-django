@@ -1,36 +1,75 @@
+import accounts.forms
 import accounts.models
-import bleach
-from django.contrib.auth import login
+import accounts.models
+import accounts.utils
+from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-import accounts.serializers
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import FormView, View, TemplateView
+from lib.common.views import AuthMixin
 
 
-class LoginApiView(APIView):
-    """View handling with the Login System via API"""
-    serializer_class = accounts.serializers.LoginSerializer
-    redirect_url = None
+class BaseUserSystemView(AuthMixin):
+    """
+    Base class inheriting from the main settings object where common validations are placed
+    """
+
+    def get_object(self):
+        user = accounts.models.User.objects.get(
+            profile__slug=self.kwargs.get('slug', self.request.user.profile.slug)
+        )
+        if self.request.user.email == user.email:
+            return self.request.user
+        return user
+
+    def get_back_url(self):
+        return self.request.META.get("HTTP_REFERER", reverse('homepage'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'user': self.get_object(),
+            'active': False
+        })
+        return context
+
+
+class LoginView(FormView):
+    template_name = '{{ cookiecutter.project_name }}/auth/login.html'
+    form_class = accounts.forms.LoginForm
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(self.get_success_url())
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        user = form.get_user()
+        login(self.request, user)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        messages.add_message(
+            self.request, messages.ERROR, _("The credentials that you've entered don't match any account")
+        )
+        return super().form_invalid(form)
 
     def get_success_url(self):
-        """ """
-        redirect_url = self.request.data.get('next', '')
-        redirect_url = bleach.clean(redirect_url)
-        if not redirect_url:
-            return reverse('homepage')
-        return redirect_url
+        return reverse('homepage')
 
-    def post(self, request, *args, **kwargs):
-        """Gets the data from the request and validates against a record in the database
-        """
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
 
-        # CREATE LOGIN
-        user = serializer.get_user()
-        login(request, user)
+class LogoutView(View):
+    def get(self, request, *args, **kwargs):
+        logout(self.request)
+        return HttpResponseRedirect(reverse('login'))
 
-        # SET THE STATUS TO ONLINE
-        accounts.utils.set_status(user.hub_user, accounts.models.Choices.ProfileStatus.ONLINE)
-        return Response({'url': self.get_success_url()}, status=status.HTTP_200_OK)
+
+class HomepageView(TemplateView):
+    template_name = '{{ cookiecutter.project_name }}/application/homepage/homepage.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().get(request, *args, **kwargs)
+        return HttpResponseRedirect(reverse('login'))

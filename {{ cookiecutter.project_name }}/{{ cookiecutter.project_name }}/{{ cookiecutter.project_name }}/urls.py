@@ -18,7 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.contrib import admin
-from accounts.django_views import LoginView, LogoutView, HomepageView
+from accounts.views import LoginView, LogoutView, HomepageView
 import accounts.urls
 
 admin.autodiscover()
@@ -36,7 +36,7 @@ urlpatterns = [
     path('u/', include(accounts.urls.accounts_urlpatterns)),
 
     # API
-    path('core/api/', include((api_url_patterns, 'internal-api'), namespace='internal-api')),
+    path("core/api/", include(("core.api.urls"))),
 ]
 
 
