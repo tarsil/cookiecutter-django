@@ -18,7 +18,7 @@ django-cors-headers==3.4.0
 django-countries==6.1.2
 django-csp==3.6
 django-dramatiq==0.9.1
-django-filter==2.3.0
+django-filter==2.4.0
 django-geoposition==0.3.0
 django-guardian==2.3.0
 django-leaflet==0.27.1
@@ -44,7 +44,7 @@ isort==4.3.4
 Jinja2==2.11.3
 jsonfield==3.1.0
 Markdown==3.2.2
-markdown2==2.3.9
+markdown2==2.4.0
 netaddr==0.8.0
 phone_iso3166==0.3.6
 phonenumbers==8.12.7
@@ -65,7 +65,7 @@ simplejson==3.17.2
 tldextract==2.2.3
 tqdm==4.48.2
 unicodecsv==0.14.1
-urllib3>=1.25.8
+urllib3==1.25.9
 user-agents==2.1
 uWSGI==2.0.19.1
 wrapt==1.12.1

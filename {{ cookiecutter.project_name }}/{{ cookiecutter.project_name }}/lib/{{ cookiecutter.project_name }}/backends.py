@@ -16,7 +16,6 @@ class EmailBackend(ModelBackend):
             email = kwargs.get(UserModel.EMAIL_FIELD)
         if email is None or password is None:
             return
-        breakpoint()
         try:
             user = UserModel.objects.get(email__iexact=email)
         except UserModel.DoesNotExist:
