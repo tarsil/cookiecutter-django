@@ -80,6 +80,10 @@ start_docker: ## Starts the dev environment
 start_docker_logs: ## Starts the dev environment
 	docker-compose up
 
+.PHONY: scheduler
+schedule: ## Starts the schedule
+	python3 whalap/manage.py scheduler
+
 ifndef VERBOSE
 .SILENT:
 endif

@@ -51,6 +51,7 @@ BASE_INSTALLED_APPS = [
     'statici18n',
     'rest_framework',
     'channels',
+    'django_apscheduler',
 ]
 
 INSTALLED_APPS = [
@@ -251,3 +252,14 @@ DRAMATIQ_QUEUES = {
     'default': 'default',
 }
 
+# DJANGO APSCHEDULER
+# More info: https://github.com/jarekwg/django-apscheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
+
+SCHEDULER_CONFIG = {
+    "apscheduler.jobstores.default": {"class": "django_apscheduler.jobstores:DjangoJobStore"},
+    "apscheduler.executors.processpool": {"type": "threadpool"},
+}
+
+DJANGO_NOTIFICATIONS_CONFIG = {"USE_JSONFIELD": True}
