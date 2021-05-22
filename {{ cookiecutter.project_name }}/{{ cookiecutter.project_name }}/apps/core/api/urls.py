@@ -33,8 +33,8 @@ def get_urls(version, importer):
     return version_urls
 
 
-for version, importer in imports.items():
-    api += get_urls(version, importer)
+for version, _import in imports.items():
+    api += get_urls(version, _import)
 
 
 urlpatterns = [re_path(r"^", include(api))]

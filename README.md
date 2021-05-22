@@ -46,5 +46,5 @@ This project implements [dramatiq](https://dramatiq.io/)
 
 ## Install the template
 
-1. `cookiecutter https://github.com/tiagoarasilva/cookiecutter-django` and follow the instructions.
+1. `cookiecutter https://github.com/tarsil/cookiecutter-django` and follow the instructions.
     **When giving a name to your project, avoid dashes by using underscores instead.**
