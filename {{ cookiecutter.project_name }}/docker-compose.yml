@@ -1,5 +1,21 @@
 version: '3.3'
 services:
+  pgbouncer:
+    image: tarsil/django:latest
+    depends_on:
+      - db
+    environment:
+      ENVIRONMENT: development
+      ROLE: pgbouncer
+    links:
+      - db:postgres
+    expose:
+      - "6432"
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    command: bash -lc "pip3 install invoke jinja2 && invoke -r /var/www/roles $${ROLE}"
+
   db:
     restart: always
     image: postgres:11.6
@@ -34,6 +50,7 @@ services:
     restart: always
     image: tarsil/django:latest
     depends_on:
+      - pgbouncer
       - redis
       - rabbitmq
     environment:
@@ -48,6 +65,7 @@ services:
       ROLE: development
     links:
       - db:postgres
+      - pgbouncer:pgbouncer
       - redis:redis
       - rabbitmq:rabbitmq
     ports:

@@ -33,3 +33,16 @@ def testing(context):
     """
     run('make requirements-dev')
     run('make test')
+
+
+@task
+def pgbouncer(context):
+    """
+    PG Bouncer to run in the local development
+    """
+    _template_file("pgbouncer/dev/pgbouncer.ini", "/tmp/pgbouncer.ini")
+    command = "/usr/sbin/pgbouncer -u www-data /tmp/pgbouncer.ini"
+    # run("apt-get update")
+    run("apt-get install -y libc-ares2")
+    run("chmod +x /usr/sbin/pgbouncer")
+    run(command)

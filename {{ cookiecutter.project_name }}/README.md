@@ -45,6 +45,7 @@ The command `make` will display all the options and automation of the project.
   2. redis
   3. rabbitmq
   4. {{ cookiecutter.project_name }}
+  5. pgbouncer
 
 ## Setup
 

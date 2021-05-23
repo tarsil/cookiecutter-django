@@ -25,6 +25,7 @@ also set and this cookiecutter offers a lot of boilerplating including:
 3. Django Rest Framework
 4. Redis
 5. RabbitMQ
+6. PGBouncer for database accesses
 
 All of this using docker.
 
