@@ -1,4 +1,7 @@
 {
     "project_name": "myproject",
-    "license": ["MIT", "BSD-3", "BSD-2", "GNU GPL v3.0", "Apache Software License 2.0"]
+    "license": ["MIT", "BSD-3", "BSD-2", "GNU GPL v3.0", "Apache Software License 2.0"],
+    "_copy_without_render": [
+        "deploy/supervisor/*"
+    ]
 }
