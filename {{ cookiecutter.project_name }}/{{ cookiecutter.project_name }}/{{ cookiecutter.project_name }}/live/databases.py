@@ -1,10 +1,5 @@
 import os
 
-{%- if cookiecutter.without_mongo == "N" %}
-import mongoengine
-{%-endif %}
-
-
 DATABASES = {
 
     'default': {
@@ -18,14 +13,28 @@ DATABASES = {
             'connect_timeout': 5,  # seconds
         }
     },
+    {%-if cookiecutter.without_mongo == "N" %}
+    'mongodb': {
+        'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': True,
+        'LOGGING': {
+            'version': 1,
+            'loggers': {
+                'djongo': {
+                    'level': 'DEBUG',
+                    'propogate': False,
+                }
+            },
+         },
+        'NAME': 'mongodb',
+        'CLIENT': {
+            'host': os.environ.get('WHALAP_MONGODB_HOST', 'mongodb'),
+            'port': os.environ.get('WHALAP_MONGODB_PORT', 'mongodb'),
+            'username': os.environ.get('WHALAP_MONGODB_USER_HOST', 'root'),
+            'password': os.environ.get('WHALAP_MONGODB_PASSWORD', 'mongoadmin'),
+            'authSource': 'admin',
+            'authMechanism': 'SCRAM-SHA-1'
+        }
+    }
+    {%-endif %}
 }
-
-{% if cookiecutter.without_mongo == "N" -%}
-MONGO_USER = os.environ.get('{{ cookiecutter.project_name }}_MONGODB_USER_HOST', 'root'),
-MONGO_PASS = os.environ.get('{{ cookiecutter.project_name }}_MONGODB_PASSWORD', 'mongoadmin'),
-MONGO_HOST = os.environ.get('{{ cookiecutter.project_name }}_MONGODB_HOST', 'mongodb')
-MONGO_DB_NAME = os.environ.get('{{ cookiecutter.project_name }}_MONGODB_DB_NAME', 'mongodb')
-MONGO_DATABASE_HOST = f"mongodb://%s:%s@%s/%s" % (MONGO_USER, MONGO_PASS, MONGO_HOST, MONGO_DB_NAME)
-
-mongoengine.connect(MONGO_DB_NAME, host=MONGO_DATABASE_HOST)
-{% endif %}
