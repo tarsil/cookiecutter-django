@@ -1,4 +1,4 @@
-# Cookiecutter Django
+# Cookiecutter Django + PostGres + Docker + DramatiQ
 
 [![CircleCI](https://circleci.com/gh/tarsil/cookiecutter-django.svg?style=shield&circle-token=91ae5605f46538c06c9b88248fd0fd6cc9b2994d)](https://circleci.com/gh/tarsil/cookiecutter-django)
 [![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/tiagoarasilva/Django%20Cookiecutter%2FTest%26Build?type=cf-1&key=eyJhbGciOiJIUzI1NiJ9.NThhOGRkNTdmMjU5OWMwMTAwZjQzYmRi.kUnXk46L86nOtnW3OI5-TJK6cYlavAHbhF5MqKg6pLM)](https://g.codefresh.io/pipelines/edit/new/builds?id=5fc91f0654e9095fcd293333&pipeline=Test%26Build&projects=Django%20Cookiecutter&projectId=5fc91e5e84fbdc5d38bf1924)
@@ -26,6 +26,7 @@ also set and this cookiecutter offers a lot of boilerplating including:
 4. Redis
 5. RabbitMQ
 6. PGBouncer for database accesses
+7. MongoDB as Optional
 
 All of this using docker.
 

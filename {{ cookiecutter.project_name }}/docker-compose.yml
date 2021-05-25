@@ -46,6 +46,33 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  {%if cookiecutter.without_mongo == "N" -%}
+    mongodb:
+      restart: always
+      image: mongo:latest
+      container_name: mongo
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+        MONGO_INITDB_DATABASE: mongodb
+      volumes:
+          - "{{ cookiecutter.project_name }}_mongo_db_data:/data/db"
+      ports:
+        - 27017:27017
+
+    mongo-express:
+      image: mongo-express
+      restart: always
+      ports:
+        - 8081:8081
+      environment:
+        ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+        ME_CONFIG_MONGODB_SERVER: mongodb
+        ME_CONFIG_MONGODB_ADMINUSERNAME: root
+        ME_CONFIG_MONGODB_ADMINPASSWORD: mongoadmin
+        ME_CONFIG_BASICAUTH_USERNAME: admin
+        ME_CONFIG_BASICAUTH_PASSWORD: password
+  {% endif %}
   {{ cookiecutter.project_name }}:
     restart: always
     image: tarsil/django:latest
@@ -68,6 +95,9 @@ services:
       - pgbouncer:pgbouncer
       - redis:redis
       - rabbitmq:rabbitmq
+    {%-if cookiecutter.without_mongo == "N"%}
+      - mongodb:mongodb
+    {%-endif %}
     ports:
       - 127.0.0.1:80:80
       - 127.0.0.1:443:443
@@ -85,3 +115,7 @@ services:
 volumes:
   {{ cookiecutter.project_name }}_db_data:
     external: true
+  {% if cookiecutter.without_mongo == "N"-%}
+  {{ cookiecutter.project_name }}_mongo_db_data:
+      external: true
+  {% endif %}

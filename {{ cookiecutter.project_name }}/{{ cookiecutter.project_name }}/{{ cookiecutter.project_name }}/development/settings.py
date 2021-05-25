@@ -1,5 +1,6 @@
 # type: ignore
 from ..settings import *
+from .databases import *
 
 # To see outgoing email dumped to a terminal, uncomment the following and
 # run "python -m smtpd -n -c DebuggingServer localhost:1025"
