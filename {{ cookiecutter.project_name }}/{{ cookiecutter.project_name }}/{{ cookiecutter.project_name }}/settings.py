@@ -51,6 +51,7 @@ BASE_INSTALLED_APPS = [
     'statici18n',
     'rest_framework',
     'channels',
+    'django_dramatiq',
     'django_apscheduler',
 ]
 

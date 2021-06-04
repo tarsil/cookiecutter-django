@@ -18,7 +18,7 @@ django-ckeditor==5.9.0
 django-cors-headers==3.4.0
 django-countries==6.1.2
 django-csp==3.6
-django-dramatiq==0.9.1
+django-dramatiq==0.10.0
 django-filter==2.4.0
 django-geoposition==0.3.0
 django-guardian==2.3.0
