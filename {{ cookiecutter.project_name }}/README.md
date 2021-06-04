@@ -15,7 +15,7 @@
 
 ## Initial notes
 
-- This project runs on Django 3.1+ and Python 3.
+- This project runs on Django 3.2+ and Python 3.
 - The requirements are located inside the requirements folder for:
   - development
   - deployment
