@@ -1,0 +1,79 @@
+{
+  "python.analysis.disabled": ["unnecessary-semicolon"],
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.extraPaths": [
+      "{{ cookiecutter.project_name }}",
+      "{{ cookiecutter.project_name }}/apps",
+      "{{ cookiecutter.project_name }}/static",
+      "{{ cookiecutter.project_name }}/templates",
+  ],
+  "terminal.integrated.env.osx": {
+      "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/{{ cookiecutter.project_name }}",
+  },
+  "terminal.integrated.env.linux": {
+      "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/{{ cookiecutter.project_name }}",
+  },
+  "terminal.integrated.env.windows": {
+      "PYTHONPATH": "${env:PYTHONPATH};${workspaceFolder}/{{ cookiecutter.project_name }}",
+  },
+  "search.useGlobalIgnoreFiles": true,
+  "python.envFile": "${workspaceFolder}/.env",
+  "python.linting.pycodestyleEnabled": false,
+  "python.linting.pylintArgs": [
+      "--load-plugins",
+      "pylint_django",
+      "--enable=W611",
+  ],
+  "python.formatting.autopep8Args": [
+    "--max-line-length=120"
+  ],
+  "python.linting.pylintEnabled": false,
+  "python.linting.enabled": true,
+  "html.suggest.html5": true,
+  "html.autoClosingTags": true,
+  "editor.rulers": [120],
+  "search.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/tmp": true,
+    "**/env": true
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/.idea": true,
+    "**/.webpack-build": true,
+    "**/*.js.map": true,
+    "**/*.css.map": true,
+    "**/*.pyc": {"when": "$(basename).py"},
+    "**/__pycache__": true
+  },
+  "workbench.list.multiSelectModifier": "alt",
+  "python.linting.flake8Enabled": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "files.associations": {
+    "**/*.html": "html",
+    "**/templates/**/*.html": "django-html",
+    "**/templates/**/*": "django-txt",
+    "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+  },
+  "emmet.includeLanguages": {"django-html": "html"},
+  "editor.fontSize": 15,
+  "workbench.colorCustomizations": {
+    "editorRuler.foreground": "#ff333388"
+  },
+  "python.linting.banditEnabled": true
+}
