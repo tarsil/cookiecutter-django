@@ -30,7 +30,7 @@ class SubList(list):
         super().__init__(*args)
 
     def __str__(self):
-        return self.token.join(self)
+        return self.delimiter.join(self)
 
 
 class ListField(models.TextField):
