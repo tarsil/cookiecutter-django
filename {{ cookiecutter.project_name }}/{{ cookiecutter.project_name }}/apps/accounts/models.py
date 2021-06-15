@@ -17,10 +17,10 @@ logger = logging.getLogger(__name__)
 
 class Choices(object):
     class Profiles:
-        ADMIN = u'admin'
-        USER = u'user'
-        MANAGER = u'manager'
-        OTHER = u'other'
+        ADMIN = 'admin'
+        USER = 'user'
+        MANAGER = 'manager'
+        OTHER = 'other'
 
         PROFILE_CHOICES = (
             (ADMIN, 'Admin'),
