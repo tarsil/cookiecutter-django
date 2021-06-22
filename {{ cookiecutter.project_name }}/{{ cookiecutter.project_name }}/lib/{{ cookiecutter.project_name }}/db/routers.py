@@ -1,11 +1,8 @@
-from django.conf import settings
-
-
 class MongoDBRouter:
 
     db_name = 'mongodb'
     default_db = "default"
-    route_app_labels = {"blockchain", "socialmedia"}
+    route_app_labels = {}
     
     def db_for_read(self, model, **hints):
         """
