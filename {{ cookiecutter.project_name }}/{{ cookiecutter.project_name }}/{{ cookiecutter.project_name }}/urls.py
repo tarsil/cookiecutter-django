@@ -24,10 +24,6 @@ import accounts.urls
 admin.autodiscover()
 
 
-api_url_patterns = [
-    path('accounts/', include((accounts.urls.accounts_api_urlpatterns, 'accounts'), namespace='accounts')),
-]
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomepageView.as_view(), name='homepage'),
@@ -36,7 +32,7 @@ urlpatterns = [
     path('u/', include(accounts.urls.accounts_urlpatterns)),
 
     # API
-    path("core/api/", include(("core.api.urls"))),
+    path("api/", include(("core.api.urls"))),
 ]
 
 

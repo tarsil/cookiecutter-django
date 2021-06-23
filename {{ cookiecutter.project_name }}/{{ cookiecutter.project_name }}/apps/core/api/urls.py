@@ -28,7 +28,7 @@ def get_urls(version, importer):
         if app_urls:
             app_path = r"^%s/%s/" % (version, app)  # noqa
             version_clean = version.replace('.', '_').replace('\\', '')  # noqa 
-            namespace = f"api-{app}:{version_clean}"  # noqa 
+            namespace = f"api-{app}_{version_clean}"  # noqa 
             version_urls += [re_path(app_path, include((app_urls, app), namespace=namespace))]
     return version_urls
 
