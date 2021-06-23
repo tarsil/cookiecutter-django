@@ -76,13 +76,9 @@ LOGGING = {
         },
     },
     "loggers": {
-        "": {
-            "handlers": ["console"],
-            "level": "ERROR",
-        },
         "{{ cookiecutter.project_name }}.apps": {
-            "handlers": [],
-            "propagate": False,
+            "handlers": ['console'],
+            "propagate": True,
         },
     }
 }
