@@ -50,6 +50,10 @@ mypy: ## Runs MyPy type checking
 .PHONY: run
 run:
 	python $(PROJECT_NAME)/manage.py runserver_plus 0.0.0.0:8000 --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+	
+.PHONY: asgi
+asgi: ## Starts the local server in ASGI mode
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python $(PROJECT_NAME)/manage.py runserver 0.0.0.0:8000
 
 .PHONY: shell
 shell:
