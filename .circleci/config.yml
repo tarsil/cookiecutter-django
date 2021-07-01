@@ -8,18 +8,20 @@ workflows:
 
 jobs:
   build:
-    machine: true
+    machine:
+      image: circleci/classic:201808-01
     environment:
       IMAGE_NAME: tarsil/django
     resource_class: medium
     steps:
       - checkout
       - run:
-          name: Update pip
-          command: pip install --upgrade pip
+          name: "Set Python Version"
+          command: |
+            pyenv versions 
+            pyenv global 3.7.0
       - run:
-          name: Install Cookiecutter
-          command: pip3 install cookiecutter
+          command: pip install cookiecutter
       - run:
           name: Create project test from cookiecutter
           command: cookiecutter . --no-input

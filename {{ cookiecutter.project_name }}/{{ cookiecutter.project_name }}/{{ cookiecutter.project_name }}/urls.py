@@ -29,7 +29,7 @@ urlpatterns = [
     path('', HomepageView.as_view(), name='homepage'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('u/', include(accounts.urls.accounts_urlpatterns)),
+    path('u/', include('accounts.urls'), name='user'),
 
     # API
     path("api/", include(("core.api.urls"))),

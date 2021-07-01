@@ -56,11 +56,6 @@ LOGGING = {
             "level": "ERROR",
             "propagate": True
         },
-        "elasticsearch": {
-            "handlers": ["console"],
-            "level": "WARNING",
-            "propagate": False
-        },
         "urllib3": {
             "handlers": ["console"],
             "level": "WARNING",
