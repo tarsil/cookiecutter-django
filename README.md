@@ -40,7 +40,7 @@ To use this cookiecutter you should have at least.
 
 ## Cookiecutter
 
-1. Cookiecutter - More details how to use and install [here](https://cookiecutter.readthedocs.io/en/1.7.2/)
+1. Cookiecutter - More details how to use and install [here](https://cookiecutter.readthedocs.io/en/latest/)
 
 ## Task Manager
 
