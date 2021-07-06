@@ -21,15 +21,15 @@ migrations: ## Generate migrations
 
 .PHONY: requirements
 requirements: ## Install the production requirements
-	pip3 install -r requirements/common.txt
+	pip3 install -r requirements/common.txt --use-feature=fast-deps --use-deprecated=legacy-resolver
 
 .PHONY: requirements-dev
 requirements-dev: ## Install the production requirements
-	pip3 install -r requirements/development.txt
+	pip3 install -r requirements/development.txt --use-feature=fast-deps --use-deprecated=legacy-resolver
 
 .PHONY: requirements-deployment
 requirements-deployment: ## Install the production requirements
-	pip3 install -r requirements/deployment.txt
+	pip3 install -r requirements/deployment.txt --use-feature=fast-deps --use-deprecated=legacy-resolver
 
 .PHONY: test
 test: ## Runs the unit tests from the scratch by recreating the testing database
