@@ -1,4 +1,4 @@
-from core.api import imports
+from core.apis import imports
 from django.conf import settings
 from django.conf.urls import include, re_path
 from drf_yasg import openapi

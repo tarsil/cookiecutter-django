@@ -1,3 +1,4 @@
+import accounts.apis.v1.serializers
 import accounts.models
 import bleach
 from django.contrib.auth import login
@@ -5,7 +6,6 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import accounts.apis.v1.serializers
 
 
 class LoginApiView(APIView):

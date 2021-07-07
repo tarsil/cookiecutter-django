@@ -110,7 +110,7 @@ class HubUserDetailsModelTest(TestCase):
         self.assertIsNotNone(self.hub_user)
 
     def test_can_create_profile_and_is_only_one(self):
-        """Tests the creation of a profile successfully"""
+        """Tests the creation of a profile successfully and only one"""
         total = accounts.models.HubUser.objects.all()
 
         self.assertEqual(total.count(), 1)

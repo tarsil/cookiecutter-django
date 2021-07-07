@@ -4,7 +4,6 @@ import logging
 from uuid import uuid4
 
 import bleach
-from accounts.utils import get_uuid
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -49,11 +48,6 @@ class HubUser(models.Model):
     is_hidden = models.BooleanField(default=False, blank=False, null=False)
     is_disabled = models.BooleanField(default=False, blank=False, null=False)
     is_password_changed = models.BooleanField(default=False, blank=False, null=False)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if not self.uuid:
-            self.uuid = get_uuid()
 
     def __str__(self):
         return self.display_name

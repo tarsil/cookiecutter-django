@@ -80,7 +80,7 @@ For these functionalities we provide some automation to make it easier the devel
   1. `make migrations` - Creates new migrations. This command is a wrapper of the `makemigrations`
   command from django.
   2. `make dramatiq` - Starts the dramatiq workers locally.
-  3. `make unittests` - Runs all the tests of the platform.
+  3. `make test` - Runs all the tests of the platform.
   4. `make shell` - Starts the shell in interactive mode.
 
 For commands and explanations, run `make` and a list will be displayed with a small description.
@@ -89,12 +89,12 @@ For commands and explanations, run `make` and a list will be displayed with a sm
 
 To make the life of our developers easier, we also have a wrapper to run the tests.
 
-  1. `make unittests` - Runs the whole suite of tests in the platform and rebuilds always the test
+  1. `make test` - Runs the whole suite of tests in the platform and rebuilds always the test
   db every time it runs.
-  2. `make unittests TESTONLY='name_of_module'` - Runs the tests for a specific module instead the
+  2. `make test TESTONLY='name_of_module'` - Runs the tests for a specific module instead the
   whole codebase. This also rebuilds the DB every time it runs. Example:
-      1. `make unittests TESTONLY='accounts'.
-      2. `make unittests TESTONLY='accounts.tests.test_models'.
-  3. `make reusedb_unittests`. Runs the whole suite of tests in the platform without rebuilding the db.
-  4. `make reusedb_unittests TESTONLY='name_of_module'` -
-  Same principle or `make unittests TESTONLY` but without rebuilding the db.
+      1. `make test TESTONLY='accounts'.
+      2. `make test TESTONLY='accounts.tests.test_models'.
+  3. `make test-reusedb`. Runs the whole suite of tests in the platform without rebuilding the db.
+  4. `make test-reusedb TESTONLY='name_of_module'` -
+  Same principle or `make test TESTONLY` but without rebuilding the db.

@@ -32,7 +32,7 @@ urlpatterns = [
     path('u/', include('accounts.urls'), name='user'),
 
     # API
-    path("api/", include(("core.api.urls"))),
+    path("api/", include(("core.apis.urls", "api"))),
 ]
 
 
