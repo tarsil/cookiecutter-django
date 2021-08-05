@@ -86,7 +86,7 @@ start_docker_logs: ## Starts the dev environment
 
 .PHONY: scheduler
 scheduler: ## Starts the schedule
-	python3 whalap/manage.py scheduler
+	python3 $(PROJECT_NAME)/manage.py scheduler
 
 ifndef VERBOSE
 .SILENT:

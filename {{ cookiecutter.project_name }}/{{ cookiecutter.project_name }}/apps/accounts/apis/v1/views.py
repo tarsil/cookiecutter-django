@@ -1,11 +1,121 @@
+import logging
+
 import accounts.apis.v1.serializers
 import accounts.models
 import bleach
+from accounts.apis.v1.serializers import (
+    CustomTokenObtainPairSerializer, 
+    UpdatePasswordSerializer,
+    UpdateEmailSerializer,
+    UserRegistrationSerializer
+)
 from django.contrib.auth import login
+from django.db import IntegrityError, OperationalError, transaction
 from django.urls import reverse
+from lib.{{cookiecutter.project_name}}.rest.generics import AuthMixin, RequiredUserContextView
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.generics import DestroyAPIView, RetrieveAPIView, UpdateAPIView
+
+log = logging.getLogger(__name__)
+
+
+class EmailTokenObtainPairView(TokenObtainPairView):
+    """
+    Replaces the token get from username and adds the possibility to be as email.
+    """
+
+    serializer_class = CustomTokenObtainPairSerializer
+
+
+class RegisterApiView(APIView):
+    """Registers a HubUser in the platform"""
+
+    serializer_class = UserRegistrationSerializer
+    permission_classes = []
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_full_url(self, request):
+        """Full URL for a auth user
+        """
+        uri = request.user.account_verification.email_uri_confirmation
+        if not uri:
+            return
+        return request.get_host() + uri
+
+    def post(self, request, *args, **kwargs):
+        with transaction.atomic():
+            try:
+                serializer = self.serializer_class(data=self.request.data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+            except OperationalError as e:
+                log.exception(e)
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_200_OK)
+
+
+class BaseUpdateUser(AuthMixin, RequiredUserContextView):
+    """Base for the updates of the HubUser"""
+
+    def get_object(self):
+        return self.request.user
+
+
+class UpdatePasswordView(BaseUpdateUser, UpdateAPIView):
+    """From the HubUser settings page, updates the password"""
+
+    serializer_class = UpdatePasswordSerializer
+
+    def update(self, request, *args, **kwargs):
+        """Updates current password of the account
+        1. Check if the password is the same as the hub user
+        2. Check if the passwords provided match
+        3. Updates
+        """
+        instance = self.get_object()
+        serializer = self.serializer_class(instance=instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+class UpdateEmailView(BaseUpdateUser, UpdateAPIView):
+    """Updates the email of an HubUser"""
+
+    serializer_class = UpdateEmailSerializer
+
+    def update(self, request, *args, **kwargs):
+        """Updates current email of the account
+        1. Check if the email is the same as the hub user
+        2. Check if the emails provided match
+        3. Updates
+
+        """
+        instance = self.get_object()
+        serializer = self.serializer_class(instance=instance, data=request.data, context=self.get_serializer_context())
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+class DeleteUserAccountApiView(AuthMixin, DestroyAPIView):
+    """View for the right to be forgotten and to remove the account for good"""
+
+    user = None
+
+    def get_mail_url(self):
+        """ """
+        return super().get_mail_url(reverse("register"))
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.request.user
+        instance.delete()
+        return Response({"url": reverse("landing-page")}, status=status.HTTP_200_OK)
 
 
 class LoginApiView(APIView):

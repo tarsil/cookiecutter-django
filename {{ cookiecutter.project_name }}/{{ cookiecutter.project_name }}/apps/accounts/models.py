@@ -6,9 +6,9 @@ from uuid import uuid4
 import bleach
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.db import models
+from django.db import IntegrityError, OperationalError, models, transaction
 from django.db import transaction, IntegrityError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from slugify import slugify
 
 logger = logging.getLogger(__name__)
@@ -94,6 +94,20 @@ class HubUser(models.Model):
                 logger.exception(f"Error creating the HubUser: {e}")
                 return
             return hub_user
+
+    @classmethod
+    def update_email(cls, instance, email):
+        """Updates the email of an HubUser
+        """
+        with transaction.atomic():
+            try:
+                user = get_user_model().objects.select_for_update().get(pk=instance.pk)
+                user.email = email
+                user.save()
+            except (get_user_model().DoesNotExist, OperationalError) as e:
+                logger.exception(e)
+                return
+            return user
 
     @property
     def display_name(self):

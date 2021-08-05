@@ -28,10 +28,10 @@ DATABASES = {
          },
         'NAME': 'mongodb',
         'CLIENT': {
-            'host': os.environ.get('WHALAP_MONGODB_HOST', 'mongodb'),
-            'port': os.environ.get('WHALAP_MONGODB_PORT', 'mongodb'),
-            'username': os.environ.get('WHALAP_MONGODB_USER_HOST', 'root'),
-            'password': os.environ.get('WHALAP_MONGODB_PASSWORD', 'mongoadmin'),
+            'host': os.environ.get('{{ cookiecutter.project_name }}_MONGODB_HOST', 'mongodb'),
+            'port': os.environ.get('{{ cookiecutter.project_name }}_MONGODB_PORT', 'mongodb'),
+            'username': os.environ.get('{{ cookiecutter.project_name }}_MONGODB_USER_HOST', 'root'),
+            'password': os.environ.get('{{ cookiecutter.project_name }}_MONGODB_PASSWORD', 'mongoadmin'),
             'authSource': 'admin',
             'authMechanism': 'SCRAM-SHA-1'
         }

@@ -1,13 +1,14 @@
 # type: ignore
+import datetime  # noqa: F403,F401
 import os  # noqa: F403,F401
 import sys  # noqa: F403,F401
+from datetime import timedelta  # noqa: F403,F401
 
-from .channel_layers import * # noqa: F403,F401
+from .channel_layers import *  # noqa: F403,F401
 from .databases import *  # noqa: F403,F401
+from .general.caches import *  # noqa: F403,F401
 from .general.settings import *  # noqa: F403,F401
 from .third_parties.blacklist_domains import *  # noqa: F403,F401
-from .general.caches import *  # noqa: F403,F401
-
 
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 os.path.basename(os.path.dirname(SITE_ROOT))
@@ -50,6 +51,7 @@ BASE_INSTALLED_APPS = [
     'lib.common',
     'statici18n',
     'rest_framework',
+    'rest_framework_simplejwt',
     'channels',
     'django_dramatiq',
     'django_apscheduler',
@@ -80,18 +82,19 @@ AUTHENTICATION_BACKENDS = (
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        "rest_framework.authentication.SessionAuthentication",
     ),
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
+    "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.JSONRenderer",
+        'rest_framework.parsers.MultiPartParser'
     ),
-    'DEFAULT_PAGINATION_CLASS': 'lib.{{ cookiecutter.project_name }}.rest.paginator.NumberDetailPagination',
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'PAGE_SIZE': 50
+    "DEFAULT_PAGINATION_CLASS": "lib.{{ cookiecutter.project_name }}.rest.paginator.NumberDetailPagination",
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+    "PAGE_SIZE": 20,
 }
 
 
@@ -264,3 +267,36 @@ SCHEDULER_CONFIG = {
 }
 
 DJANGO_NOTIFICATIONS_CONFIG = {"USE_JSONFIELD": True}
+
+# JWT
+SIMPLE_JWT_SIGNING_KEY = "b=72^ado*%1(v3r7rga9ch)03xr=d*f)lroz94kosf!61((9=i"
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=200),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+    'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=200),
+}

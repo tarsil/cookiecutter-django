@@ -1,4 +1,4 @@
-"""dj URL Configuration
+"""django URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -19,7 +19,12 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.contrib import admin
 from accounts.views import LoginView, LogoutView, HomepageView
-import accounts.urls
+
+from accounts.apis.v1.views import EmailTokenObtainPairView
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+    TokenVerifyView
+)
 
 admin.autodiscover()
 
@@ -33,6 +38,11 @@ urlpatterns = [
 
     # API
     path("api/", include(("core.apis.urls", "api"))),
+
+    # JWT
+    path('auth/api/token', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/api/token/verify', TokenVerifyView.as_view(), name='token_verify'),
 ]
 
 
