@@ -120,7 +120,7 @@ class DeleteUserAccountApiView(AuthMixin, DestroyAPIView):
 
 class LoginApiView(APIView):
     """View handling with the Login System via API"""
-    serializer_class = accounts.serializers.LoginSerializer
+    serializer_class = accounts.apis.v1.serializers.LoginSerializer
     redirect_url = None
 
     def get_success_url(self):
