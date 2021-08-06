@@ -31,3 +31,19 @@ class ChoicesField(serializers.Field):
 
         """
         return getattr(self._choices, data)
+ 
+
+class WritableSerializerMethodField(serializers.SerializerMethodField):
+    def __init__(self, method_name=None, **kwargs):
+        super().__init__(**kwargs)
+
+        self.read_only = False
+
+    def get_default(self):
+        default = super().get_default()
+
+        return {self.field_name: default}
+
+    def to_internal_value(self, data):
+        return {self.field_name: data}
+
