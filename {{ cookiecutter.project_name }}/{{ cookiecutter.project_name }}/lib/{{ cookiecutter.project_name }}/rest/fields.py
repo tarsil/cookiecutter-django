@@ -11,29 +11,17 @@ class ChoicesField(serializers.Field):
         super().__init__(**kwargs)
 
     def to_representation(self, obj):
-        """
-
-        Args:
-          obj:
-
-        Returns:
-
-        """
         return self._choices[obj]
 
     def to_internal_value(self, data):
-        """
-
-        Args:
-          data:
-
-        Returns:
-
-        """
         return getattr(self._choices, data)
  
 
 class WritableSerializerMethodField(serializers.SerializerMethodField):
+    """
+    Allows the serializer method field to be writable.
+    """
+
     def __init__(self, method_name=None, **kwargs):
         super().__init__(**kwargs)
 
@@ -46,4 +34,19 @@ class WritableSerializerMethodField(serializers.SerializerMethodField):
 
     def to_internal_value(self, data):
         return {self.field_name: data}
+
+
+class AbsoluteImageField(serializers.ImageField):
+    """
+    Returns the absolute path of a image object
+    """
+
+    def to_representation(self, value):
+        if not value:
+            return None
+
+        request = self.context.get('request', None)
+        if request is not None:
+            return request.build_absolute_uri(value.url)
+        return value.url
 
