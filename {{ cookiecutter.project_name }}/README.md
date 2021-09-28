@@ -61,11 +61,12 @@ The first run will ask you to create the volumes (step 3). Just follow the instr
 ## Start the Development Environment
 
 When the project is starting for the first time, the migrations should be applied to your local.
-
-  1. `make migrate` - Applies the migrations to your local machine.
-  2. `make createsuperuser`- Create a superuser for yourself if is the first time running the project.
-  3. `make run` - Starts the project.
-  4. Go to `https://localhost:8000` and have fun!
+  
+  1. `docker-compose exec {{ cookiecutter.project_name }} bash`. All of the commands should be placed inside the container.
+  2. `make migrate` - Applies the migrations to your local machine.
+  3. `make createsuperuser`- Create a superuser for yourself if is the first time running the project.
+  4. `make run` - Starts the project.
+  5. Go to `https://localhost:8000` and have fun!
 
 ### Additional Useful Commands
 
