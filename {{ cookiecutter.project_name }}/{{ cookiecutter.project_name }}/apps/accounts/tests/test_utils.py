@@ -18,8 +18,8 @@ class UtilsTest(TestCase):
         self.assertEqual(result, '{{ cookiecutter.project_name }}-porto')
 
     def test_can_update_profile_slug(self):
-        user = accounts.tests.factories.HubUserFactory(user__username='slug!déstá-coisa')
-        slug_slugified = slugify(user.user.username)
+        user = accounts.tests.factories.HubUserFactory(user__username=slugify('slug!déstá-coisa'))
+        slug_slugified = user.user.username
 
         self.assertEqual(slug_slugified, 'slug-desta-coisa')
 
