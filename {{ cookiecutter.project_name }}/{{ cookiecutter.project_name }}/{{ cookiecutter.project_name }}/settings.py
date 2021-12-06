@@ -55,6 +55,7 @@ BASE_INSTALLED_APPS = [
     'channels',
     'django_dramatiq',
     'django_apscheduler',
+    'corsheaders',
 ]
 
 INSTALLED_APPS = [
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -267,6 +269,9 @@ SCHEDULER_CONFIG = {
 }
 
 DJANGO_NOTIFICATIONS_CONFIG = {"USE_JSONFIELD": True}
+
+# CORS
+CORS_ALLOWED_ORIGINS = []
 
 # JWT
 SIMPLE_JWT_SIGNING_KEY = "b=72^ado*%1(v3r7rga9ch)03xr=d*f)lroz94kosf!61((9=i"
