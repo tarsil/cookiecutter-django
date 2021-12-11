@@ -21,7 +21,7 @@ django-csp==3.6
 django-dramatiq==0.10.0
 django-filter==2.4.0
 django-geoposition==0.3.0
-django-guardian==2.3.0
+django-guardian==2.4.0
 django-leaflet==0.27.1
 django-localflavor==3.0.1
 django-modeltranslation==0.12.2
