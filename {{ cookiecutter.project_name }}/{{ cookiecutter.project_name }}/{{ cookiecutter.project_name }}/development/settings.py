@@ -83,6 +83,8 @@ LOGGING = {
     }
 }
 
+CORS_ALLOWED_ORIGINS = []
+
 try:
     from .local_settings import *
 except ImportError:
