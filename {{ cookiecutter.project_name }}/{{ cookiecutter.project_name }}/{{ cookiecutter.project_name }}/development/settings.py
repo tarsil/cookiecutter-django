@@ -18,6 +18,8 @@ MIDDLEWARE += [
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
+IPYTHON_ARGUMENTS = ["--ext", "lib.ipython.notebook_extension"]
+
 # FOR THE DEBUG TOOLBAR
 INTERNAL_IPS = [
     "127.0.0.1",
