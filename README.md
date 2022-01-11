@@ -4,6 +4,9 @@
 [![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/tiagoarasilva/Django%20Cookiecutter%2FTest%26Build?type=cf-1&key=eyJhbGciOiJIUzI1NiJ9.NThhOGRkNTdmMjU5OWMwMTAwZjQzYmRi.kUnXk46L86nOtnW3OI5-TJK6cYlavAHbhF5MqKg6pLM)](https://g.codefresh.io/pipelines/edit/new/builds?id=5fc91f0654e9095fcd293333&pipeline=Test%26Build&projects=Django%20Cookiecutter&projectId=5fc91e5e84fbdc5d38bf1924)
 
 This is a cookiecutter application that aims to help people speeding up the development process.
+We use [django-guardian](https://django-guardian.readthedocs.io/en/stable/) for user permissions
+if not using external services (Auth0, Google...) as we see it fit and easy to use
+as well as simple to manipulate complex object permissions.
 
 ## Table of Contents
 
@@ -26,7 +29,8 @@ also set and this cookiecutter offers a lot of boilerplating including:
 4. Redis
 5. RabbitMQ
 6. PGBouncer for database accesses
-7. MongoDB as Optional
+7. [django-guardian](https://django-guardian.readthedocs.io/en/stable/)
+8. MongoDB as Optional
 
 All of this using docker.
 
