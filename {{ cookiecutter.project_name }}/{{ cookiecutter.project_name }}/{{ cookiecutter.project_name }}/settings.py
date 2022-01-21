@@ -53,6 +53,7 @@ BASE_INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'channels',
+    'guardian',
     'django_dramatiq',
     'django_apscheduler',
     'corsheaders',
@@ -78,6 +79,7 @@ MIDDLEWARE = [
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
+    "guardian.backends.ObjectPermissionBackend",
     "lib.{{ cookiecutter.project_name }}.backends.EmailBackend"
 )
 
@@ -306,5 +308,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=200),
 }
 
-
 CORS_ALLOWED_ORIGINS = []
+
+ANONYMOUS_USER_NAME = None
