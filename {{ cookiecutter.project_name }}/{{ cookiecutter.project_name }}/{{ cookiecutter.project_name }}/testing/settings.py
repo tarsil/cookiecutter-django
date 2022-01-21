@@ -13,8 +13,6 @@ from ..settings import *
 from .databases import *
 import os
 
-NOSE_INCLUDE_EXE = 1
-
 SECRET_KEY = os.environ.get("SECRET_KEY", "x7@y+)ixs_gdewzjw!br7ee#e4ovat7xd3%5&m8i6ws(d=5p#x")
 
 #
@@ -29,8 +27,6 @@ TESTING = True
 DJANGOENV = os.environ.get("DJANGOENV", "testing")
 
 REUSE_DB = bool(int(os.environ.get("REUSE_DB", 0)))
-
-INSTALLED_APPS += ["django_nose"]
 
 if REUSE_DB:
     DATABASE_ROUTERS = []
@@ -51,12 +47,6 @@ STATIC_ROOT = "/tmp/assets-upload"
 STATIC_URL = "/static/"
 MEDIA_ROOT = "/tmp/media-root"
 
-# nosetests - NoseTestSuiteRunner
-TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
-
-# Args passed to nose
-NOSE_ARGS = ["--logging-clear-handlers", "--logging-filter", "INFO"]
-
 # Give ourselves a test instance of redis (another special thanks to @DD for this)
 REDIS_SERVER = ("redis", 6379, 2)  # host, port, dbs
 REDIS_PASSWORD = None
@@ -72,7 +62,6 @@ CACHES = {
 # We don't care about secure password for tests, use MD5 which is faster.
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher", "django.contrib.auth.hashers.SHA1PasswordHasher")
 
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
@@ -80,7 +69,6 @@ LOGGING = {
     "formatters": {"verbose": {"format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"}},
     "handlers": {"console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "verbose"}},
 }
-
 
 MIDDLEWARE = list(MIDDLEWARE)
 
