@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import logging
 from uuid import uuid4
 
@@ -7,7 +5,6 @@ import bleach
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError, OperationalError, models, transaction
-from django.db import transaction, IntegrityError
 from django.utils.translation import gettext_lazy as _
 from slugify import slugify
 from .types import ProfileType
@@ -18,9 +15,9 @@ logger = logging.getLogger(__name__)
 class HubUser(models.Model):
     """
     Model responsible for the user maintenance for the platform. This is a default from django but you can change to
-    models.Model and create a One-to-One relationship. This way, the application logins are isolated
-    in case of being integrated with external apps. If you do it, don't forget to remove the AUTH_USER_MODEL setting from
-    the settings file.
+    models.Model and create a One-to-One relationship.
+    This way, the application logins are isolated in case of being integrated with external apps.
+    If you do it, don't forget to remove the AUTH_USER_MODEL setting from the settings file.
     """
 
     uuid = models.UUIDField(null=False, blank=False, default=uuid4)
