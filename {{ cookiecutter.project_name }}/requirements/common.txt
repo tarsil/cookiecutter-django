@@ -8,14 +8,14 @@ cffi==1.14.1
 channels==3.0.3
 channels-redis==3.2.0
 cryptography==3.3.2
-Django==3.2.10
+Django==3.2.11
 django-annoying==0.10.6
 django-anymail[sendinblue]==7.2
 django-appconf==1.0.4
 django_apscheduler==0.6.0
 django-block-ip==0.2.0
 django-ckeditor==5.9.0
-django-cors-headers==3.10.1
+django-cors-headers==3.11.0
 django-countries==7.2.1
 django-csp==3.6
 django-dramatiq==0.10.0
@@ -34,7 +34,7 @@ django-sql-explorer==1.1.3
 django-statici18n==1.9.0
 django-storages==1.11.1
 django-weasyprint==1.0.1
-djangorestframework==3.11.2
+djangorestframework==3.13.1
 djangorestframework_simplejwt==4.7.1
 dramatiq[all]==1.9.0
 drf-yasg==1.20.0
@@ -70,6 +70,6 @@ tqdm==4.48.2
 unicodecsv==0.14.1
 urllib3==1.26.5
 user-agents==2.1
-uWSGI==2.0.19.1
+uWSGI==2.0.20
 wrapt==1.12.1
 xhtml2pdf==0.2.4
