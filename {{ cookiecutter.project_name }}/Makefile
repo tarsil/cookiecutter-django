@@ -33,15 +33,9 @@ requirements-deployment: ## Install the production requirements
 
 .PHONY: test
 test: ## Runs the unit tests from the scratch by recreating the testing database
-	cd $(PROJECT_NAME) &&\
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings DJANGOENV=testing python manage.py test $(TESTONLY) --exe --with-specplugin --noinput
+	cd $(PROJECT_NAME) 														&&\
+	pytest $(TESTONLY) --disable-pytest-warnings -s -vv $(DB)				&&\
 	cd .
-
-.PHONY: test-reusedb
-test-reusedb:  ## Run the unit tests without recreating the testing database
-	cd $(PROJECT_NAME) &&\
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).testing.settings REUSE_DB=1 DJANGOENV=testing python manage.py test $(TESTONLY)  --exe --with-specplugin  --keepdb &&\
-	cd ..
 
 .PHONY: mypy
 mypy: ## Runs MyPy type checking
@@ -50,7 +44,7 @@ mypy: ## Runs MyPy type checking
 .PHONY: run
 run:
 	python $(PROJECT_NAME)/manage.py runserver_plus 0.0.0.0:8000 --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
-	
+
 .PHONY: asgi
 asgi: ## Starts the local server in ASGI mode
 	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python $(PROJECT_NAME)/manage.py runserver 0.0.0.0:8000

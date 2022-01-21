@@ -10,23 +10,9 @@ from django.db import IntegrityError, OperationalError, models, transaction
 from django.db import transaction, IntegrityError
 from django.utils.translation import gettext_lazy as _
 from slugify import slugify
+from .types import ProfileType
 
 logger = logging.getLogger(__name__)
-
-
-class Choices(object):
-    class Profiles:
-        ADMIN = 'admin'
-        USER = 'user'
-        MANAGER = 'manager'
-        OTHER = 'other'
-
-        PROFILE_CHOICES = (
-            (ADMIN, 'Admin'),
-            (USER, 'User'),
-            (MANAGER, 'Manager'),
-            (OTHER, 'Other'),
-        )
 
 
 class HubUser(models.Model):
@@ -36,13 +22,16 @@ class HubUser(models.Model):
     in case of being integrated with external apps. If you do it, don't forget to remove the AUTH_USER_MODEL setting from
     the settings file.
     """
+
     uuid = models.UUIDField(null=False, blank=False, default=uuid4)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, blank=False, related_name='hub_user',
-                                 on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, null=False, blank=False, related_name="hub_user", on_delete=models.CASCADE
+    )
     middle_name = models.CharField(blank=True, null=True, max_length=255)
-    profile_type = models.CharField(max_length=255, choices=Choices.Profiles.PROFILE_CHOICES,
-                                    default=Choices.Profiles.USER, null=False, blank=False)
-    slug = models.SlugField(max_length=255, help_text=_('Slug'), blank=False, null=False, unique=True)
+    profile_type = models.CharField(
+        max_length=255, choices=ProfileType.choices, default=ProfileType.USER, null=False, blank=False
+    )
+    slug = models.SlugField(max_length=255, help_text=_("Slug"), blank=False, null=False, unique=True)
     created_at = models.DateTimeField(null=False, blank=False, auto_now_add=True)
     modified_at = models.DateTimeField(null=False, blank=False, auto_now=True)
     is_hidden = models.BooleanField(default=False, blank=False, null=False)
@@ -65,8 +54,9 @@ class HubUser(models.Model):
         return f"{slugify(first_name)}-{slugify(last_name)}-{slugify(email)}-{str(uuid4())}"
 
     @staticmethod
-    def create_hub_user(email, password, profile_type=Choices.Profiles.USER, username=None, first_name=None,
-                        last_name=None, **kwargs):
+    def create_hub_user(
+        email, password, profile_type=ProfileType.USER, username=None, first_name=None, last_name=None, **kwargs
+    ):
         """
         Wrapper where a user is created followed by the models
         :param username: str username
@@ -82,14 +72,15 @@ class HubUser(models.Model):
             try:
                 username = username or HubUser.generate_username(first_name, last_name, email)
                 user = get_user_model().objects.create_user(
-                    username=bleach.clean(username), email=bleach.clean(email), password=password,
-                    is_staff=False, is_superuser=False, first_name=bleach.clean(first_name),
+                    username=bleach.clean(username),
+                    email=bleach.clean(email),
+                    password=password,
+                    is_staff=False,
+                    is_superuser=False,
+                    first_name=bleach.clean(first_name),
                     last_name=bleach.clean(last_name),
-
                 )
-                hub_user = HubUser.objects.create(
-                    user=user, profile_type=profile_type, **kwargs
-                )
+                hub_user = HubUser.objects.create(user=user, profile_type=profile_type, **kwargs)
             except IntegrityError as e:
                 logger.exception(f"Error creating the HubUser: {e}")
                 return

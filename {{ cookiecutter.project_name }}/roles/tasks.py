@@ -32,7 +32,7 @@ def testing(context):
     For the unittesting in our CI
     """
     run('make requirements-dev')
-    run('make test')
+    run('make test DB=--create-db')
 
 
 @task

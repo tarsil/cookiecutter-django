@@ -61,7 +61,7 @@ The first run will ask you to create the volumes (step 3). Just follow the instr
 ## Start the Development Environment
 
 When the project is starting for the first time, the migrations should be applied to your local.
-  
+
   1. `docker-compose exec {{ cookiecutter.project_name }} bash`. All of the commands should be placed inside the container.
   2. `make migrate` - Applies the migrations to your local machine.
   3. `make createsuperuser`- Create a superuser for yourself if is the first time running the project.
@@ -96,6 +96,4 @@ To make the life of our developers easier, we also have a wrapper to run the tes
   whole codebase. This also rebuilds the DB every time it runs. Example:
       1. `make test TESTONLY='accounts'.
       2. `make test TESTONLY='accounts.tests.test_models'.
-  3. `make test-reusedb`. Runs the whole suite of tests in the platform without rebuilding the db.
-  4. `make test-reusedb TESTONLY='name_of_module'` -
-  Same principle or `make test TESTONLY` but without rebuilding the db.
+  4. `make test DB=--create-db` - Runs the tests by creating a new database.
