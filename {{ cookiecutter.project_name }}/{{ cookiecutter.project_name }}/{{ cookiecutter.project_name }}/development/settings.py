@@ -8,7 +8,6 @@ DEBUG = True
 DJANGOENV = os.environ.get("DJANGOENV", "development")
 
 INSTALLED_APPS += [
-    'django_nose',
     'debug_toolbar',
     'template_repl',
     'django_extensions',
@@ -17,8 +16,6 @@ INSTALLED_APPS += [
 MIDDLEWARE += [
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
-
-IPYTHON_ARGUMENTS = ["--ext", "lib.ipython.notebook_extension"]
 
 # FOR THE DEBUG TOOLBAR
 INTERNAL_IPS = [
