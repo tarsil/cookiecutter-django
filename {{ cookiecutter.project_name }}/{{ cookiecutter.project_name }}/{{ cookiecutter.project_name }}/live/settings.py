@@ -27,7 +27,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.csrf',
-                'lib.context_processor.export_env_vars',
 
             ],
             'loaders': [
