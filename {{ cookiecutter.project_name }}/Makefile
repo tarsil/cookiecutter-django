@@ -56,7 +56,7 @@ shell:
 .PHONY: dramatiq
 dramatiq: ## Starts DramatiQ task manager
 	cd $(PROJECT_NAME) &&\
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python3 manage.py rundramatiq
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python manage.py rundramatiq
 
 .PHONY: show_urls
 show_urls:
@@ -68,7 +68,7 @@ validate_templates:
 
 .PHONY: createsuperuser
 createsuperuser: ## Creates a super user in the database
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python3 $(PROJECT_NAME)/manage.py createsuperuser
+	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python $(PROJECT_NAME)/manage.py createsuperuser
 
 .PHONY: start_docker
 start_docker: ## Starts the dev environment
@@ -80,7 +80,7 @@ start_docker_logs: ## Starts the dev environment
 
 .PHONY: scheduler
 scheduler: ## Starts the schedule
-	python3 $(PROJECT_NAME)/manage.py scheduler
+	python $(PROJECT_NAME)/manage.py scheduler
 
 ifndef VERBOSE
 .SILENT:
