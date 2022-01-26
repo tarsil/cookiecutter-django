@@ -6,6 +6,5 @@ freezegun==0.3.10
 mock==3.0.5
 pytest-django
 pytest-pspec
-spec==1.4.1
 unittest-data-provider==1.0.1
 webtest
