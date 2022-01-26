@@ -50,6 +50,10 @@ To use this cookiecutter you should have at least.
 
 This project implements [dramatiq](https://dramatiq.io/)
 
+The project also contains inside the `development/settings.py` a `DRAMATIQ_BROKER` specially
+designed for developement. For users used to `CELERY_TASK_ALWAYS_EAGER=True`, this broker
+has a similar behaviour. Special thanks to @dnmellen for providing an alternative.
+
 ## Install the template
 
 1. `cookiecutter https://github.com/tarsil/cookiecutter-django` and follow the instructions.

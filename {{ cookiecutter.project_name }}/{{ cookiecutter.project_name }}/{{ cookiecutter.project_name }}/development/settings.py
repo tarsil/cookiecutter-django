@@ -84,6 +84,20 @@ LOGGING = {
 
 CORS_ALLOWED_ORIGINS = []
 
+# SIMULATES THE OLD CELERY_TASK_ALWAYS_EAGER=True behaviour
+DRAMATIQ_BROKER = {
+    "BROKER": "lib.dramatiq.brokers.EagerBroker",
+    "OPTIONS": {},
+    "MIDDLEWARE": [
+        "dramatiq.middleware.AgeLimit",
+        "dramatiq.middleware.TimeLimit",
+        "dramatiq.middleware.Callbacks",
+        "dramatiq.middleware.Retries",
+        "django_dramatiq.middleware.AdminMiddleware",
+        "django_dramatiq.middleware.DbConnectionsMiddleware",
+    ]
+}
+
 try:
     from .local_settings import *
 except ImportError:

@@ -21,6 +21,14 @@
   - deployment
   - testing/staging/live
 
+The project also contains inside the `development/settings.py` a `DRAMATIQ_BROKER` specially
+designed for developement. For users used to `CELERY_TASK_ALWAYS_EAGER=True`, this broker
+has a similar behaviour. Special thanks to @dnmellen for providing an alternative.
+
+In development, `dramatiq` will always run syncronously unless the `DRAMATIQ_BROKER` inside
+`{{ cookiecutter.project_name }}/development/settings.py` is changed. This **only** affects development.
+Fell free to create your own brokers.
+
 ## Requirements
 
   1. MacOS 15+, Ubuntu 20+ or Windows WSL
