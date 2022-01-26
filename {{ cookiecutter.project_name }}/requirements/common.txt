@@ -10,7 +10,7 @@ channels-redis==3.2.0
 cryptography==36.0.1
 Django==3.2.11
 django-annoying==0.10.6
-django-anymail[sendinblue]==7.2
+django-anymail[sendinblue]==8.5
 django-appconf==1.0.4
 django_apscheduler==0.6.0
 django-block-ip==0.2.0
