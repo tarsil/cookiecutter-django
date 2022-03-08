@@ -1,7 +1,6 @@
 # Cookiecutter Django with PostGres + Docker + DramatiQ and optional APScheduler
 
 [![CircleCI](https://circleci.com/gh/tarsil/cookiecutter-django.svg?style=shield&circle-token=91ae5605f46538c06c9b88248fd0fd6cc9b2994d)](https://circleci.com/gh/tarsil/cookiecutter-django)
-[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/tiagoarasilva/Django%20Cookiecutter%2FTest%26Build?type=cf-1&key=eyJhbGciOiJIUzI1NiJ9.NThhOGRkNTdmMjU5OWMwMTAwZjQzYmRi.kUnXk46L86nOtnW3OI5-TJK6cYlavAHbhF5MqKg6pLM)](https://g.codefresh.io/pipelines/edit/new/builds?id=5fc91f0654e9095fcd293333&pipeline=Test%26Build&projects=Django%20Cookiecutter&projectId=5fc91e5e84fbdc5d38bf1924)
 
 This is a cookiecutter application that aims to help people speeding up the development process.
 We use [django-guardian](https://django-guardian.readthedocs.io/en/stable/) for user permissions
@@ -57,4 +56,4 @@ has a similar behaviour. Special thanks to @dnmellen for providing an alternativ
 ## Install the template
 
 1. `cookiecutter https://github.com/tarsil/cookiecutter-django` and follow the instructions.
-    **When giving a name to your project, avoid dashes by using underscores instead.**
+   **When giving a name to your project, avoid dashes by using underscores instead.**
