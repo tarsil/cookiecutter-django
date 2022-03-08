@@ -225,7 +225,7 @@ LOGOUT_REDIRECT_URL = '/'
 DRAMATIQ_BROKER = {
     "BROKER": "dramatiq.brokers.rabbitmq.RabbitmqBroker",
     "OPTIONS": {
-        "url": 'amqp://rabbit_user:rabbit_user_default_pass@rabbitmq:5672/',
+        "url": 'amqp://rabbit_user:rabbit_user_default_pass@localhost:5672/',
     },
     "MIDDLEWARE": [
         "dramatiq.middleware.Prometheus",
@@ -244,7 +244,7 @@ DRAMATIQ_TASKS_DATABASE = "default"
 
 DRAMATIQ_RESULT_BACKEND = {
     "BACKEND": "dramatiq.results.backends.redis.RedisBackend",
-    "BACKEND_OPTIONS": {"url": "redis://redis:6379"},
+    "BACKEND_OPTIONS": {"url": "redis://localhost:6379"},
     "MIDDLEWARE_OPTIONS": {"result_ttl": 60000},
 }
 

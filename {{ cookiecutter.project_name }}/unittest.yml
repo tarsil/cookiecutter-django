@@ -1,20 +1,22 @@
-version: '3.3'
+version: "3.8"
 services:
   db:
     image: postgres:12.3
     container_name: db
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+    expose:
+      - 5432
     ports:
-      - "5432:5432"
+      - 5432:5432
 
   redis:
     container_name: redis
     image: redis:latest
     expose:
-      - "6379"
+      - 6379
     ports:
-      - "6379:6379"
+      - 6379:6379
 
   rabbitmq:
     image: rabbitmq:3.8.5
@@ -24,41 +26,8 @@ services:
       RABBITMQ_DEFAULT_PASS: rabbit_user_default_pass
       RABBITMQ_DEFAULT_VHOST: /
     expose:
-      - "15672"
-      - "5672"
+      - 15672
+      - 5672
     ports:
-      - "5672:5672"
-      - "15672:15672"
-
-  webapp:
-    image: tarsil/django:latest
-    container_name: webapp
-    depends_on:
-      - redis
-      - rabbitmq
-    environment:
-      DJANGO_SETTINGS_MODULE: {{ cookiecutter.project_name }}.testing.settings
-      BROKER_URL: amqp://rabbit_user:rabbit_user_default_pass@rabbitmq:5672//
-      DJANGOENV: testing
-      ENVIRONMENT: testing
-      PYTHON: python
-      PROJECT_NAME: {{ cookiecutter.project_name }}
-      TERM: xterm
-      ROLE: testing
-    links:
-      - db:postgres
-      - redis:redis
-      - rabbitmq:rabbitmq
-    ports:
-      - 80:80
-      - 443:443
-      - 127.0.0.1:8080:8080
-      - 127.0.0.1:8000:8000
-    expose:
-      - 80
-      - 443
-      - 8000
-    volumes:
-      - .:/var/www
-    working_dir: /var/www
-    command: bash -lc "pip3 install invoke jinja2 && invoke -r roles $${ROLE}"
+      - 5672:5672
+      - 15672:15672

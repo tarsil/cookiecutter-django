@@ -7,7 +7,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://redis:6379',
+        'LOCATION': 'redis://localhost:6379',
         'KEY_PREFIX': 'cache',
         'OPTIONS': {
             'SERIALIZER': 'django_redis.serializers.json.JSONSerializer',

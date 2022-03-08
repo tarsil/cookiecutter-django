@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 services:
   pgbouncer:
     image: tarsil/django:latest
@@ -10,7 +10,9 @@ services:
     links:
       - db:postgres
     expose:
-      - "6432"
+      - 6432
+    ports:
+      - 6432
     volumes:
       - .:/var/www
     working_dir: /var/www
@@ -22,17 +24,19 @@ services:
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
     expose:
-      - "5432"
+      - 5432
     volumes:
       - "{{ cookiecutter.project_name }}_db_data:/var/lib/postgresql/data"
     ports:
-      - "5432:5432"
+      - 5432:5432
 
   redis:
     restart: always
     image: redis:latest
     expose:
-      - "6379"
+      - 6379
+    ports:
+      - 6379
 
   rabbitmq:
     restart: always
@@ -42,11 +46,11 @@ services:
       RABBITMQ_DEFAULT_PASS: rabbit_user_default_pass
       RABBITMQ_DEFAULT_VHOST: /
     expose:
-      - "15672"
-      - "5672"
+      - 15672
+      - 5672
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - 5672:5672
+      - 15672:15672
 
   {%if cookiecutter.without_mongo == "N" -%}
     mongodb:
@@ -59,6 +63,8 @@ services:
         MONGO_INITDB_DATABASE: mongodb
       volumes:
           - "{{ cookiecutter.project_name }}_mongo_db_data:/data/db"
+      expose:
+        - 27017
       ports:
         - 27017:27017
 
@@ -75,44 +81,6 @@ services:
         ME_CONFIG_BASICAUTH_USERNAME: admin
         ME_CONFIG_BASICAUTH_PASSWORD: password
   {% endif %}
-  {{ cookiecutter.project_name }}:
-    restart: always
-    image: tarsil/django:latest
-    depends_on:
-      - pgbouncer
-      - redis
-      - rabbitmq
-    environment:
-      DJANGO_SETTINGS_MODULE: {{ cookiecutter.project_name }}.development.settings
-      BROKER_URL: amqp://rabbit_user:rabbit_user_default_pass@rabbitmq:5672//
-      DJANGOENV: development
-      ENVIRONMENT: development
-      PYTHON: python
-      PROJECT_NAME: {{ cookiecutter.project_name }}
-      PYTHONBREAKPOINT: ipdb.sset_trace
-      TERM: xterm
-      ROLE: development
-    links:
-      - db:postgres
-      - pgbouncer:pgbouncer
-      - redis:redis
-      - rabbitmq:rabbitmq
-    {%-if cookiecutter.without_mongo == "N"%}
-      - mongodb:mongodb
-    {%-endif %}
-    ports:
-      - 127.0.0.1:80:80
-      - 127.0.0.1:443:443
-      - 127.0.0.1:8080:8080
-      - 127.0.0.1:8000:8000
-    expose:
-      - 80
-      - 443
-      - 8000
-    volumes:
-      - .:/var/www
-    working_dir: /var/www
-    command: bash -lc "pip3 install invoke jinja2 && invoke -r roles $${ROLE}"
 
 volumes:
   {{ cookiecutter.project_name }}_db_data:

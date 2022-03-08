@@ -16,10 +16,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Set Python Version"
+          name: Set Python Version and Pip
           command: |
-            pyenv versions 
+            pyenv versions
             pyenv global 3.7.0
+            pip install -U pip
       - run:
           command: pip install cookiecutter
       - run:
@@ -32,8 +33,13 @@ jobs:
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
-          name: Running Tests
+          name: Start Docker Compose
           command: |
             cd myproject
-            docker-compose -f unittest.yml up --abort-on-container-exit --exit-code-from webapp
-            
+            docker-compose -f unittest.yml up -d
+      - run:
+          name: Run tests
+          command: |
+            cd myproject
+            make requirements-dev
+            make test

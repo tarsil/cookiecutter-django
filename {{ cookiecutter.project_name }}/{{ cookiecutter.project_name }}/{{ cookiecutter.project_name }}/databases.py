@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'pgbouncer',
+        'HOST': 'localhost',
         'USER': 'default',
         'PASSWORD': 'bouncer',
         'NAME': 'postgres',
@@ -26,7 +26,7 @@ DATABASES = {
          },
         'NAME': 'mongodb',
         'CLIENT': {
-            'host': 'mongodb',
+            'host': 'localhost',
             'port': 27017,
             'username': 'root',
             'password': "mongoadmin",

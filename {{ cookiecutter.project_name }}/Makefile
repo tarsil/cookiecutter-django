@@ -13,11 +13,11 @@ clean_pyc: ## Clean all *.pyc in the system
 
 .PHONY: migrate
 migrate: # Runs the migrations
-	python $(PROJECT_NAME)/manage.py migrate --noinput
+	python {{ cookiecutter.project_name }}/manage.py migrate --noinput
 
 .PHONY: migrations
 migrations: ## Generate migrations
-	python $(PROJECT_NAME)/manage.py makemigrations
+	python {{ cookiecutter.project_name }}/manage.py makemigrations
 
 .PHONY: requirements
 requirements: ## Install the production requirements
@@ -33,42 +33,42 @@ requirements-deployment: ## Install the production requirements
 
 .PHONY: test
 test: ## Runs the unit tests from the scratch by recreating the testing database
-	cd $(PROJECT_NAME) 														&&\
+	cd {{ cookiecutter.project_name }} 										&&\
 	pytest $(TESTONLY) --disable-pytest-warnings -s -vv $(DB)				&&\
 	cd .
 
 .PHONY: mypy
 mypy: ## Runs MyPy type checking
-	mypy $(PROJECT_NAME)/
+	mypy {{ cookiecutter.project_name }}/
 
 .PHONY: run
 run:
-	python $(PROJECT_NAME)/manage.py runserver_plus 0.0.0.0:8000 --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+	python {{ cookiecutter.project_name }}/manage.py runserver_plus 0.0.0.0:8000 --settings={{ cookiecutter.project_name }}.development.settings
 
 .PHONY: asgi
 asgi: ## Starts the local server in ASGI mode
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python $(PROJECT_NAME)/manage.py runserver 0.0.0.0:8000
+	DJANGO_SETTINGS_MODULE={{ cookiecutter.project_name }}.development.settings python {{ cookiecutter.project_name }}/manage.py runserver 0.0.0.0:8000
 
 .PHONY: shell
 shell:
-	python $(PROJECT_NAME)/manage.py shell_plus --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+	python {{ cookiecutter.project_name }}/manage.py shell_plus --settings={{ cookiecutter.project_name }}.development.settings
 
 .PHONY: dramatiq
 dramatiq: ## Starts DramatiQ task manager
-	cd $(PROJECT_NAME) &&\
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python manage.py rundramatiq
+	cd {{ cookiecutter.project_name }} &&\
+	DJANGO_SETTINGS_MODULE={{ cookiecutter.project_name }}.development.settings python manage.py rundramatiq
 
 .PHONY: show_urls
 show_urls:
-	python $(PROJECT_NAME)/manage.py show_urls --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+	python {{ cookiecutter.project_name }}/manage.py show_urls --settings={{ cookiecutter.project_name }}.development.settings
 
 .PHONY: validate_templates
 validate_templates:
-	python $(PROJECT_NAME)/manage.py validate_templates --settings=$(PROJECT_NAME).$(ENVIRONMENT).settings
+	python {{ cookiecutter.project_name }}/manage.py validate_templates --settings={{ cookiecutter.project_name }}.development.settings
 
 .PHONY: createsuperuser
 createsuperuser: ## Creates a super user in the database
-	DJANGO_SETTINGS_MODULE=$(PROJECT_NAME).$(ENVIRONMENT).settings python $(PROJECT_NAME)/manage.py createsuperuser
+	DJANGO_SETTINGS_MODULE={{ cookiecutter.project_name }}.development.settings python {{ cookiecutter.project_name }}/manage.py createsuperuser
 
 .PHONY: start_docker
 start_docker: ## Starts the dev environment
@@ -80,7 +80,7 @@ start_docker_logs: ## Starts the dev environment
 
 .PHONY: scheduler
 scheduler: ## Starts the schedule
-	python $(PROJECT_NAME)/manage.py scheduler
+	python {{ cookiecutter.project_name }}/manage.py scheduler
 
 ifndef VERBOSE
 .SILENT:
