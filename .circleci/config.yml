@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  docker: circleci/docker@2.0.3
+
 workflows:
   build-test-push:
     jobs:
@@ -43,3 +46,13 @@ jobs:
             cd myproject
             make requirements-dev
             make test
+      - run:
+          name: Building docker image
+          command: |
+            cd myproject
+            docker build -t tarsil/django:latest .
+      - run:
+          name: Pushing docker image
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+            docker push tarsil/django:latest

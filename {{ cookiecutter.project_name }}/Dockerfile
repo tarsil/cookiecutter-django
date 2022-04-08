@@ -11,18 +11,20 @@ ENV LC_ALL en_GB.UTF-8
 #
 # Install Apt Packages
 #
-RUN apt-get update -y && apt-get install -y gnupg2 synaptic software-properties-common
+RUN apt clean                                           && \
+    apt update -y                                       && \
+    apt install -y gnupg2 synaptic software-properties-common
 
-RUN apt-get update                                                                                           && \
-    apt-get upgrade -y                                                                                       && \
-    apt-get install curl -y                                                                                  && \
-    apt-get clean && apt-get autoclean                                                                       && \
+RUN apt update                                                                                               && \
+    apt upgrade -y                                                                                           && \
+    apt install curl -y                                                                                      && \
+    apt clean && apt autoclean                                                                               && \
     find /var/lib/apt/lists/ -type f -delete                                                                 && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -                                  && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
 
-RUN apt-get update -y                                           && \
-    apt-get install -y postgresql                                  \
+RUN apt update -y                                               && \
+    apt install -y postgresql                                      \
                        build-essential                             \
                        curl                                        \
                        geoip-bin                                   \
@@ -54,10 +56,10 @@ RUN apt-get update -y                                           && \
                        unattended-upgrades                         \
                        unzip                                       \
                        wget                                     && \
-    apt-get clean && apt-get autoclean                          && \
-    apt-get autoremove -y                                       && \
+    apt clean && apt autoclean                                  && \
+    apt autoremove -y                                           && \
     find /var/lib/apt/lists/ -type f -delete                    && \
-    apt-get -y update
+    apt -y update
 
 
 
