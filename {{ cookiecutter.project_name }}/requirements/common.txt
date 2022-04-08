@@ -54,7 +54,6 @@ phonenumbers==8.12.7
 postgres==3.0.0
 pyaml==20.4.0
 pycountry==20.7.3
-pyOpenSSL==19.1.0
 python-dateutil==2.8.1
 python-json-logger==0.1.11
 python-Levenshtein==0.12.0
