@@ -17,10 +17,6 @@ jobs:
       IMAGE_NAME: tarsil/django
     resource_class: medium
     steps:
-      - setup_remote_docker
-      - docker/check:
-          docker-username: DOCKERHUB_USERNAME
-          docker-password: DOCKERHUB_PASSWORD
       - checkout
       - run:
           name: Set Python Version and Pip
@@ -50,7 +46,13 @@ jobs:
             cd myproject
             make requirements-dev
             make test
-      - docker/build:
-          image: tarsil/django:latest
-      - docker/push:
-          image: tarsil/django:latest
+      - run:
+          name: Building docker image
+          command: |
+            cd myproject
+            docker build -t tarsil/django:latest .
+      - run:
+          name: Pushing docker image
+          command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+            docker push tarsil/django:latest
