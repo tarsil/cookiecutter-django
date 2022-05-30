@@ -43,7 +43,7 @@ mypy: ## Runs MyPy type checking
 
 .PHONY: run
 run:
-	python {{ cookiecutter.project_name }}/manage.py runserver_plus 0.0.0.0:8000 --settings={{ cookiecutter.project_name }}.development.settings
+	DJANGO_SETTINGS_MODULE={{ cookiecutter.project_name }}.development.settings python {{ cookiecutter.project_name }}/manage.py runserver_plus 0.0.0.0:8000
 
 .PHONY: asgi
 asgi: ## Starts the local server in ASGI mode
@@ -51,7 +51,7 @@ asgi: ## Starts the local server in ASGI mode
 
 .PHONY: shell
 shell:
-	python {{ cookiecutter.project_name }}/manage.py shell_plus --settings={{ cookiecutter.project_name }}.development.settings
+	DJANGO_SETTINGS_MODULE={{ cookiecutter.project_name }}.development.settings python {{ cookiecutter.project_name }}/manage.py shell_plus
 
 .PHONY: dramatiq
 dramatiq: ## Starts DramatiQ task manager
@@ -60,11 +60,11 @@ dramatiq: ## Starts DramatiQ task manager
 
 .PHONY: show_urls
 show_urls:
-	python {{ cookiecutter.project_name }}/manage.py show_urls --settings={{ cookiecutter.project_name }}.development.settings
+	DJANGO_SETTINGS_MODULE={{ cookiecutter.project_name }}.development.settings python {{ cookiecutter.project_name }}/manage.py show_urls
 
 .PHONY: validate_templates
 validate_templates:
-	python {{ cookiecutter.project_name }}/manage.py validate_templates --settings={{ cookiecutter.project_name }}.development.settings
+	DJANGO_SETTINGS_MODULE={{ cookiecutter.project_name }}.development.settings python {{ cookiecutter.project_name }}/manage.py validate_templates
 
 .PHONY: createsuperuser
 createsuperuser: ## Creates a super user in the database
