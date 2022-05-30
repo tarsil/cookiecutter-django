@@ -36,26 +36,10 @@ class RegisterApiView(APIView):
     serializer_class = UserRegistrationSerializer
     permission_classes = []
 
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    def get_full_url(self, request):
-        """Full URL for a auth user
-        """
-        uri = request.user.account_verification.email_uri_confirmation
-        if not uri:
-            return
-        return request.get_host() + uri
-
     def post(self, request, *args, **kwargs):
-        with transaction.atomic():
-            try:
-                serializer = self.serializer_class(data=self.request.data)
-                serializer.is_valid(raise_exception=True)
-                serializer.save()
-            except OperationalError as e:
-                log.exception(e)
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+        serializer = self.serializer_class(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(status=status.HTTP_200_OK)
 
 
@@ -105,17 +89,10 @@ class UpdateEmailView(BaseUpdateUser, UpdateAPIView):
 
 class DeleteUserAccountApiView(AuthMixin, DestroyAPIView):
     """View for the right to be forgotten and to remove the account for good"""
-
-    user = None
-
-    def get_mail_url(self):
-        """ """
-        return super().get_mail_url(reverse("register"))
-
     def destroy(self, request, *args, **kwargs):
         instance = self.request.user
         instance.delete()
-        return Response({"url": reverse("landing-page")}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class LoginApiView(APIView):
