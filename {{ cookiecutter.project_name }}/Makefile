@@ -42,7 +42,7 @@ mypy: ## Runs MyPy type checking
 	mypy {{ cookiecutter.project_name }}/
 
 .PHONY: run
-run:
+run: ## Starts the dev server
 	DJANGO_SETTINGS_MODULE={{ cookiecutter.project_name }}.development.settings python {{ cookiecutter.project_name }}/manage.py runserver_plus 0.0.0.0:8000
 
 .PHONY: asgi
