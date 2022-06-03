@@ -68,7 +68,7 @@ class AccountModelTest(BaseTest):
 
     def test_creates_a_user_and_profiles_and_hub(self):
         """Tests using the create_hub_user successfully"""
-        accounts.models.HubUser.create_hub_user('{{ cookiecutter.project_name }}@test.com', '123test', 'User', username='test_user',
+        accounts.models.HubUser.create_hub_user('{{ cookiecutter.project_name }}@test.com', '123test', username='test_user',
                                                 first_name='first', last_name='last')
 
         users = get_user_model().objects.all()
@@ -79,7 +79,7 @@ class AccountModelTest(BaseTest):
 
     def test_information_created_matches(self):
         """The information created on cascade matches"""
-        accounts.models.HubUser.create_hub_user('{{ cookiecutter.project_name }}@test.com', '123test', 'User', username='test_user',
+        accounts.models.HubUser.create_hub_user('{{ cookiecutter.project_name }}@test.com', '123test', username='test_user',
                                                 first_name='first', last_name='last')
 
         users = get_user_model().objects.all()

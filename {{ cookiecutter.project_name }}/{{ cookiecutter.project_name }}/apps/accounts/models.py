@@ -52,7 +52,7 @@ class HubUser(models.Model):
 
     @staticmethod
     def create_hub_user(
-        email, password, profile_type=ProfileType.USER, username=None, first_name=None, last_name=None, **kwargs
+        email, password, username=None, first_name=None, last_name=None, **kwargs
     ):
         """
         Wrapper where a user is created followed by the models
@@ -77,7 +77,7 @@ class HubUser(models.Model):
                     first_name=bleach.clean(first_name),
                     last_name=bleach.clean(last_name),
                 )
-                hub_user = HubUser.objects.create(user=user, profile_type=profile_type, **kwargs)
+                hub_user = HubUser.objects.create(user=user, **kwargs)
             except IntegrityError as e:
                 logger.exception(f"Error creating the HubUser: {e}")
                 return
