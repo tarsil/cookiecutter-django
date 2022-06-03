@@ -222,8 +222,6 @@ class UpdatePasswordSerializer(serializers.Serializer):
         return instance
 
 
-
-
 class LoginSerializer(serializers.Serializer):
     """Validates the login of a HubUser"""
     email = serializers.EmailField(allow_blank=False, required=True)
