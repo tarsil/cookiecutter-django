@@ -12,7 +12,7 @@ services:
     expose:
       - 6432
     ports:
-      - 6432
+      - 6432:6432
     volumes:
       - .:/var/www
     working_dir: /var/www
