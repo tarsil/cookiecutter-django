@@ -40,6 +40,7 @@ RUN apt update -y                                               && \
                        libgeos-c1v5                                \
                        libmagickwand-dev                           \
                        libmemcached-dev                            \
+                       zlib1g-dev                                  \
                        libmemcached-tools                          \
                        libxml2-dev                                 \
                        libxslt-dev                                 \

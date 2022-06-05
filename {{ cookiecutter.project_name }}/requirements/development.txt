@@ -20,6 +20,4 @@ PyVirtualDisplay==0.2.1
 PyYAML==5.4
 recommonmark
 sqlparse==0.2.4
-transifex-client==0.13.9
-virtualenv-tools==1.0
 werkzeug==2.0.2

@@ -1,0 +1,72 @@
+name: Build, Test and Publish
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - ci
+
+jobs:
+  tests:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        python-version:
+          # - "3.7"
+          - "3.8"
+          # - "3.9"
+          # - "3.10"
+
+    steps:
+      - name: Login to Docker hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Python version
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "{{ cookiecutter.project_name }}/requirements/*.txt"
+
+      - name: Install Cookiecutter
+        run: pip install cookiecutter
+
+      - name: Create a project from cookiecutter
+        run: cookiecutter . --no-input
+
+      - name: Install Docker Compose
+        run: |
+          curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+          chmod +x ~/docker-compose
+          sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
+      - name: Start Docker Compose
+        run: |
+          cd myproject
+          docker-compose -f unittest.yml up -d
+      - name: Run tests
+        run: |
+          sudo apt install -y libmemcached-dev
+          cd myproject
+          python3 -m venv venv
+          source ./venv/bin/activate
+          make requirements-dev
+          make test
+
+      - name: Building docker image
+        run: |
+          cd myproject
+          docker build -t tarsil/django:latest .
+
+      - name: Pushing docker image
+        run: |
+          docker push tarsil/django:latest
