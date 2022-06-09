@@ -1,6 +1,6 @@
 # Cookiecutter Django with PostGres + Docker + DramatiQ and optional APScheduler
 
-[![CircleCI](https://circleci.com/gh/tarsil/cookiecutter-django.svg?style=shield&circle-token=91ae5605f46538c06c9b88248fd0fd6cc9b2994d)](https://circleci.com/gh/tarsil/cookiecutter-django)
+![CI](https://github.com/tarsil/cookiecutter-django/actions/workflows/main.yml/badge.svg)
 
 This is a cookiecutter application that aims to help people speeding up the development process.
 We use [django-guardian](https://django-guardian.readthedocs.io/en/stable/) for user permissions

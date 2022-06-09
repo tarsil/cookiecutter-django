@@ -1,4 +1,4 @@
-name: Build, Test and Publish
+name: CI
 
 on:
   push:
@@ -59,7 +59,7 @@ jobs:
           cd myproject
           python3 -m venv venv
           source ./venv/bin/activate
-          make requirements-dev
+          pip3 install -r requirements/testing.txt
           make test
 
       - name: Building docker image
