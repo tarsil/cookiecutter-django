@@ -15,10 +15,10 @@ jobs:
     strategy:
       matrix:
         python-version:
-          # - "3.7"
+          - "3.7"
           - "3.8"
-          # - "3.9"
-          # - "3.10"
+          - "3.9"
+          - "3.10"
 
     steps:
       - name: Login to Docker hub
@@ -59,7 +59,7 @@ jobs:
           cd myproject
           python3 -m venv venv
           source ./venv/bin/activate
-          pip3 install -r requirements/testing.txt
+          pip3 install -r requirements/test.txt
           make test
 
       - name: Building docker image
