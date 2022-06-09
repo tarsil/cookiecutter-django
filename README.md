@@ -19,7 +19,7 @@ as well as simple to manipulate complex object permissions.
 
 ## Introduction
 
-Every time a new django project needs to be set a lot of settings and configurations need to be
+Every time a new django project needs to be set, a lot of settings and configurations need to be
 also set and this cookiecutter offers a lot of boilerplating including:
 
 1. Login
