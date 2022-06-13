@@ -57,6 +57,7 @@ BASE_INSTALLED_APPS = [
     'django_dramatiq',
     'django_apscheduler',
     'corsheaders',
+    'drf_yasg',
 ]
 
 INSTALLED_APPS = [
