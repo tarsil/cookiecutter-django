@@ -4,10 +4,10 @@ import accounts.models
 import accounts.utils
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import FormView, View, TemplateView
+from django.views.generic import FormView, View
 from lib.common.views import AuthMixin
 
 
@@ -66,10 +66,7 @@ class LogoutView(View):
         return HttpResponseRedirect(reverse('login'))
 
 
-class HomepageView(TemplateView):
-    template_name = '{{ cookiecutter.project_name }}/application/homepage/homepage.html'
+class HomepageView(View):
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return super().get(request, *args, **kwargs)
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponse('Homepage')
