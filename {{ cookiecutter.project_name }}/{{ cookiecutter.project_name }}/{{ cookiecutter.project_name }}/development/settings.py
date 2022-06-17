@@ -98,6 +98,11 @@ DRAMATIQ_BROKER = {
     ]
 }
 
+SIMPLE_JWT = SIMPLE_JWT.update({
+    'ACCESS_TOKEN_LIFETIME':  timedelta(hours=24),
+    'AUTH_COOKIE_SECURE': False,
+})
+
 try:
     from .local_settings import *
 except ImportError:

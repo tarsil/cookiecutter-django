@@ -1,6 +1,5 @@
 import accounts.forms
 import accounts.models
-import accounts.models
 import accounts.utils
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -8,36 +7,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, View
-from lib.common.views import AuthMixin
-
-
-class BaseUserSystemView(AuthMixin):
-    """
-    Base class inheriting from the main settings object where common validations are placed
-    """
-
-    def get_object(self):
-        user = accounts.models.User.objects.get(
-            profile__slug=self.kwargs.get('slug', self.request.user.profile.slug)
-        )
-        if self.request.user.email == user.email:
-            return self.request.user
-        return user
-
-    def get_back_url(self):
-        return self.request.META.get("HTTP_REFERER", reverse('homepage'))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'user': self.get_object(),
-            'active': False
-        })
-        return context
 
 
 class LoginView(FormView):
-    template_name = '{{ cookiecutter.project_name }}/auth/login.html'
+    template_name = 'saturn/auth/login.html'
     form_class = accounts.forms.LoginForm
 
     def get(self, request, *args, **kwargs):
@@ -67,6 +40,5 @@ class LogoutView(View):
 
 
 class HomepageView(View):
-
     def get(self, request, *args, **kwargs):
-        return HttpResponse('Homepage')
+        return HttpResponse("Homepage")
