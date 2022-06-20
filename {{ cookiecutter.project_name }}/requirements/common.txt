@@ -17,6 +17,7 @@ django-cors-headers==3.11.0
 django-countries==7.2.1
 django-csp==3.6
 django-dramatiq==0.10.0
+django_fast_utils
 django-filter==2.4.0
 django-geoposition==0.3.0
 django-guardian==2.4.0

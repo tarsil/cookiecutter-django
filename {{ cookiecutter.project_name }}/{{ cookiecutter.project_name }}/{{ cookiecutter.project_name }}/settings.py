@@ -52,6 +52,7 @@ BASE_INSTALLED_APPS = [
     'statici18n',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'channels',
     'guardian',
     'django_dramatiq',
