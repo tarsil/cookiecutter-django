@@ -16,7 +16,7 @@ services:
     volumes:
       - .:/var/www
     working_dir: /var/www
-    command: bash -lc "pip3 install invoke jinja2 && invoke -r /var/www/roles $${ROLE}"
+    command: bash -lc "pip3 install invoke jinja2 markupsafe==2.0.1 && invoke -r /var/www/roles $${ROLE}"
 
   db:
     restart: always
