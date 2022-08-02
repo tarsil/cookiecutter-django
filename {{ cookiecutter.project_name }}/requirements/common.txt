@@ -1,11 +1,10 @@
-anyjson==0.3.3
 astroid==2.4.2
 awesome-slugify==1.6.5
-bleach==3.3.0
+bleach==5.0.1
 cffi==1.14.1
 channels==3.0.3
 channels-redis==3.2.0
-cryptography==36.0.1
+cryptography==37.0.4
 Django==3.2.14
 django-annoying==0.10.6
 django-anymail[sendinblue]==8.5

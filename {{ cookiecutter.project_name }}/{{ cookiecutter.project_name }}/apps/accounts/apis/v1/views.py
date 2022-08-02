@@ -3,21 +3,17 @@ import logging
 import accounts.apis.v1.serializers
 import accounts.models
 import bleach
-from accounts.apis.v1.serializers import (
-    CustomTokenObtainPairSerializer, 
-    UpdatePasswordSerializer,
-    UpdateEmailSerializer,
-    UserRegistrationSerializer
-)
+from accounts.apis.v1.serializers import (CustomTokenObtainPairSerializer, UpdateEmailSerializer,
+                                          UpdatePasswordSerializer, UserRegistrationSerializer)
 from django.contrib.auth import login
 from django.db import IntegrityError, OperationalError, transaction
 from django.urls import reverse
-from lib.{{cookiecutter.project_name}}.rest.generics import AuthMixin, RequiredUserContextView
+from django_fast_utils.auth.generics import AuthMixin, RequiredUserContextView
 from rest_framework import status
+from rest_framework.generics import DestroyAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.generics import DestroyAPIView, RetrieveAPIView, UpdateAPIView
 
 log = logging.getLogger(__name__)
 

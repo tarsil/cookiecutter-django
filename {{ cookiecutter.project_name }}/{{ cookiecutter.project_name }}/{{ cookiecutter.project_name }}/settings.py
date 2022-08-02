@@ -82,7 +82,7 @@ MIDDLEWARE = [
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "guardian.backends.ObjectPermissionBackend",
-    "lib.{{ cookiecutter.project_name }}.backends.EmailBackend"
+    "django_fast_utils.backends.EmailBackend",
 )
 
 REST_FRAMEWORK = {
@@ -97,7 +97,7 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
         'rest_framework.parsers.MultiPartParser'
     ),
-    "DEFAULT_PAGINATION_CLASS": "lib.{{ cookiecutter.project_name }}.rest.paginator.NumberDetailPagination",
+    "DEFAULT_PAGINATION_CLASS": "django_fast_utils.paginator.NumberDetailPagination",
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     "PAGE_SIZE": 20,
