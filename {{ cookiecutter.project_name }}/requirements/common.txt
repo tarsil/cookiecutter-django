@@ -62,6 +62,6 @@ tldextract==2.2.3
 tqdm==4.48.2
 urllib3==1.26.5
 user-agents==2.1
-uWSGI==2.0.20
+uWSGI==2.0.22
 wrapt==1.12.1
 xhtml2pdf==0.2.4
