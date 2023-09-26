@@ -3,9 +3,11 @@ name: CI
 on:
   push:
     branches:
-      - master
-      - main
-      - ci
+      - "**"
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   tests:
