@@ -59,7 +59,7 @@ redis==4.5.4
 requests==2.31.0
 simplejson==3.17.2
 tldextract==2.2.3
-tqdm==4.48.2
+tqdm==4.66.3
 urllib3==1.26.18
 user-agents==2.1
 uWSGI==2.0.22
