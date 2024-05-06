@@ -20,4 +20,4 @@ PyVirtualDisplay==0.2.1
 PyYAML==5.4
 recommonmark
 sqlparse==0.4.4
-werkzeug==3.0.1
+werkzeug==3.0.3
