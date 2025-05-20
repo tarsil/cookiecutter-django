@@ -1,3 +1,21 @@
+# Announcement
+
+After almost 10 years maintining this cookiecutter and with joy doing it so, it's now the time to retire it.
+
+The painful reason behind it has nothing toon  with Django but bigger projects came out since its inception like [Dymmond](https://github.com/dymmond) and my focus has shifted towards it and my time became constrained.
+
+I'm also the creator of:
+
+* [Esmerald](https://esmerald.dev)
+* [Lilya](https://lilya.dev)
+* [AsyncMQ](https://asyncmq.dymmond.com)
+
+And many others that require special dedicated attention and maintenance.
+
+I would personally invite you to join me there and help growing them.
+
+I also personally thank you for the support and for using this great cookiecutter that was also my first biggest open source contribution back in the day.
+
 # Cookiecutter Django with PostGres + Docker + DramatiQ and optional APScheduler
 
 ![CI](https://github.com/tarsil/cookiecutter-django/actions/workflows/main.yml/badge.svg)
